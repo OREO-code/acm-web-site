@@ -20,7 +20,7 @@ services:
     image: web:latest
     build: . # 表当前目录下的Dockerfile开始构建镜像
     ports:
-      - 8081:8081
+      - 8082:8082
     depends_on: # 依赖与mysql、redis，其实可以不填，默认已经表示可以
       - mysql
       - redis
