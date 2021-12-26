@@ -1,20 +1,43 @@
 package com.acm.web.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.acm.web.entity.User;
+import com.acm.web.form.LoginForm;
+import com.acm.web.service.UserService;
+import com.acm.web.vo.JwtVo;
+import com.acm.web.vo.ResponseVo;
+import com.acm.web.vo.UserVo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author henrik
- * @since 2021-12-25
- */
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/login")
+    public ResponseVo<JwtVo> login(@Valid @RequestBody LoginForm loginForm) {
+        return userService.login(loginForm.getUsername(), loginForm.getPassword());
+    }
+
+    @GetMapping("/currentUser")
+    public ResponseVo<UserVo> currentUser(@RequestHeader("Authorization") String token) {
+        return userService.currentUser(token);
+    }
+
+    @GetMapping("/logout")
+    public ResponseVo logout(@RequestHeader("Authorization") String token) {
+        return userService.logout(token);
+    }
+
+    @PostMapping("/addUser")
+    public ResponseVo addUser(@Valid @RequestBody LoginForm loginForm) {
+        User user = new User();
+        BeanUtils.copyProperties(loginForm,user);
+        return userService.addUser(user);
+    }
 }

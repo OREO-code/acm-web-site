@@ -1,16 +1,18 @@
 package com.acm.web.service;
 
+
 import com.acm.web.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.acm.web.vo.JwtVo;
+import com.acm.web.vo.ResponseVo;
+import com.acm.web.vo.UserVo;
 
-/**
- * <p>
- *  服务类
- * </p>
- *
- * @author henrik
- * @since 2021-12-25
- */
-public interface UserService extends IService<User> {
+public interface UserService {
 
+    ResponseVo<JwtVo> login(String username, String password);
+
+    ResponseVo<UserVo> currentUser(String token);
+
+    ResponseVo logout(String token);
+
+    ResponseVo addUser(User user);
 }

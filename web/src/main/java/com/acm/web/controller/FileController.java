@@ -1,57 +1,40 @@
 package com.acm.web.controller;
 
 
-import com.acm.web.lang.Result;
+import com.acm.web.enums.ResponseEnum;
+import com.acm.web.utils.DownloadUtil;
+import com.acm.web.utils.UploadUtil;
+import com.acm.web.vo.ResponseVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author henrik
- * @since 2021-12-25
- */
 @RestController
-@RequestMapping
+@Slf4j
 public class FileController {
 
     @Autowired
-    FileService fileService;
+    UploadUtil uploadUtil;
 
-    @GetMapping("/file")
-    public Result file(){
-        HashMap<String,Object> data = new HashMap<>();
-        data.put("sum",fileService.count());
-        data.put("fileList",fileService.list());
-        return Result.success(data);
+    @Autowired
+    DownloadUtil downloadUtil;
+
+    @PostMapping("/upload")
+    public ResponseVo fileUpload(@RequestParam("file") MultipartFile file){
+        try {
+            uploadUtil.upload(file);
+        } catch (IOException e) {
+            return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
+        }
+        return ResponseVo.success(ResponseEnum.UPLOAD_SUCCESS);
     }
 
-    @PostMapping("/addFile")
-    public Result addFile(@RequestBody File file){
-        file.setCreateTime(LocalDateTime.now());
-        file.setUpdateTime(null);
-        boolean ans = fileService.save(file);
-        if (ans) return Result.success();
-        else return Result.fail();
+    @GetMapping("/download/{fileName}")
+    public void downloads(HttpServletResponse response, @PathVariable("fileName")String fileName) {
+        downloadUtil.download(response, fileName);
     }
-
-    @PostMapping("/delFile")
-    public Result delFile(@RequestBody File file){
-        boolean ans = fileService.removeById(file.getId());
-        if(ans) return Result.success();
-        else return Result.fail(null);
-    }
-
-    @PostMapping("/updateFile")
-    public Result updateFile(@RequestBody File file){
-        boolean ans = fileService.updateById(file);
-        if(ans) return Result.success();
-        else return Result.fail(null);
-    }
-
 }

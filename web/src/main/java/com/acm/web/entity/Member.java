@@ -1,18 +1,12 @@
 package com.acm.web.entity;
 
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author henrik
- * @since 2021-12-25
- */
+import java.io.Serializable;
+
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
