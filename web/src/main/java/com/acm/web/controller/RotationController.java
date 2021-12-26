@@ -2,22 +2,13 @@ package com.acm.web.controller;
 
 
 import com.acm.web.entity.Rotation;
-import com.acm.web.lang.Result;
+import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.RotationService;
-import com.baomidou.mybatisplus.extension.api.R;
+import com.acm.web.vo.ResponseVo;
+import com.acm.web.vo.RotationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author henrik
- * @since 2021-12-25
- */
 @RestController
 @RequestMapping
 public class RotationController {
@@ -26,32 +17,32 @@ public class RotationController {
     RotationService rotationService;
 
     @GetMapping("/rotation")
-    public Result getRotation(){
-        HashMap<String,Object> data = new HashMap<>();
-        data.put("pageNumber",rotationService.count());
-        data.put("urlList",rotationService.list());
-        return Result.success(data);
+    public ResponseVo<RotationVo> getRotation(){
+        RotationVo rotationVo = new RotationVo()
+                .setSum(rotationService.count())
+                .setUrlList(rotationService.list());
+        return ResponseVo.success(rotationVo);
     }
 
     @PostMapping("/updateRotation")
-    public Result updateRotation(@RequestBody Rotation rotation){
+    public ResponseVo updateRotation(@RequestBody Rotation rotation){
         boolean ans = rotationService.updateById(rotation);
-        if(ans) return Result.success();
-        else return Result.fail();
+        if(ans) return ResponseVo.success();
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/delRotation")
-    public Result delRotation(@RequestBody Rotation rotation){
+    public ResponseVo delRotation(@RequestBody Rotation rotation){
         boolean ans = rotationService.removeById(rotation.getId());
-        if(ans) return Result.success();
-        else return Result.fail();
+        if(ans) return ResponseVo.success();
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
 
     @PostMapping("/addRotation")
-    public Result addRotation(@RequestBody Rotation rotation){
+    public ResponseVo addRotation(@RequestBody Rotation rotation){
         boolean ans = rotationService.save(rotation);
-        if (ans) return Result.success();
-        else return Result.fail();
+        if (ans) return ResponseVo.success();
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
