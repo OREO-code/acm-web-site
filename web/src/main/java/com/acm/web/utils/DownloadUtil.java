@@ -13,6 +13,9 @@ public class DownloadUtil {
     @Value("${spring.servlet.multipart.location}")
     private String uploadDir;
 
+    @Value("${spring.profiles.active}")
+    private String profiles;
+
     public void download(HttpServletResponse response, String fileName) {
 
         response.reset();
@@ -21,7 +24,12 @@ public class DownloadUtil {
         InputStream input = null;
         OutputStream output = null;
         byte[] buff = new byte[1024];
-        File file = new File(uploadDir+fileName);
+        String path ;
+        if (profiles.equalsIgnoreCase("dev")) {
+            path = System.getProperty("user.dir") + uploadDir + fileName;
+        }
+        else path = uploadDir + fileName ;
+        File file = new File(path);
         if (!file.exists()) {
             return;
         }

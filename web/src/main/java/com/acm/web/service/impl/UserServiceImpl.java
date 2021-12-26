@@ -3,6 +3,7 @@ package com.acm.web.service.impl;
 
 import com.acm.web.entity.User;
 import com.acm.web.enums.ResponseEnum;
+import com.acm.web.form.LoginForm;
 import com.acm.web.mapper.UserMapper;
 import com.acm.web.service.UserService;
 import com.acm.web.utils.JwtUtil;
@@ -48,9 +49,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVo<JwtVo> login(String username, String password) {
         User user = userMapper.selectByUsername(username);
-        log.info(username);
-        log.info(password);
-        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
+//        log.info(username);
+//        log.info(password);
+//        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
         if (user == null || !user.getPassword().equalsIgnoreCase(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)))) {
             //密码错误(用户名或密码错误)
             return ResponseVo.error(USERNAME_OR_PASSWORD_ERROR);
@@ -96,7 +97,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVo addUser(User user) {
+    public ResponseVo addUser(LoginForm loginForm) {
+        User user = new User();
+        BeanUtils.copyProperties(loginForm,user);
         user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword()+SALT).getBytes(StandardCharsets.UTF_8)));
         boolean flag = userMapper.addUser(user);
         if (!flag) {

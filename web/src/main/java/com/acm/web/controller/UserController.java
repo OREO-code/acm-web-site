@@ -1,13 +1,11 @@
 package com.acm.web.controller;
 
 
-import com.acm.web.entity.User;
 import com.acm.web.form.LoginForm;
 import com.acm.web.service.UserService;
 import com.acm.web.vo.JwtVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.UserVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +34,6 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseVo addUser(@Valid @RequestBody LoginForm loginForm) {
-        User user = new User();
-        BeanUtils.copyProperties(loginForm,user);
-        return userService.addUser(user);
+        return userService.addUser(loginForm);
     }
 }
