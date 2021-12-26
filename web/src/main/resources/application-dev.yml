@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/officialwebsite?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: wang123yi456xiao789
+    password: 123456
   redis:
     host: 127.0.0.1
     port: 6379
@@ -15,7 +15,7 @@ spring:
       file-size-threshold: 0 #支持文件写入磁盘
       resolve-lazily: false  #是否支持 multipart 上传文件时懒加载
 #     TODO 设置文件存储位置
-#      location:
+      location:
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
