@@ -23,7 +23,7 @@ public class User implements Serializable {
 
     private String password;
 
-    private String eamil;
+    private String email;
 
     private String phone;
 
