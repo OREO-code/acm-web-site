@@ -9,5 +9,7 @@ public interface UserMapper {
     User selectByUsername(String username);
 
     boolean addUser(User user);
+
+    boolean updateUser(User user);
 }
 

@@ -23,6 +23,14 @@ public enum ResponseEnum {
 
     UPLOAD_ERROR(8,"上传失败"),
 
+    PASSWORD_INCONSISTENT(9,"两次密码不一致"),
+
+    OLD_PASSWORD_ERROR(10,"旧密码错误"),
+
+    USER_NONEXISTENT(11,"用户不存在"),
+
+    PASSWORD_CONSISTENT(12,"新旧密码一致"),
+
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //
 //    DOWNLOAD_ERROR(10,"下载失败"),

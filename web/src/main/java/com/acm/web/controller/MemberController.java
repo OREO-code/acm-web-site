@@ -37,21 +37,21 @@ public class MemberController {
     @PostMapping("/addMember")
     public ResponseVo addMember(@RequestBody Member member){
         boolean ans = memberService.save(member);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("增加成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/updateMember")
     public ResponseVo updateMember(@RequestBody Member member){
         boolean ans = memberService.updateById(member);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/delMember")
     public ResponseVo delMember(@RequestBody Member member){
         boolean ans = memberService.removeById(member.getId());
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }

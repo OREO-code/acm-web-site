@@ -35,7 +35,7 @@ public class IntroduceController {
         introduce.setCreateTime(LocalDateTime.now());
         introduce.setUpdateTime(LocalDateTime.now());
         boolean ans = introduceService.save(introduce);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("增加成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
@@ -43,7 +43,7 @@ public class IntroduceController {
     @PostMapping("/delFile")
     public ResponseVo delFile(@RequestBody Introduce introduce) {
         boolean ans = introduceService.removeById(introduce.getId());
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
@@ -52,7 +52,7 @@ public class IntroduceController {
     @PostMapping("/updateFile")
     public ResponseVo updateFile(@RequestBody Introduce introduce) {
         boolean ans = introduceService.updateById(introduce);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 

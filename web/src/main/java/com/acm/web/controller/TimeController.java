@@ -36,21 +36,21 @@ public class TimeController {
     @PostMapping("/updateTime")
     public ResponseVo updateTime(@RequestBody Time time){
         boolean ans = timeService.updateById(time);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/delTime")
     public ResponseVo delTime(@RequestBody Time time){
         boolean ans = timeService.removeById(time.getId());
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/addTime")
     public ResponseVo addTime(@RequestBody Time time){
         boolean ans = timeService.save(time);
-        if (ans) return ResponseVo.success();
+        if (ans) return ResponseVo.success("增加成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
