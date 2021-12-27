@@ -24,7 +24,7 @@ public class MemberController {
     MemberService memberService;
 
     @PostMapping("/members")
-    public ResponseVo<MemberVo> members(@RequestBody List<Member> memberList){
+    public ResponseVo<MemberVo> members(@RequestBody Member member){
         QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("year",member.getYear()).eq("college",member.getCollege());
         MemberVo memberVo = new MemberVo();
