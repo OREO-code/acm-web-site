@@ -20,4 +20,6 @@ public class File implements Serializable {
     private String fileName;
 
     private String fileUrl;
+
+    private Integer isDel;
 }

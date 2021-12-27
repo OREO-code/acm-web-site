@@ -2,6 +2,7 @@ package com.acm.web.controller;
 
 
 import com.acm.web.form.LoginForm;
+import com.acm.web.form.UpdateUserFrom;
 import com.acm.web.service.UserService;
 import com.acm.web.vo.JwtVo;
 import com.acm.web.vo.ResponseVo;
@@ -35,5 +36,10 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseVo addUser(@Valid @RequestBody LoginForm loginForm) {
         return userService.addUser(loginForm);
+    }
+
+    @PostMapping("/updateUser")
+    public ResponseVo updateUser(@Valid @RequestBody UpdateUserFrom updateUserFrom) {
+        return userService.updateUser(updateUserFrom);
     }
 }

@@ -4,6 +4,7 @@ package com.acm.web.service.impl;
 import com.acm.web.entity.User;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.LoginForm;
+import com.acm.web.form.UpdateUserFrom;
 import com.acm.web.mapper.UserMapper;
 import com.acm.web.service.UserService;
 import com.acm.web.utils.JwtUtil;
@@ -106,5 +107,26 @@ public class UserServiceImpl implements UserService {
             return ResponseVo.error(ResponseEnum.ERROR);
         }
         return ResponseVo.success("添加成功");
+    }
+
+    @Override
+    public ResponseVo updateUser(UpdateUserFrom updateUserFrom) {
+        if (!updateUserFrom.getNewPassword1().equals(updateUserFrom.getNewPassword2())) {
+            return ResponseVo.error(ResponseEnum.PASSWORD_INCONSISTENT);
+        }
+        User user = userMapper.selectByUsername(updateUserFrom.getUsername());
+        if (user == null) {
+            return ResponseVo.error(ResponseEnum.USER_NONEXISTENT);
+        }
+        if (!(updateUserFrom.getOldPassword().equals(user.getPassword()))) {
+            return ResponseVo.error(ResponseEnum.OLD_PASSWORD_ERROR);
+        }
+        if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1()+SALT).getBytes(StandardCharsets.UTF_8)))) {
+            return ResponseVo.error(ResponseEnum.PASSWORD_CONSISTENT);
+        }
+        user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1()+SALT).getBytes(StandardCharsets.UTF_8)));
+        log.info("user:{}",user);
+        userMapper.updateUser(user);
+        return ResponseVo.success("修改成功");
     }
 }
