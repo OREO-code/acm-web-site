@@ -5,9 +5,7 @@ import com.acm.web.entity.Member;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.QueryMembers;
 import com.acm.web.service.MemberService;
-import com.acm.web.vo.MemberVo;
 import com.acm.web.vo.ResponseVo;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

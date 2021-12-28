@@ -5,7 +5,6 @@ import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.QueryMembers;
 import com.acm.web.mapper.MemberMapper;
 import com.acm.web.service.MemberService;
-import com.acm.web.vo.MemberVo;
 import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
