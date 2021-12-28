@@ -2,6 +2,7 @@ package com.acm.web.controller;
 
 
 import com.acm.web.entity.Document;
+import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.DocumentService;
 import com.acm.web.utils.DelFileUtil;
 import com.acm.web.utils.DownloadUtil;
@@ -32,11 +33,14 @@ public class DocumentController {
     @Autowired
     DelFileUtil delFileUtil;
 
+    private static final String FILEPATH = "document/";
+
     @PostMapping("/upload")
     public ResponseVo fileUpload(@RequestParam("file") MultipartFile file) {
-        return uploadUtil.upload(file);
+        return uploadUtil.upload(file,FILEPATH);
     }
 
+    //必须带后缀名
     @GetMapping("/download/{fileName}")
     public void downloads(HttpServletResponse response, @PathVariable("fileName") String fileName) {
         downloadUtil.download(response, fileName);
@@ -46,14 +50,22 @@ public class DocumentController {
     public ResponseVo<DocumentVo> file() {
         QueryWrapper<Document> wrapper = new QueryWrapper<>();
         wrapper.eq("isDel", 0);
-        DocumentVo fileVo = new DocumentVo()
+        DocumentVo documentVo = new DocumentVo()
                 .setSum(documentService.count())
                 .setFileList(documentService.list(wrapper));
-        return ResponseVo.success(fileVo);
+        return ResponseVo.success(documentVo);
     }
 
     @GetMapping("/delFile/{id}")
     public ResponseVo delFile(@PathVariable("id") Integer id) {
-        return delFileUtil.delFile(id);
+        try {
+            Document document = documentService.getById(id);
+            String filename = document.getFileName();
+            document.setIsDel(1);
+            documentService.updateById(document);
+            return delFileUtil.delFile(filename,FILEPATH);
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.DELETE_ERROR);
+        }
     }
 }

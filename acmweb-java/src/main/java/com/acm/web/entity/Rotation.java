@@ -21,5 +21,8 @@ public class Rotation implements Serializable {
 
     private String url;
 
+    private String name;
+
+    private Integer isDel;
 
 }
