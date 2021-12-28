@@ -1,8 +1,9 @@
 package com.acm.web.utils;
 
 
+import com.acm.web.entity.Document;
 import com.acm.web.enums.ResponseEnum;
-import com.acm.web.service.FileService;
+import com.acm.web.service.DocumentService;
 import com.acm.web.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
-
 
 @Slf4j
 @Component
@@ -25,28 +24,34 @@ public class UploadUtil {
     private String profiles;
 
     @Autowired
-    FileService fileService;
+    DocumentService fileService;
 
-    public ResponseVo upload(MultipartFile file) {
-
+    public ResponseVo upload(MultipartFile multipartFile) {
 
         String path;
+        String realpath;
         if (profiles.equalsIgnoreCase("dev")) {
-            path = System.getProperty("user.dir") + uploadDir + file.getOriginalFilename();
+            path = System.getProperty("user.dir") + uploadDir + multipartFile.getOriginalFilename();
+            realpath = System.getProperty("user.dir") + uploadDir;
+        } else {
+            path = uploadDir + multipartFile.getOriginalFilename();
+            realpath = uploadDir;
         }
-        else path = uploadDir + file.getOriginalFilename();
         log.info("目录:{}", path);
-        File realPath = new File(uploadDir);
+        File realPath = new File(realpath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
+        Document file = new Document()
+                .setFileName(multipartFile.getOriginalFilename())
+                .setIsDel(0)
+                .setFileUrl(path);
         try {
-            file.transferTo(new File(path));
-        } catch (IOException e) {
+            fileService.save(file);
+            multipartFile.transferTo(new File(path));
+        } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
-        return ResponseVo.success(ResponseEnum.UPLOAD_SUCCESS);
+        return ResponseVo.success("上传成功");
     }
-
-
 }
