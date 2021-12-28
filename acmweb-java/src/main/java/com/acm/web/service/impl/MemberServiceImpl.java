@@ -9,6 +9,7 @@ import com.acm.web.vo.MemberVo;
 import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,12 @@ import java.util.List;
 @Service
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements MemberService {
 
+    @Autowired
+    MemberMapper memberMapper;
 
     @Override
-    public ResponseVo<MemberVo> members(QueryMembers queryMembers) {
+    public ResponseVo<List<Member>> members(QueryMembers queryMembers) {
         Member member = new Member();
-        MemberVo memberVo = new MemberVo();
         List<String> yearList = queryMembers.getYearList();
         List<String> collegeList = queryMembers.getCollegeList();
         List<Member> memberList = new ManagedList<>();
@@ -59,7 +61,18 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             }
 
         }
-        memberVo.setMemberList(memberList);
-        return ResponseVo.success(memberVo);
+        return ResponseVo.success(memberList);
+    }
+
+    @Override
+    public ResponseVo<List<String>> getYear() {
+        List<String> yearList = memberMapper.getYear();
+        return ResponseVo.success(yearList);
+    }
+
+    @Override
+    public ResponseVo<List<String>> getCollege() {
+        List<String> collegeList = memberMapper.getCollege();
+        return ResponseVo.success(collegeList);
     }
 }
