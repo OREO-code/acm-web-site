@@ -33,11 +33,16 @@ public enum ResponseEnum {
 
     DELETE_ERROR(13, "删除失败"),
 
+    NEED_PARAM(14,"参数不能为空"),
+
+    ERROR_PARAM(15,"参数错误"),
+
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //
 //    DOWNLOAD_ERROR(10,"下载失败"),
 
     ;
+
 
     Integer code;
 
