@@ -16,14 +16,14 @@ public class NoticeController {
     NoticeService noticeService;
 
     @GetMapping("/notice")
-    public ResponseVo getNotice(){
+    public ResponseVo getNotice() {
         Notice notice = noticeService.getById(1);
-        if(notice!=null) return ResponseVo.success(notice);
+        if (notice != null) return ResponseVo.success(notice);
         return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/updateNotice")
-    public ResponseVo<Notice> updateNotice(@RequestBody Notice notice){
+    public ResponseVo<Notice> updateNotice(@RequestBody Notice notice) {
         return noticeService.updateNotice(notice);
     }
 

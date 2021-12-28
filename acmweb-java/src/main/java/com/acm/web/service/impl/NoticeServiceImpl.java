@@ -20,7 +20,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     public ResponseVo<Notice> updateNotice(Notice notice) {
         notice.setId(1);
         int i = noticeMapper.updateById(notice);
-        if(i!=0) return ResponseVo.success();
+        if (i != 0) return ResponseVo.success();
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }

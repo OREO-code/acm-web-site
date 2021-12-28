@@ -15,21 +15,23 @@ public enum ResponseEnum {
 
     USERNAME_OR_PASSWORD_ERROR(3, "用户名或密码错误"),
 
-    TOKEN_ERROR(4,"token不合法"),
+    TOKEN_ERROR(4, "token不合法"),
 
-    EXPIRED_ERROR(6,"token已过期或已注销"),
+    EXPIRED_ERROR(6, "token已过期或已注销"),
 
-    UPLOAD_SUCCESS(7,"上传成功"),
+    UPLOAD_SUCCESS(7, "上传成功"),
 
-    UPLOAD_ERROR(8,"上传失败"),
+    UPLOAD_ERROR(8, "上传失败"),
 
-    PASSWORD_INCONSISTENT(9,"两次密码不一致"),
+    PASSWORD_INCONSISTENT(9, "两次密码不一致"),
 
-    OLD_PASSWORD_ERROR(10,"旧密码错误"),
+    OLD_PASSWORD_ERROR(10, "旧密码错误"),
 
-    USER_NONEXISTENT(11,"用户不存在"),
+    USER_NONEXISTENT(11, "用户不存在"),
 
-    PASSWORD_CONSISTENT(12,"新旧密码一致"),
+    PASSWORD_CONSISTENT(12, "新旧密码一致"),
+
+    DELETE_ERROR(13, "删除失败"),
 
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //

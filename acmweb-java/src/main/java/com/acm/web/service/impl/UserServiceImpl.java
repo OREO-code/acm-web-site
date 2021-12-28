@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = gson.fromJson(value, User.class);
         UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(user,userVo);
+        BeanUtils.copyProperties(user, userVo);
         return ResponseVo.success(userVo);
     }
 
@@ -100,8 +100,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVo addUser(LoginForm loginForm) {
         User user = new User();
-        BeanUtils.copyProperties(loginForm,user);
-        user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword()+SALT).getBytes(StandardCharsets.UTF_8)));
+        BeanUtils.copyProperties(loginForm, user);
+        user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword() + SALT).getBytes(StandardCharsets.UTF_8)));
         boolean flag = userMapper.addUser(user);
         if (!flag) {
             return ResponseVo.error(ResponseEnum.ERROR);
@@ -121,11 +121,11 @@ public class UserServiceImpl implements UserService {
         if (!(updateUserFrom.getOldPassword().equals(user.getPassword()))) {
             return ResponseVo.error(ResponseEnum.OLD_PASSWORD_ERROR);
         }
-        if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1()+SALT).getBytes(StandardCharsets.UTF_8)))) {
+        if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)))) {
             return ResponseVo.error(ResponseEnum.PASSWORD_CONSISTENT);
         }
-        user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1()+SALT).getBytes(StandardCharsets.UTF_8)));
-        log.info("user:{}",user);
+        user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)));
+        log.info("user:{}", user);
         userMapper.updateUser(user);
         return ResponseVo.success("修改成功");
     }

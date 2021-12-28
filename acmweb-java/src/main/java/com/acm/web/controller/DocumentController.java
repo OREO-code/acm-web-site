@@ -1,12 +1,12 @@
 package com.acm.web.controller;
 
 
-import com.acm.web.entity.File;
-import com.acm.web.enums.ResponseEnum;
-import com.acm.web.service.FileService;
+import com.acm.web.entity.Document;
+import com.acm.web.service.DocumentService;
+import com.acm.web.utils.DelFileUtil;
 import com.acm.web.utils.DownloadUtil;
 import com.acm.web.utils.UploadUtil;
-import com.acm.web.vo.FileVo;
+import com.acm.web.vo.DocumentVo;
 import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +18,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @Slf4j
-public class FileController {
+public class DocumentController {
 
     @Autowired
-    FileService fileService;
+    DocumentService documentService;
 
     @Autowired
     UploadUtil uploadUtil;
 
     @Autowired
     DownloadUtil downloadUtil;
+
+    @Autowired
+    DelFileUtil delFileUtil;
 
     @PostMapping("/upload")
     public ResponseVo fileUpload(@RequestParam("file") MultipartFile file) {
@@ -40,22 +43,17 @@ public class FileController {
     }
 
     @GetMapping("/file")
-    public ResponseVo<FileVo> file() {
-        QueryWrapper<File> wrapper = new QueryWrapper<>();
-        wrapper.eq("isDel",0);
-        FileVo fileVo = new FileVo()
-                .setSum(fileService.count())
-                .setFileList(fileService.list(wrapper));
+    public ResponseVo<DocumentVo> file() {
+        QueryWrapper<Document> wrapper = new QueryWrapper<>();
+        wrapper.eq("isDel", 0);
+        DocumentVo fileVo = new DocumentVo()
+                .setSum(documentService.count())
+                .setFileList(documentService.list(wrapper));
         return ResponseVo.success(fileVo);
     }
 
     @GetMapping("/delFile/{id}")
     public ResponseVo delFile(@PathVariable("id") Integer id) {
-        File file = new File();
-        file.setIsDel(1);
-        file.setId(id);
-        boolean flag = fileService.updateById(file);
-        if (flag) return ResponseVo.success("删除成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return delFileUtil.delFile(id);
     }
 }

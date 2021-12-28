@@ -17,7 +17,7 @@ public class RotationController {
     RotationService rotationService;
 
     @GetMapping("/rotation")
-    public ResponseVo<RotationVo> getRotation(){
+    public ResponseVo<RotationVo> getRotation() {
         RotationVo rotationVo = new RotationVo()
                 .setSum(rotationService.count())
                 .setUrlList(rotationService.list());
@@ -25,22 +25,22 @@ public class RotationController {
     }
 
     @PostMapping("/updateRotation")
-    public ResponseVo updateRotation(@RequestBody Rotation rotation){
+    public ResponseVo updateRotation(@RequestBody Rotation rotation) {
         boolean ans = rotationService.updateById(rotation);
-        if(ans) return ResponseVo.success("修改成功");
+        if (ans) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @PostMapping("/delRotation")
-    public ResponseVo delRotation(@RequestBody Rotation rotation){
+    public ResponseVo delRotation(@RequestBody Rotation rotation) {
         boolean ans = rotationService.removeById(rotation.getId());
-        if(ans) return ResponseVo.success("删除成功");
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
 
     @PostMapping("/addRotation")
-    public ResponseVo addRotation(@RequestBody Rotation rotation){
+    public ResponseVo addRotation(@RequestBody Rotation rotation) {
         boolean ans = rotationService.save(rotation);
         if (ans) return ResponseVo.success("增加成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
