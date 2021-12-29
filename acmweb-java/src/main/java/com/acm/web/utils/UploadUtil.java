@@ -1,13 +1,8 @@
 package com.acm.web.utils;
 
 
-import com.acm.web.entity.Document;
-import com.acm.web.entity.Rotation;
-import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.DocumentService;
 import com.acm.web.service.RotationService;
-import com.acm.web.vo.FileVo;
-import com.acm.web.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,52 +30,29 @@ public class UploadUtil {
     @Autowired
     RotationService rotationService;
 
-    public ResponseVo upload(MultipartFile multipartFile, String filePath) {
+    public String upload(MultipartFile multipartFile, String filePath) {
 
-        String path;
         String realpath;
         //主要原因就是不好控制 要加判断 如果存入static目录的话
         //如果是dev环境存在/resources/document/目录下！！！
         //否则存在/usr/local/document/目录下！！！
         if (profiles.equalsIgnoreCase("dev")) {
-            path = System.getProperty("user.dir") + uploadDir + filePath + multipartFile.getOriginalFilename();
             realpath = System.getProperty("user.dir") + uploadDir + filePath;
         } else {
-            path = uploadDir + filePath + multipartFile.getOriginalFilename();
             realpath = uploadDir + filePath;
         }
-        log.info("路径:{}", path);
+        log.info("路径:{}", realpath+multipartFile.getOriginalFilename());
         File realPath = new File(realpath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
-        if (filePath.equals("document/")) {
-            Document document = new Document()
-                    .setFileName(multipartFile.getOriginalFilename())
-                    .setIsDel(0)
-                    .setFileUrl(path);
-            try {
-                documentService.save(document);
-                multipartFile.transferTo(new File(path));
-                FileVo fileVo = new FileVo().setUrl(path);
-                return ResponseVo.success(fileVo);
-            } catch (Exception e) {
-                return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
-            }
-        } else {
-            Rotation rotation = new Rotation()
-                    .setUrl(URL+multipartFile.getOriginalFilename())
-                    .setIsDel(0)
-                    .setName(multipartFile.getOriginalFilename());
-            try {
-                rotationService.save(rotation);
-                multipartFile.transferTo(new File(path));
-                FileVo fileVo = new FileVo().setUrl(URL+multipartFile.getOriginalFilename());
-                return ResponseVo.success(fileVo);
-            } catch (Exception e) {
-                return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
-            }
+        try {
+            multipartFile.transferTo(new File(realpath+multipartFile.getOriginalFilename()));
+        } catch (Exception e) {
+            log.error("上传意外错误:{}",e.getMessage());
+            e.printStackTrace();
         }
-
+        if (filePath.equals("document/")) return realpath+multipartFile.getOriginalFilename();
+        else return URL+multipartFile.getOriginalFilename();
     }
 }

@@ -8,6 +8,7 @@ import com.acm.web.utils.DelFileUtil;
 import com.acm.web.utils.DownloadUtil;
 import com.acm.web.utils.UploadUtil;
 import com.acm.web.vo.DocumentVo;
+import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,17 @@ public class DocumentController {
 
     @PostMapping("/upload")
     public ResponseVo fileUpload(@RequestParam("file") MultipartFile file) {
-        return uploadUtil.upload(file,FILEPATH);
+        String path = uploadUtil.upload(file, FILEPATH);
+        Document document = new Document()
+                    .setFileName(file.getOriginalFilename())
+                    .setIsDel(0)
+                    .setFileUrl(path);
+        try {
+            documentService.save(document);
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
+        }
+        return ResponseVo.success(new FileVo().setUrl(path));
     }
 
     //必须带后缀名
@@ -58,14 +69,17 @@ public class DocumentController {
 
     @GetMapping("/delFile/{id}")
     public ResponseVo delFile(@PathVariable("id") Integer id) {
+        String filename;
         try {
             Document document = documentService.getById(id);
-            String filename = document.getFileName();
+            filename = document.getFileName();
             document.setIsDel(1);
             documentService.updateById(document);
-            return delFileUtil.delFile(filename,FILEPATH);
         } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.DELETE_ERROR);
         }
+        boolean flag = delFileUtil.delFile(filename, FILEPATH);
+        if (flag) return ResponseVo.success("删除成功");
+        return ResponseVo.error(ResponseEnum.DELETE_ERROR);
     }
 }
