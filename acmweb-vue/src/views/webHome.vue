@@ -12,11 +12,7 @@
 			  </div>
 			  <div class="line"></div>
 			  <div class="bottom">
-				  <!-- <el-row type="flex" class="row-bg" justify="space-around">
-				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-				    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-				  </el-row> -->
+
 				  <div class="bottomitem">
 					  <div class="item"><div class="itemtitle">
 						<p>扫描右方二维码，关注我们</p>

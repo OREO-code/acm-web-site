@@ -34,7 +34,7 @@ public class Introduce implements Serializable {
 
     private LocalDateTime created;
 
-    private Integer status;
+
 
 
 }
