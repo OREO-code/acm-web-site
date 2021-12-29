@@ -53,6 +53,6 @@ public class UploadUtil {
             e.printStackTrace();
         }
         if (filePath.equals("document/")) return realpath+multipartFile.getOriginalFilename();
-        else return URL+multipartFile.getOriginalFilename();
+        return URL+multipartFile.getOriginalFilename();
     }
 }

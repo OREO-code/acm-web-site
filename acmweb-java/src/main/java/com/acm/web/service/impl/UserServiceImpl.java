@@ -16,15 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static com.acm.web.enums.ResponseEnum.USERNAME_OR_PASSWORD_ERROR;
 
 
 @Service
@@ -55,11 +57,21 @@ public class UserServiceImpl implements UserService {
 //        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
         if (user == null || !user.getPassword().equalsIgnoreCase(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)))) {
             //密码错误(用户名或密码错误)
-            return ResponseVo.error(USERNAME_OR_PASSWORD_ERROR);
+            return ResponseVo.error(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
         }
-        String jwt = jwtUtil.generateToken(username);
         //不要通过jwt解析出username再去数据库里查
         //直接存入redis中加快效率
+        //TODO 优化效率 如果数据量很大会导致redis堵塞
+        //另外 请保证redis当前数据库中只含有JWT-User的键值对
+        //否则类型转换异常
+        Set<String> keys = redisTemplate.keys("*");
+        for (String key : Objects.requireNonNull(keys)) {
+            User user1 = gson.fromJson(redisTemplate.opsForValue().get(key), User.class);
+            if (Objects.equals(redisTemplate.type(key), DataType.STRING) && user1.getUsername().equals(username)) {
+                return ResponseVo.success(new JwtVo(key));
+            }
+        }
+        String jwt = jwtUtil.generateToken(username);
         if (Boolean.FALSE.equals(redisTemplate.hasKey(jwt))) {
             redisTemplate.opsForValue().set(jwt, gson.toJson(user), expiration - 1, TimeUnit.SECONDS);
         }
