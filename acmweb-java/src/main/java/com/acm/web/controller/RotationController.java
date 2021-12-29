@@ -4,10 +4,14 @@ package com.acm.web.controller;
 import com.acm.web.entity.Rotation;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.RotationService;
+import com.acm.web.utils.DelFileUtil;
+import com.acm.web.utils.UploadUtil;
+import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.RotationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping
@@ -15,6 +19,15 @@ public class RotationController {
 
     @Autowired
     RotationService rotationService;
+
+    @Autowired
+    UploadUtil uploadUtil;
+
+    @Autowired
+    DelFileUtil delFileUtil;
+
+    private static final String FILEPATH = "rotation/";
+
 
     @GetMapping("/rotation")
     public ResponseVo<RotationVo> getRotation() {
@@ -33,9 +46,18 @@ public class RotationController {
 
     @PostMapping("/delRotation")
     public ResponseVo delRotation(@RequestBody Rotation rotation) {
-        boolean ans = rotationService.removeById(rotation.getId());
-        if (ans) return ResponseVo.success("删除成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        String rotation1Name;
+        try {
+            Rotation rotation1 = rotationService.getById(rotation.getId());
+            rotation1Name = rotation1.getName();
+            rotation1.setIsDel(1);
+            rotationService.updateById(rotation1);
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.DELETE_ERROR);
+        }
+        boolean flag = delFileUtil.delFile(rotation1Name, FILEPATH);
+        if (flag) return ResponseVo.success("删除成功");
+        return ResponseVo.error(ResponseEnum.DELETE_ERROR);
     }
 
 
@@ -44,5 +66,20 @@ public class RotationController {
         boolean ans = rotationService.save(rotation);
         if (ans) return ResponseVo.success("增加成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
+    }
+
+    @PostMapping("/uploadRotation")
+    public ResponseVo uploadRotation(@RequestParam("file") MultipartFile file) {
+        String path = uploadUtil.upload(file, FILEPATH);
+        Rotation rotation = new Rotation()
+                    .setUrl(path)
+                    .setIsDel(0)
+                    .setName(file.getOriginalFilename());
+        try {
+            rotationService.save(rotation);
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.ERROR);
+        }
+        return ResponseVo.success(new FileVo().setUrl(path));
     }
 }

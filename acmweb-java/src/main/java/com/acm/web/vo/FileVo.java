@@ -1,16 +1,16 @@
 package com.acm.web.vo;
 
-import com.acm.web.entity.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberVo {
+@Accessors(chain = true)
+public class FileVo {
 
-    List<Member> memberList;
+    private String url;
 }

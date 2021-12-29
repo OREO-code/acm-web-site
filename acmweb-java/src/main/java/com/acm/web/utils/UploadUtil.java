@@ -1,10 +1,8 @@
 package com.acm.web.utils;
 
 
-import com.acm.web.entity.Document;
-import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.DocumentService;
-import com.acm.web.vo.ResponseVo;
+import com.acm.web.service.RotationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,35 +21,38 @@ public class UploadUtil {
     @Value("${spring.profiles.active}")
     private String profiles;
 
+    //轮播图在服务器上的存放位置
+    private static final String URL = "http://101.43.16.42:8082/rotation/";
+
     @Autowired
-    DocumentService fileService;
+    DocumentService documentService;
 
-    public ResponseVo upload(MultipartFile multipartFile) {
+    @Autowired
+    RotationService rotationService;
 
-        String path;
+    public String upload(MultipartFile multipartFile, String filePath) {
+
         String realpath;
+        //主要原因就是不好控制 要加判断 如果存入static目录的话
+        //如果是dev环境存在/resources/document/目录下！！！
+        //否则存在/usr/local/document/目录下！！！
         if (profiles.equalsIgnoreCase("dev")) {
-            path = System.getProperty("user.dir") + uploadDir + multipartFile.getOriginalFilename();
-            realpath = System.getProperty("user.dir") + uploadDir;
+            realpath = System.getProperty("user.dir") + uploadDir + filePath;
         } else {
-            path = uploadDir + multipartFile.getOriginalFilename();
-            realpath = uploadDir;
+            realpath = uploadDir + filePath;
         }
-        log.info("目录:{}", path);
+        log.info("路径:{}", realpath+multipartFile.getOriginalFilename());
         File realPath = new File(realpath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
-        Document file = new Document()
-                .setFileName(multipartFile.getOriginalFilename())
-                .setIsDel(0)
-                .setFileUrl(path);
         try {
-            fileService.save(file);
-            multipartFile.transferTo(new File(path));
+            multipartFile.transferTo(new File(realpath+multipartFile.getOriginalFilename()));
         } catch (Exception e) {
-            return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
+            log.error("上传意外错误:{}",e.getMessage());
+            e.printStackTrace();
         }
-        return ResponseVo.success("上传成功");
+        if (filePath.equals("document/")) return realpath+multipartFile.getOriginalFilename();
+        return URL+multipartFile.getOriginalFilename();
     }
 }
