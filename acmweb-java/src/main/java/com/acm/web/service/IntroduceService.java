@@ -1,6 +1,8 @@
 package com.acm.web.service;
 
 import com.acm.web.entity.Introduce;
+import com.acm.web.vo.ResponseVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IntroduceService extends IService<Introduce> {
 
+    ResponseVo<IPage> introduces(Integer currentPage);
 }

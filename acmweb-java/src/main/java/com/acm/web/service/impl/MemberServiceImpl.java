@@ -28,7 +28,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         List<String> collegeList = queryMembers.getCollegeList();
         List<Member> memberList = new ManagedList<>();
         if(yearList==null||collegeList==null){
-            return ResponseVo.error(ResponseEnum.ERROR_PARAM);
+            return ResponseVo.error(ResponseEnum.PARAM_ERROR);
         }
         else if(yearList.size()==0&&collegeList.size()==0){
             return ResponseVo.error(ResponseEnum.NEED_PARAM);

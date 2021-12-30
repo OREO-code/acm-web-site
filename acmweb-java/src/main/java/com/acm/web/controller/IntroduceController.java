@@ -31,9 +31,7 @@ public class IntroduceController {
 
     @GetMapping("/introduces")
     public ResponseVo<IPage> introduces(@RequestParam(defaultValue = "1") Integer currentPage){
-        Page page = new Page(currentPage,5);
-        IPage pageDate = introduceService.page(page, new QueryWrapper<Introduce>().orderByDesc("created"));
-        return ResponseVo.success(pageDate);
+        return introduceService.introduces(currentPage);
     }
 
 }
