@@ -36,4 +36,9 @@ public class RuntimeExceptionHandler {
     public ResponseVo<Object> parseExceptionHandle() {
         return ResponseVo.error(ResponseEnum.TOKEN_ERROR);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseVo<Object> illegalArgumentHandle() {
+        return ResponseVo.error(ResponseEnum.PARAM_ERROR);
+    }
 }

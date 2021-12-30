@@ -33,6 +33,8 @@ public enum ResponseEnum {
 
     DELETE_ERROR(13, "删除失败"),
 
+    UPLOAD_TYPE_ILLEGAL(14, "上传类型不合法")
+
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //
 //    DOWNLOAD_ERROR(10,"下载失败"),

@@ -30,7 +30,7 @@ public class UploadUtil {
     @Autowired
     RotationService rotationService;
 
-    public String upload(MultipartFile multipartFile, String filePath) {
+    public String upload(MultipartFile multipartFile, String filePath, String originalFilename) {
 
         String realpath;
         //主要原因就是不好控制 要加判断 如果存入static目录的话
@@ -41,18 +41,18 @@ public class UploadUtil {
         } else {
             realpath = uploadDir + filePath;
         }
-        log.info("路径:{}", realpath+multipartFile.getOriginalFilename());
+        log.info("路径:{}", realpath + originalFilename);
         File realPath = new File(realpath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
         try {
-            multipartFile.transferTo(new File(realpath+multipartFile.getOriginalFilename()));
+            multipartFile.transferTo(new File(realpath + originalFilename));
         } catch (Exception e) {
-            log.error("上传意外错误:{}",e.getMessage());
+            log.error("上传意外错误:{}", e.getMessage());
             e.printStackTrace();
         }
-        if (filePath.equals("document/")) return realpath+multipartFile.getOriginalFilename();
-        return URL+multipartFile.getOriginalFilename();
+        if (filePath.equals("document/")) return realpath + originalFilename;
+        return URL + originalFilename;
     }
 }
