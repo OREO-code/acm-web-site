@@ -1,6 +1,5 @@
 package com.acm.web.vo;
 
-import com.acm.web.entity.Introduce;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class IntroduceVo {
+public class  IntroduceVo {
 
     private Integer sum;
 
-    private List<Introduce> fileList;
+    //private List<Introduce> fileList;
 }

@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Objects;
 
 @RestController
-@RequestMapping
 public class RotationController {
 
     @Autowired

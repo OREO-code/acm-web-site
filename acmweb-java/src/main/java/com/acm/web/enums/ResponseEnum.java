@@ -39,12 +39,12 @@ public enum ResponseEnum {
 
     UPLOAD_TYPE_ILLEGAL(16, "上传类型不合法"),
 
-
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //
 //    DOWNLOAD_ERROR(10,"下载失败"),
 
     ;
+
 
     Integer code;
 
