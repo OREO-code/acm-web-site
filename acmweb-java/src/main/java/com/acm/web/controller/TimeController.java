@@ -20,20 +20,13 @@ public class TimeController {
     TimeService timeService;
 
     @GetMapping("/time")
-    public ResponseVo time() {
-        List<Time> timeList = timeService.list();
-        TimeVo timeVo = new TimeVo()
-                .setSum(timeService.count())
-                .setTimeList(timeList);
-        if (timeList.size() > 0) return ResponseVo.success(timeVo);
-        else return ResponseVo.error(ResponseEnum.ERROR);
+    public ResponseVo<TimeVo> time() {
+        return timeService.time();
     }
 
     @PostMapping("/updateTime")
     public ResponseVo updateTime(@RequestBody Time time) {
-        boolean ans = timeService.updateById(time);
-        if (ans) return ResponseVo.success("修改成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return timeService.updateTime(time);
     }
 
     @PostMapping("/delTime")

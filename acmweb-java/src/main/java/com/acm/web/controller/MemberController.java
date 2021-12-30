@@ -36,9 +36,7 @@ public class MemberController {
 
     @PostMapping("/addMember")
     public ResponseVo addMember(@RequestBody Member member) {
-        boolean ans = memberService.save(member);
-        if (ans) return ResponseVo.success("增加成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return memberService.addMember(member);
     }
 
     @PostMapping("/updateMember")

@@ -21,6 +21,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Autowired
     MemberMapper memberMapper;
 
+    @Autowired
+    MemberService memberService;
+
     @Override
     public ResponseVo<List<Member>> members(QueryMembers queryMembers) {
         Member member = new Member();
@@ -73,5 +76,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public ResponseVo<List<String>> getCollege() {
         List<String> collegeList = memberMapper.getCollege();
         return ResponseVo.success(collegeList);
+    }
+
+    @Override
+    public ResponseVo addMember(Member member) {
+        boolean ans = memberService.save(member);
+        if (ans) return ResponseVo.success("增加成功");
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
