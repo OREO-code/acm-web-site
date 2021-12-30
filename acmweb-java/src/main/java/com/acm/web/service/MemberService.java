@@ -19,4 +19,6 @@ public interface MemberService extends IService<Member> {
     ResponseVo addMember(Member member);
 
     ResponseVo updateMember(Member member);
+
+    ResponseVo delMember(Integer id);
 }

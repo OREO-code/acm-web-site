@@ -42,13 +42,10 @@ public class MemberController {
     @PostMapping("/updateMember")
     public ResponseVo updateMember(@RequestBody Member member) {
         return memberService.updateMember(member);
-
     }
 
-    @PostMapping("/delMember")
-    public ResponseVo delMember(@RequestBody Member member) {
-        boolean ans = memberService.removeById(member.getId());
-        if (ans) return ResponseVo.success("删除成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+    @GetMapping("/delMember")
+    public ResponseVo delMember(@RequestParam Integer id) {
+        return memberService.delMember(id);
     }
 }

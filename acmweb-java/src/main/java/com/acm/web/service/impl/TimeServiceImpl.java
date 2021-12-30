@@ -32,18 +32,21 @@ public class TimeServiceImpl extends ServiceImpl<TimeMapper, Time> implements Ti
     @Override
     public ResponseVo updateTime(Time time) {
         boolean ans = this.updateById(time);
-        if(ans) return ResponseVo.success("");
+        if(ans) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @Override
     public ResponseVo delTime(Integer id) {
         boolean ans = this.removeById(id);
-        return null;
+        if(ans) return ResponseVo.success("删除成功");
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @Override
     public ResponseVo addTime(Time time) {
-        return null;
+        boolean ans = this.save(time);
+        if(ans) return ResponseVo.success("添加成功");
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }

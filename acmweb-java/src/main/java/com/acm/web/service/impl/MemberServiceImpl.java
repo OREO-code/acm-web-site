@@ -85,7 +85,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Override
     public ResponseVo updateMember(Member member) {
         int ans = memberMapper.updateById(member);
-        if (ans>0) return ResponseVo.success("增加成功");
+        if (ans>0) return ResponseVo.success("修改成功");
+        else return ResponseVo.error(ResponseEnum.ERROR);
+    }
+
+    @Override
+    public ResponseVo delMember(Integer id) {
+        boolean ans = this.removeById(id);
+        if(ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
