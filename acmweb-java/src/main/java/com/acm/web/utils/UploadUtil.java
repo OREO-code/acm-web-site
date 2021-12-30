@@ -1,10 +1,7 @@
 package com.acm.web.utils;
 
 
-import com.acm.web.service.DocumentService;
-import com.acm.web.service.RotationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,12 +20,6 @@ public class UploadUtil {
 
     //轮播图在服务器上的存放位置
     private static final String URL = "http://101.43.16.42:8082/rotation/";
-
-    @Autowired
-    DocumentService documentService;
-
-    @Autowired
-    RotationService rotationService;
 
     public String upload(MultipartFile multipartFile, String filePath, String originalFilename) {
 

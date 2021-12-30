@@ -25,6 +25,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/rotation/**")
-                .addResourceLocations("file:/usr/local/rotation/");
+                .addResourceLocations("file:/usr/local/file/rotation/");
     }
 }
