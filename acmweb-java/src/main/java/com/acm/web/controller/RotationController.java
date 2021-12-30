@@ -10,6 +10,7 @@ import com.acm.web.utils.UploadUtil;
 import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.RotationVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,9 +34,11 @@ public class RotationController {
 
     @GetMapping("/rotation")
     public ResponseVo<RotationVo> getRotation() {
+        QueryWrapper<Rotation> wrapper = new QueryWrapper<>();
+        wrapper.eq("isDel", 0);
         RotationVo rotationVo = new RotationVo()
                 .setSum(rotationService.count())
-                .setUrlList(rotationService.list());
+                .setUrlList(rotationService.list(wrapper));
         return ResponseVo.success(rotationVo);
     }
 
