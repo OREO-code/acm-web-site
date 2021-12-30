@@ -77,8 +77,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     @Override
     public ResponseVo addMember(Member member) {
-        int ans = memberMapper.insert(member);
-        if (ans>0) return ResponseVo.success("增加成功");
+
+        boolean ans = this.save(member);
+        if (ans) return ResponseVo.success("增加成功");
+
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
