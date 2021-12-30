@@ -12,4 +12,8 @@ public interface TimeService extends IService<Time> {
     ResponseVo<TimeVo> time();
 
     ResponseVo updateTime(Time time);
+
+    ResponseVo delTime(Integer id);
+
+    ResponseVo addTime(Time time);
 }

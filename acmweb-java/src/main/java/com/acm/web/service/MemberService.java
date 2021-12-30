@@ -17,4 +17,6 @@ public interface MemberService extends IService<Member> {
     ResponseVo<List<String>> getCollege();
 
     ResponseVo addMember(Member member);
+
+    ResponseVo updateMember(Member member);
 }

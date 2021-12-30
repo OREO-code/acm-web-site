@@ -41,9 +41,8 @@ public class MemberController {
 
     @PostMapping("/updateMember")
     public ResponseVo updateMember(@RequestBody Member member) {
-        boolean ans = memberService.updateById(member);
-        if (ans) return ResponseVo.success("修改成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return memberService.updateMember(member);
+
     }
 
     @PostMapping("/delMember")

@@ -29,17 +29,13 @@ public class TimeController {
         return timeService.updateTime(time);
     }
 
-    @PostMapping("/delTime")
-    public ResponseVo delTime(@RequestBody Time time) {
-        boolean ans = timeService.removeById(time.getId());
-        if (ans) return ResponseVo.success("删除成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+    @GetMapping("/delTime")
+    public ResponseVo delTime(@RequestParam Integer id) {
+        return timeService.delTime(id);
     }
 
     @PostMapping("/addTime")
     public ResponseVo addTime(@RequestBody Time time) {
-        boolean ans = timeService.save(time);
-        if (ans) return ResponseVo.success("增加成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return timeService.addTime(time);
     }
 }

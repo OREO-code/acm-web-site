@@ -64,13 +64,6 @@ public class RotationController {
 
 
     @PostMapping("/addRotation")
-    public ResponseVo addRotation(@RequestBody Rotation rotation) {
-        boolean ans = rotationService.save(rotation);
-        if (ans) return ResponseVo.success("增加成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
-    }
-
-    @PostMapping("/uploadRotation")
     public ResponseVo uploadRotation(@RequestParam("file") MultipartFile file) {
         String id = String.valueOf(IdUtil.nextId());
         String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
