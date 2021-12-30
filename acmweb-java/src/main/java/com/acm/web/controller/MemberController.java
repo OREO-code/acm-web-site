@@ -36,7 +36,9 @@ public class MemberController {
 
     @PostMapping("/addMember")
     public ResponseVo addMember(@RequestBody Member member) {
-        return memberService.addMember(member);
+        memberService.save(member);
+        return null;
+        //return memberService.addMember(member);
     }
 
     @PostMapping("/updateMember")
