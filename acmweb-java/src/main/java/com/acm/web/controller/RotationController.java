@@ -5,6 +5,7 @@ import com.acm.web.entity.Rotation;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.RotationService;
 import com.acm.web.utils.DelFileUtil;
+import com.acm.web.utils.IdUtil;
 import com.acm.web.utils.UploadUtil;
 import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
@@ -12,6 +13,8 @@ import com.acm.web.vo.RotationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Objects;
 
 @RestController
 public class RotationController {
@@ -69,11 +72,18 @@ public class RotationController {
 
     @PostMapping("/uploadRotation")
     public ResponseVo uploadRotation(@RequestParam("file") MultipartFile file) {
-        String path = uploadUtil.upload(file, FILEPATH);
+        String id = String.valueOf(IdUtil.nextId());
+        String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
+        //TODO 询问业务逻辑
+        //TODO 待完善,当前只能通过后缀名判断
+        if (!split[1].equals("jpg") && !split[1].equals("svg") && !split[1].equals("png")) {
+            return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
+        }
+        String path = uploadUtil.upload(file, FILEPATH, id + "." + split[1]);
         Rotation rotation = new Rotation()
-                    .setUrl(path)
-                    .setIsDel(0)
-                    .setName(file.getOriginalFilename());
+                .setUrl(path)
+                .setIsDel(0)
+                .setName(id + split[1]);
         try {
             rotationService.save(rotation);
         } catch (Exception e) {
