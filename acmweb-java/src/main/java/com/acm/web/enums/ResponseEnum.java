@@ -33,7 +33,12 @@ public enum ResponseEnum {
 
     DELETE_ERROR(13, "删除失败"),
 
-    UPLOAD_TYPE_ILLEGAL(14, "上传类型不合法")
+    NEED_PARAM(14,"参数不能为空"),
+
+    ERROR_PARAM(15,"参数错误"),
+
+    UPLOAD_TYPE_ILLEGAL(16, "上传类型不合法"),
+
 
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //
