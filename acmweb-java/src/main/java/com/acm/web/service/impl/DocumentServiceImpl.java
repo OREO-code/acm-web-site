@@ -55,7 +55,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
         QueryWrapper<Document> wrapper = new QueryWrapper<>();
         wrapper.eq("isDel", 0);
         DocumentVo documentVo = new DocumentVo()
-                .setSum(this.count())
+                .setSum(this.count(wrapper))
                 .setFileList(this.list(wrapper));
         return ResponseVo.success(documentVo);
     }
