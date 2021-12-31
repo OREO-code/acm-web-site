@@ -32,7 +32,7 @@ public class DelFileUtil {
             return file1.exists() && file1.isFile() && file1.delete();
         } else {
             path = uploadDir + filePath + fileName;
-            String cmd = "rm -f" + path;
+            String cmd = "rm -f " + path;
             try {
                 Process process = Runtime.getRuntime().exec(cmd);
                 process.waitFor();
