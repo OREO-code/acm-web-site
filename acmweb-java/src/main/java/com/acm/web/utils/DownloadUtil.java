@@ -16,7 +16,7 @@ public class DownloadUtil {
     @Value("${spring.profiles.active}")
     private String profiles;
 
-    private static final String FILEPATH = "document/";
+    private static final String FILEPATH = "/document/";
 
     public void download(HttpServletResponse response, String fileName) {
 

@@ -19,7 +19,7 @@ public class UploadUtil {
     private String profiles;
 
     //轮播图在服务器上的存放位置
-    private static final String URL = "http://101.43.16.42:8082/rotation/";
+    private static final String URL = "http://101.43.16.42:8082/file";
 
     public String upload(MultipartFile multipartFile, String filePath, String originalFilename) {
 
@@ -43,7 +43,7 @@ public class UploadUtil {
             log.error("上传意外错误:{}", e.getMessage());
             e.printStackTrace();
         }
-        if (filePath.equals("document/")) return realpath + originalFilename;
+        if (filePath.contains("document")) return realpath + originalFilename;
         return URL + originalFilename;
     }
 }

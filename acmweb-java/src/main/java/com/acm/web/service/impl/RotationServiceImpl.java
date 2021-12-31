@@ -29,7 +29,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
     @Autowired
     DelFileUtil delFileUtil;
 
-    private static final String FILEPATH = "rotation/";
+    private static final String FILEPATH = "/rotation/";
 
     @Override
     public ResponseVo<RotationVo> getRotation() {

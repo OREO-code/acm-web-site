@@ -32,7 +32,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
     @Autowired
     DelFileUtil delFileUtil;
 
-    private static final String FILEPATH = "document/";
+    private static final String FILEPATH = "/document/";
 
     @Override
     public ResponseVo delFile(Integer id) {
@@ -66,12 +66,12 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
         String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
         //TODO 询问业务逻辑
         //TODO 待完善,当前只能通过后缀名判断
-        if (!split[1].equals("txt") && !split[1].equals("md")) {
+        if (!split[1].equals("mp4") && !split[1].equals("pdf") ) {
             return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
         }
         String path = uploadUtil.upload(file, FILEPATH, id + "." + split[1]);
         Document document = new Document()
-                .setFileName(id + split[1])
+                .setFileName(file.getOriginalFilename())
                 .setIsDel(0)
                 .setFileUrl(path);
         try {
