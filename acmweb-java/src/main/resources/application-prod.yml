@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.43.16.42:3306/officialwebsite?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://101.43.16.42:3306/acm-web-site?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: henrik
+    password: BNEUQACMhenrik
   redis:
     host: 101.43.16.42
     port: 6379
-    password: 123456
+    password: B&NEUQ#ACM@henrik
     username: default
   servlet:
     multipart:
