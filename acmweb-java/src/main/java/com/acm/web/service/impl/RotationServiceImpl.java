@@ -29,7 +29,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
     @Autowired
     DelFileUtil delFileUtil;
 
-    private static final String FILEPATH = "/rotation/";
+    private static final String FILEPATH = "image/";
 
     @Override
     public ResponseVo<RotationVo> getRotation() {
@@ -77,7 +77,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
         Rotation rotation = new Rotation()
                 .setUrl(path)
                 .setIsDel(0)
-                .setName(id + split[1]);
+                .setName(file.getOriginalFilename());
         try {
             this.save(rotation);
         } catch (Exception e) {

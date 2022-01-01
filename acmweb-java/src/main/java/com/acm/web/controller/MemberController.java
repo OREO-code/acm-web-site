@@ -8,6 +8,7 @@ import com.acm.web.service.MemberService;
 import com.acm.web.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,4 +49,7 @@ public class MemberController {
     public ResponseVo delMember(@RequestParam Integer id) {
         return memberService.delMember(id);
     }
+
+    @PostMapping("/addImg")
+    public ResponseVo<String> addImg(@RequestParam("file") MultipartFile file){return  memberService.addMember(file);}
 }

@@ -32,7 +32,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
     @Autowired
     DelFileUtil delFileUtil;
 
-    private static final String FILEPATH = "/document/";
+    private static final String FILEPATH = "document/";
 
     @Override
     public ResponseVo delFile(Integer id) {

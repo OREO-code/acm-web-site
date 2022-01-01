@@ -19,7 +19,7 @@ public class UploadUtil {
     private String profiles;
 
     //轮播图在服务器上的存放位置
-    private static final String URL = "http://101.43.16.42:8082/file";
+    private static final String URL = "http://101.43.16.42:8082/image/";
 
     public String upload(MultipartFile multipartFile, String filePath, String originalFilename) {
 
