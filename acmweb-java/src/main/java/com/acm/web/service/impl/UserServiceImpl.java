@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVo<JwtVo> login(String username, String password) {
-        User user = userMapper.selectByUsername(username);
+         User user = userMapper.selectByUsername(username);
 //        log.info(username);
 //        log.info(password);
 //        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));

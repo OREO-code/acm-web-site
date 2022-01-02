@@ -35,7 +35,7 @@ public enum ResponseEnum {
 
     NEED_PARAM(14,"参数不能为空"),
 
-
+    SELECT_EMPTY(15,"记录为空"),
 
     UPLOAD_TYPE_ILLEGAL(16, "上传类型不合法"),
 

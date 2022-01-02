@@ -5,6 +5,8 @@ import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -15,5 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IntroduceService extends IService<Introduce> {
 
-    ResponseVo<IPage> introduces(Integer currentPage);
+    ResponseVo<IPage<Introduce>> introduces(Integer currentPage);
+
+    ResponseVo<List<Introduce>> introduceAdmin();
+
+    ResponseVo<Introduce> detail(Integer id);
+
+    ResponseVo edit(Introduce introduce);
 }

@@ -4,6 +4,13 @@ spring:
     url: jdbc:mysql://101.43.16.42:3306/acm-web-site?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: BNEUQACMhenrik
+    # Hikari 连接池配置
+    hikari:
+      minimum-idle: 3  # 最小空闲连接数量
+      maximum-pool-size: 5  # 连接池最大连接数，默认是10
+      max-lifetime: 28800 # 此属性控制池中连接的最长生命周期
+      connection-test-query: SELECT 1
+
   redis:
     host: 101.43.16.42
     port: 6379
