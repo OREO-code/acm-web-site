@@ -64,9 +64,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
     public ResponseVo fileUpload(MultipartFile file) {
         String id = String.valueOf(IdUtil.nextId());
         String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
-        //TODO 询问业务逻辑
-        //TODO 待完善,当前只能通过后缀名判断
-        if (!split[1].equals("mp4") && !split[1].equals("pdf") ) {
+        if (!split[split.length-1].equals("mp4") && !split[split.length-1].equals("pdf") ) {
             return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
         }
         String path = uploadUtil.upload(file, FILEPATH, id + "." + split[1]);
