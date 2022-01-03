@@ -8,18 +8,21 @@
 	  		          mode="horizontal"
 	  		          @select="handleSelect"
 	  		          >
-	  		        <el-menu-item index="1" route="/"><div >首页</div></el-menu-item>
+					  <el-menu-item><div> <img src="./assets/acmlogo.jpg" style="width: 3.875rem;height: 3.125rem;"></div></el-menu-item>
+	  		        <el-menu-item index="1" route="/">
+						<div ><i class="el-icon-house"></i>首页</div>
+					</el-menu-item>
 	  				<!-- <el-menu-item index="2" route="/time"><div >时间线</div></el-menu-item> -->
 	  				<!-- <el-menu-item index="3" route="/form">组织架构</el-menu-item> -->
-	  				<el-menu-item index="2" route="/member"><div>成员风采</div></el-menu-item>
+	  				<el-menu-item index="2" route="/member"><div><i class="el-icon-medal-1"></i>成员风采</div></el-menu-item>
 	  		        <!-- <el-submenu index="2">
 	  		          <template slot="title">组织架构</template>
 	  		          <el-menu-item index="2-1">竞赛队</el-menu-item>
 	  		          <el-menu-item index="2-2">技术部</el-menu-item>
 	  		          <el-menu-item index="2-3">预备队</el-menu-item>
 	  		        </el-submenu> -->
-	  		        <el-menu-item index="3" route="/tulin"><div>图灵杯</div></el-menu-item>
-	  		        <el-menu-item index="4"><a href="http://newoj.acmclub.cn/home" style="text-decoration: none;color: #A6ADB4;" target="_blank" ><div>NEUQ OJ</div></a>
+	  		        <el-menu-item index="3" route="/tulin"><div><i class="el-icon-trophy"></i>图灵杯</div></el-menu-item>
+	  		        <el-menu-item><a href="http://newoj.acmclub.cn/home" style="text-decoration: none;color: #A6ADB4;" target="_blank" ><div><i class="el-icon-link"></i>NEUQ OJ</div></a>
 	  		        </el-menu-item>
 					<!-- <el-menu-item index="7" route="/login"><div>管理员登录</div></el-menu-item> -->
 	  		        <!--        <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
@@ -154,6 +157,11 @@
 	.showImage{
 		width: 100%;
 		height: 100%;
+	}
+	canvas {
+	  background-color: #eee;
+	  display: block;
+	  margin: 0 auto;
 	}
 </style>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
