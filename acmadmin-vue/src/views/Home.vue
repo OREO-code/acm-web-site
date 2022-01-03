@@ -1,17 +1,20 @@
 <template>
 	<el-container>
+
+<!--    左侧布局-->
 		<el-aside width="200px">
 
 			<SideMenu></SideMenu>
 
 		</el-aside>
+
 		<el-container>
 			<el-header>
 				<strong>ACM官网后台管理系统</strong>
 
 				<div class="header-avatar">
 
-					<el-avatar size="medium" :src="userInfo.avatar"></el-avatar>
+					<el-avatar size="medium" src="https://s3.bmp.ovh/imgs/2021/12/5f60ab4a82d1e62c.jpg"></el-avatar>
 
 					<el-dropdown>
 						<span class="el-dropdown-link">
@@ -31,9 +34,11 @@
 			</el-header>
 			<el-main>
 				<Tabs></Tabs>
+
 				<div style="margin: 0 15px;">
 					<router-view/>
 				</div>
+        
 			</el-main>
 		</el-container>
 	</el-container>
@@ -62,7 +67,7 @@
 		},
 		methods: {
 			getUserInfo() {
-				this.$axios.get("/sys/userInfo").then(res => {
+				this.$axios.get("/currentUser").then(res => {
 					this.userInfo = res.data.data
 				})
 			},

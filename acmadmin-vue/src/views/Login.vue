@@ -53,14 +53,8 @@ export default {
           this.$axios.post('/login',this.ruleForm).then(response=> {
             if(response.data!=null){
               const jwt = response.data.data.token;
-              console.log(response)
-              console.log(jwt)
               this.$store.commit('SET_TOKEN',jwt)
               this.$router.push("/index")
-              // this.$store.commit('SET_TOKEN', jwt)
-              // this.$store.push("index")
-              // localStorage.setItem('access-admin',JSON.stringify(response.data))
-              // _this.$router.replace({path:'/'})
             }
           })
         }else{
