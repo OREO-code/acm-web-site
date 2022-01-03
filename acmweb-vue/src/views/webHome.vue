@@ -3,7 +3,7 @@
 			<marquee class="player"  style="color: ivory;" >
 				公告:{{notice}}
 			</marquee>
-			<el-carousel :interval="5000" arrow="always" height="500px">
+			<el-carousel :interval="5000" arrow="always" height="35vw" >
 			    <el-carousel-item v-for="item in showImageList" :key="item">
 			      <img :src="item.url" width="100%" height="100%">
 			    </el-carousel-item>
@@ -12,11 +12,17 @@
 			  </div>
 			  <div class="line"></div>
 			  <div class="bottom">
-
+				  <!-- <el-row type="flex" class="row-bg" justify="space-around">
+				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+				    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
+				  </el-row> -->
 				  <div class="bottomitem">
 					  <div class="item"><div class="itemtitle">
 						<p>扫描右方二维码，关注我们</p>
 						<p>时刻获取最新资讯</p>
+						<!-- <p>联系方式:</p>
+						<p>2319841923@qq.com</p> -->
 					  </div>
 					  <div class="itemtitle">@2021技术部</div>
 				  		<!-- <img src="../assets/.png"> --></div>
@@ -74,7 +80,7 @@
     font-size: 18px;
     opacity: 0.75;
     line-height: 300px;
-    margin: 0;
+   
   }
   
   .el-carousel__item:nth-child(2n) {
@@ -92,15 +98,6 @@
 .el-carousel{
 	overflow: hidden;
 		height: 60%;
-}
-
-.el-carousel__container{
-	width: 60%;
-	margin-left: 20%;
-	height: 50%;
-}
-.el-carousel__item{
-	width: 100%;
 }
 .player{
 	width: 100%;
@@ -231,16 +228,15 @@
 			showImageList:[],
 			notice:'',
 			sum:'',
-			fileList:'',
-			imgHeight: '',
+			fileList:[],
+			imgHeight: "",
 			// 图片父容器高度
 			bannerHeight :1000,
 			// 浏览器宽度
 			screenWidth :0,
-			token:'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0MDYxMjM1MCwiZXhwIjoxNjQwNjk4NzUwfQ.I9L67Vg9iTew5gmmguTH-q6JJNt3RiCbpDPtyQc3JOec-kZ20cF4BshoO7HbPaDI'
+			token:''
 	      };
 	    },
-		
 		mounted() {
 		    
 		},
@@ -256,12 +252,14 @@
 					_that.showImageList=response.data.data.urlList
 			        console.log(response);
 			      }).catch((response)=>{
+					console.log('err')
 			        console.log(response);
 			      })
 			this.$axios.get('http://101.43.16.42:8082/introduce/file').then((response)=>{
 					_that.fileList=response.data.data.fileList
 			        console.log(response);
 			      }).catch((response)=>{
+					  console.log('err')
 			        console.log(response);
 			      })
 		},
@@ -276,10 +274,18 @@
 		        }
 			},
 		methods:{
+			imgLoad() {
+			            this.$nextTick(function() {
+			                // 获取窗口宽度*图片的比例，定义页面初始的轮播图高度
+			                this.imgHeight = document.body.clientWidth*1/4
+							console.log(this.imgHeight)
+			            });
+			        },
 			getInfo(){
 				console.log('执行')
 				this.$axios.get('http://101.43.16.42:8082/notice')
 				  .then(function (response) {
+					  this.imgLoad()
 				    console.log(response);
 					console.log('已执行')
 				  })
@@ -294,7 +300,9 @@
 			            // 通过浏览器宽度(图片宽度)计算高度
 			            this.bannerHeight = 400 / 1920 * this.screenWidth;
 			          },
-
+			linebackground:function(){
+				
+			}
 		}
 	}
 </script>

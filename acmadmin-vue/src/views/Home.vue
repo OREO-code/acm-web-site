@@ -7,7 +7,7 @@
 		</el-aside>
 		<el-container>
 			<el-header>
-				<strong>VueAdmin后台管理系统</strong>
+				<strong>ACM官网后台管理系统</strong>
 
 				<div class="header-avatar">
 
@@ -26,7 +26,6 @@
 					</el-dropdown>
 
 					<el-link href="https://markerhub.com" target="_blank">网站</el-link>
-					<el-link href="https://space.bilibili.com/13491144" target="_blank">B站</el-link>
 				</div>
 
 			</el-header>
@@ -101,7 +100,7 @@
 	}
 
 	.el-header {
-		background-color: #17B3A3;
+		background-color: #22A7F2;
 		color: #333;
 		text-align: center;
 		line-height: 60px;

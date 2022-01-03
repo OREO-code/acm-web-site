@@ -2,18 +2,12 @@ package com.acm.web.controller;
 
 
 import com.acm.web.entity.Introduce;
-import com.acm.web.enums.ResponseEnum;
 import com.acm.web.service.IntroduceService;
 import com.acm.web.vo.ResponseVo;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,5 +42,10 @@ public class IntroduceController {
     @PostMapping("/introduce/edit")
     public ResponseVo edit(@RequestBody Introduce introduce){
         return introduceService.edit(introduce);
+    }
+
+    @GetMapping("/delIntroduce/{id}")
+    public ResponseVo delIntroduce(@PathVariable(name = "id") Integer id){
+        return introduceService.delIntroduce(id);
     }
 }

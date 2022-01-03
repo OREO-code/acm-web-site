@@ -62,4 +62,11 @@ public class IntroduceServiceImpl extends ServiceImpl<IntroduceMapper, Introduce
         this.saveOrUpdate(temp);
         return ResponseVo.success();
     }
+
+    @Override
+    public ResponseVo delIntroduce(Integer id) {
+        boolean ans = this.removeById(id);
+        if(ans) return ResponseVo.success(ResponseEnum.SUCCESS);
+        else return ResponseVo.error(ResponseEnum.ERROR);
+    }
 }

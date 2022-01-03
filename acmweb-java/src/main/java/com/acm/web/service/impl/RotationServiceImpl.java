@@ -5,9 +5,8 @@ import com.acm.web.entity.Rotation;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.mapper.RotationMapper;
 import com.acm.web.service.RotationService;
-import com.acm.web.utils.DelFileUtil;
+import com.acm.web.utils.FileUtil;
 import com.acm.web.utils.IdUtil;
-import com.acm.web.utils.UploadUtil;
 import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.RotationVo;
@@ -26,10 +25,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
 
 
     @Autowired
-    UploadUtil uploadUtil;
-
-    @Autowired
-    DelFileUtil delFileUtil;
+    FileUtil fileUtil;
 
     private static final String FILEPATH = "image/";
 
@@ -55,13 +51,14 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
         String rotation1Name;
         try {
             Rotation rotation1 = this.getById(rotation.getId());
-            rotation1Name = rotation1.getName();
+            String[] strings = rotation1.getUrl().split("/");
+            rotation1Name = strings[strings.length-1];
             rotation1.setIsDel(1);
             this.updateById(rotation1);
         } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.DELETE_ERROR);
         }
-        boolean flag = delFileUtil.delFile(rotation1Name, FILEPATH);
+        boolean flag = fileUtil.delFile(rotation1Name, FILEPATH);
         if (flag) return ResponseVo.success("删除成功");
         return ResponseVo.error(ResponseEnum.DELETE_ERROR);
     }
@@ -77,7 +74,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
             if (!type.equals("jpg") && !type.equals("png")) {
                 return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
             }
-            path = uploadUtil.upload(file, FILEPATH, id + "." + type);
+            path = fileUtil.upload(file, FILEPATH, id + "." + type);
             Rotation rotation = new Rotation()
                     .setUrl(path)
                     .setIsDel(0)
