@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 
@@ -52,7 +51,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
         try {
             Rotation rotation1 = this.getById(rotation.getId());
             String[] strings = rotation1.getUrl().split("/");
-            rotation1Name = strings[strings.length-1];
+            rotation1Name = strings[strings.length - 1];
             rotation1.setIsDel(1);
             this.updateById(rotation1);
         } catch (Exception e) {
@@ -80,7 +79,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
                     .setIsDel(0)
                     .setName(file.getOriginalFilename());
             this.save(rotation);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
         return ResponseVo.success(new FileVo().setUrl(path));

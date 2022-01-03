@@ -58,11 +58,10 @@ public class FileUtil {
         InputStream input = null;
         OutputStream output = null;
         byte[] buff = new byte[1024];
-        String path ;
+        String path;
         if (profiles.equalsIgnoreCase("dev")) {
             path = System.getProperty("user.dir") + uploadDir + "/document" + fileName;
-        }
-        else path = document.getFileUrl() ;
+        } else path = document.getFileUrl();
         File file = new File(path);
         if (!file.exists()) {
             return;

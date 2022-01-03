@@ -16,7 +16,6 @@ import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -38,31 +37,27 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         List<String> yearList = queryMembers.getYearList();
         List<String> collegeList = queryMembers.getCollegeList();
         List<Member> memberList = new ManagedList<>();
-        if(yearList==null||collegeList==null){
+        if (yearList == null || collegeList == null) {
             return ResponseVo.error(ResponseEnum.PARAM_ERROR);
-        }
-        else if(yearList.size()==0&&collegeList.size()==0){
+        } else if (yearList.size() == 0 && collegeList.size() == 0) {
             return ResponseVo.error(ResponseEnum.NEED_PARAM);
-        }
-        else if(collegeList.size()>0 && yearList.size()==0){
-            for(String college:collegeList){
+        } else if (collegeList.size() > 0 && yearList.size() == 0) {
+            for (String college : collegeList) {
                 QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("college",college);
+                queryWrapper.eq("college", college);
                 List<Member> members = member.selectList(queryWrapper);
                 memberList.addAll(members);
             }
-        }
-        else if(collegeList.size() == 0){
-            for(String year:yearList){
+        } else if (collegeList.size() == 0) {
+            for (String year : yearList) {
                 QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("year",year);
+                queryWrapper.eq("year", year);
                 List<Member> members = member.selectList(queryWrapper);
                 memberList.addAll(members);
             }
-        }
-        else {
-            for (String year:yearList){
-                for(String college:collegeList){
+        } else {
+            for (String year : yearList) {
+                for (String college : collegeList) {
                     QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
                     queryWrapper.eq("year", year).eq("college", college);
                     List<Member> members = member.selectList(queryWrapper);
@@ -96,14 +91,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Override
     public ResponseVo updateMember(Member member) {
         int ans = memberMapper.updateById(member);
-        if (ans>0) return ResponseVo.success("修改成功");
+        if (ans > 0) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @Override
     public ResponseVo delMember(Integer id) {
         boolean ans = this.removeById(id);
-        if(ans) return ResponseVo.success("删除成功");
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
@@ -118,7 +113,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
                 return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
             }
             path = fileUtil.upload(file, FILEPATH, id + "." + type);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
         return ResponseVo.success(path);
