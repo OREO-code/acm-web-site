@@ -1,5 +1,6 @@
 package com.acm.web.service.impl;
 
+import cn.hutool.core.io.FileTypeUtil;
 import com.acm.web.entity.Rotation;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.mapper.RotationMapper;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
+import java.io.InputStream;
 
 
 @Service
@@ -50,7 +51,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
         try {
             Rotation rotation1 = this.getById(rotation.getId());
             String[] strings = rotation1.getUrl().split("/");
-            rotation1Name = strings[strings.length-1];
+            rotation1Name = strings[strings.length - 1];
             rotation1.setIsDel(1);
             this.updateById(rotation1);
         } catch (Exception e) {
@@ -61,24 +62,25 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
         return ResponseVo.error(ResponseEnum.DELETE_ERROR);
     }
 
+    //TODO 暂时无法判断svg
     @Override
     public ResponseVo uploadRotation(MultipartFile file) {
         String id = String.valueOf(IdUtil.nextId());
-        String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
-        //TODO 询问业务逻辑
-        //TODO 待完善,当前只能通过后缀名判断
-        if (!split[1].equals("jpg") && !split[1].equals("svg") && !split[1].equals("png")) {
-            return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
-        }
-        String path = fileUtil.upload(file, FILEPATH, id + "." + split[1]);
-        Rotation rotation = new Rotation()
-                .setUrl(path)
-                .setIsDel(0)
-                .setName(file.getOriginalFilename());
+        String path;
         try {
+            InputStream inputStream = file.getInputStream();
+            String type = FileTypeUtil.getType(inputStream, file.getOriginalFilename());
+            if (!type.equals("jpg") && !type.equals("png")) {
+                return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
+            }
+            path = fileUtil.upload(file, FILEPATH, id + "." + type);
+            Rotation rotation = new Rotation()
+                    .setUrl(path)
+                    .setIsDel(0)
+                    .setName(file.getOriginalFilename());
             this.save(rotation);
         } catch (Exception e) {
-            return ResponseVo.error(ResponseEnum.ERROR);
+            return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
         return ResponseVo.success(new FileVo().setUrl(path));
     }
