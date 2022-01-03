@@ -20,11 +20,11 @@ public class DelFileUtil {
 
     public boolean delFile(String fileName, String filePath) {
         Document document = new Document().selectOne(new QueryWrapper<Document>().eq("fileName", fileName));
-        if(document==null){
+        if (document == null) {
             return false;
         }
         String[] strings = document.getFileUrl().split("/");
-        fileName = strings[strings.length-1];
+        fileName = strings[strings.length - 1];
         String path;
         if (profiles.equalsIgnoreCase("dev")) {
             path = System.getProperty("user.dir") + uploadDir + filePath + fileName;

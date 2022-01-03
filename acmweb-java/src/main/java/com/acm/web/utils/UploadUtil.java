@@ -29,9 +29,7 @@ public class UploadUtil {
         //否则存在/usr/local/document/目录下！！！
         if (profiles.equalsIgnoreCase("dev")) {
             realpath = System.getProperty("user.dir") + uploadDir + filePath;
-        } else {
-            realpath = uploadDir + filePath;
-        }
+        } else realpath = uploadDir + filePath;
         log.info("路径:{}", realpath + originalFilename);
         File realPath = new File(realpath);
         if (!realPath.exists()) {

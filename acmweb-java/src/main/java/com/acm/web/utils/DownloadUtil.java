@@ -23,22 +23,21 @@ public class DownloadUtil {
     public void download(HttpServletResponse response, String fileName) {
         String oldName = fileName;
         Document document = new Document().selectOne(new QueryWrapper<Document>().eq("fileName", fileName));
-        if(document==null){
+        if (document == null) {
             return;
         }
         String[] strings = document.getFileUrl().split("/");
-        fileName = strings[strings.length-1];
+        fileName = strings[strings.length - 1];
         response.reset();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("multipart/form-data");
         InputStream input = null;
         OutputStream output = null;
         byte[] buff = new byte[1024];
-        String path ;
+        String path;
         if (profiles.equalsIgnoreCase("dev")) {
             path = System.getProperty("user.dir") + uploadDir + FILEPATH + fileName;
-        }
-        else path = uploadDir + FILEPATH + fileName ;
+        } else path = uploadDir + FILEPATH + fileName;
         File file = new File(path);
         if (!file.exists()) {
             return;
