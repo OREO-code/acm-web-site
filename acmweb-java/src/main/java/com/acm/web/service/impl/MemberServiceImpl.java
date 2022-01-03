@@ -1,5 +1,6 @@
 package com.acm.web.service.impl;
 
+import cn.hutool.core.io.FileTypeUtil;
 import com.acm.web.entity.Member;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.QueryMembers;
@@ -15,8 +16,8 @@ import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -36,31 +37,27 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         List<String> yearList = queryMembers.getYearList();
         List<String> collegeList = queryMembers.getCollegeList();
         List<Member> memberList = new ManagedList<>();
-        if(yearList==null||collegeList==null){
+        if (yearList == null || collegeList == null) {
             return ResponseVo.error(ResponseEnum.PARAM_ERROR);
-        }
-        else if(yearList.size()==0&&collegeList.size()==0){
+        } else if (yearList.size() == 0 && collegeList.size() == 0) {
             return ResponseVo.error(ResponseEnum.NEED_PARAM);
-        }
-        else if(collegeList.size()>0 && yearList.size()==0){
-            for(String college:collegeList){
+        } else if (collegeList.size() > 0 && yearList.size() == 0) {
+            for (String college : collegeList) {
                 QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("college",college);
+                queryWrapper.eq("college", college);
                 List<Member> members = member.selectList(queryWrapper);
                 memberList.addAll(members);
             }
-        }
-        else if(collegeList.size() == 0){
-            for(String year:yearList){
+        } else if (collegeList.size() == 0) {
+            for (String year : yearList) {
                 QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("year",year);
+                queryWrapper.eq("year", year);
                 List<Member> members = member.selectList(queryWrapper);
                 memberList.addAll(members);
             }
-        }
-        else {
-            for (String year:yearList){
-                for(String college:collegeList){
+        } else {
+            for (String year : yearList) {
+                for (String college : collegeList) {
                     QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
                     queryWrapper.eq("year", year).eq("college", college);
                     List<Member> members = member.selectList(queryWrapper);
@@ -94,25 +91,31 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Override
     public ResponseVo updateMember(Member member) {
         int ans = memberMapper.updateById(member);
-        if (ans>0) return ResponseVo.success("修改成功");
+        if (ans > 0) return ResponseVo.success("修改成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @Override
     public ResponseVo delMember(Integer id) {
         boolean ans = this.removeById(id);
-        if(ans) return ResponseVo.success("删除成功");
+        if (ans) return ResponseVo.success("删除成功");
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
 
     @Override
     public ResponseVo<String> addMember(MultipartFile file) {
         String id = String.valueOf(IdUtil.nextId());
-        String[] split = Objects.requireNonNull(file.getOriginalFilename()).split("\\.");
-        if (!split[1].equals("jpg") && !split[1].equals("svg") && !split[1].equals("png")) {
-            return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
+        String path;
+        try {
+            InputStream inputStream = file.getInputStream();
+            String type = FileTypeUtil.getType(inputStream, file.getOriginalFilename());
+            if (!type.equals("jpg") && !type.equals("png")) {
+                return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
+            }
+            path = fileUtil.upload(file, FILEPATH, id + "." + type);
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
-        String path = fileUtil.upload(file, FILEPATH, id + "." + split[1]);
         return ResponseVo.success(path);
     }
 }
