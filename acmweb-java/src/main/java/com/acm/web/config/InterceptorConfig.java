@@ -18,13 +18,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/notice", "/rotation", "/introduce/file", "/time"
+                .excludePathPatterns("/login", "/notice", "/rotation", "/introduces","/introduce/**", "/time"
                         , "/members", "/download/**", "/file","/getYear","/getCollege");
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/rotation/**")
-                .addResourceLocations("file:/usr/local/rotation/");
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:/usr/local/file/image/");
     }
 }

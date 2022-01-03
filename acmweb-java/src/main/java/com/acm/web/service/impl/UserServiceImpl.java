@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVo<JwtVo> login(String username, String password) {
-        User user = userMapper.selectByUsername(username);
+         User user = userMapper.selectByUsername(username);
 //        log.info(username);
 //        log.info(password);
 //        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
             //密码错误(用户名或密码错误)
             return ResponseVo.error(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
         }
-        //不要通过jwt解析出username再去数据库里查
+        //不要通过jwt解析出username 再去数据库里查
         //直接存入redis中加快效率
         //TODO 优化效率 如果数据量很大会导致redis堵塞
         //另外 请保证redis当前数据库中只含有JWT-User的键值对

@@ -21,8 +21,6 @@ public class Time extends Model<Time> implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String year;
-
     private LocalDateTime time;
 
     private String content;

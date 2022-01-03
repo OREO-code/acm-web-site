@@ -1,10 +1,7 @@
 package com.acm.web.utils;
 
 
-import com.acm.web.service.DocumentService;
-import com.acm.web.service.RotationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,15 +19,9 @@ public class UploadUtil {
     private String profiles;
 
     //轮播图在服务器上的存放位置
-    private static final String URL = "http://101.43.16.42:8082/rotation/";
+    private static final String URL = "http://101.43.16.42:8082/image/";
 
-    @Autowired
-    DocumentService documentService;
-
-    @Autowired
-    RotationService rotationService;
-
-    public String upload(MultipartFile multipartFile, String filePath) {
+    public String upload(MultipartFile multipartFile, String filePath, String originalFilename) {
 
         String realpath;
         //主要原因就是不好控制 要加判断 如果存入static目录的话
@@ -41,18 +32,18 @@ public class UploadUtil {
         } else {
             realpath = uploadDir + filePath;
         }
-        log.info("路径:{}", realpath+multipartFile.getOriginalFilename());
+        log.info("路径:{}", realpath + originalFilename);
         File realPath = new File(realpath);
         if (!realPath.exists()) {
             realPath.mkdir();
         }
         try {
-            multipartFile.transferTo(new File(realpath+multipartFile.getOriginalFilename()));
+            multipartFile.transferTo(new File(realpath + originalFilename));
         } catch (Exception e) {
-            log.error("上传意外错误:{}",e.getMessage());
+            log.error("上传意外错误:{}", e.getMessage());
             e.printStackTrace();
         }
-        if (filePath.equals("document/")) return realpath+multipartFile.getOriginalFilename();
-        return URL+multipartFile.getOriginalFilename();
+        if (filePath.contains("document")) return realpath + originalFilename;
+        return URL + originalFilename;
     }
 }

@@ -17,9 +17,7 @@ public class NoticeController {
 
     @GetMapping("/notice")
     public ResponseVo getNotice() {
-        Notice notice = noticeService.getById(1);
-        if (notice != null) return ResponseVo.success(notice);
-        return ResponseVo.error(ResponseEnum.ERROR);
+        return noticeService.getNotice();
     }
 
     @PostMapping("/updateNotice")

@@ -23,4 +23,11 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
         if (i != 0) return ResponseVo.success();
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
+
+    @Override
+    public ResponseVo getNotice() {
+        Notice notice = this.getById(1);
+        if (notice != null) return ResponseVo.success(notice);
+        return ResponseVo.error(ResponseEnum.ERROR);
+    }
 }

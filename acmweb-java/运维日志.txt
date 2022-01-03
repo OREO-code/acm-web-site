@@ -1,0 +1,9 @@
+# mysql
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=BNEUQACMhenrik -d mysql
+
+# redis
+docker run -d --name redis -p 6379:6379 redis --requirepass "B&NEUQ#ACM@henrik"
+
+# web
+docker build -f ./Dockerfile -t app . 
+docker run -id -p 8082:8082 -v /usr/local/file:/usr/local/file app

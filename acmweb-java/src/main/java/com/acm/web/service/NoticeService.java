@@ -8,4 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface NoticeService extends IService<Notice> {
 
     ResponseVo<Notice> updateNotice(Notice notice);
+
+    ResponseVo getNotice();
 }

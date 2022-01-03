@@ -8,6 +8,7 @@ import com.acm.web.service.MemberService;
 import com.acm.web.vo.ResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,22 +37,19 @@ public class MemberController {
 
     @PostMapping("/addMember")
     public ResponseVo addMember(@RequestBody Member member) {
-        boolean ans = memberService.save(member);
-        if (ans) return ResponseVo.success("增加成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return memberService.addMember(member);
     }
 
     @PostMapping("/updateMember")
     public ResponseVo updateMember(@RequestBody Member member) {
-        boolean ans = memberService.updateById(member);
-        if (ans) return ResponseVo.success("修改成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+        return memberService.updateMember(member);
     }
 
-    @PostMapping("/delMember")
-    public ResponseVo delMember(@RequestBody Member member) {
-        boolean ans = memberService.removeById(member.getId());
-        if (ans) return ResponseVo.success("删除成功");
-        else return ResponseVo.error(ResponseEnum.ERROR);
+    @GetMapping("/delMember")
+    public ResponseVo delMember(@RequestParam Integer id) {
+        return memberService.delMember(id);
     }
+
+    @PostMapping("/addImg")
+    public ResponseVo<String> addImg(@RequestParam("file") MultipartFile file){return  memberService.addMember(file);}
 }

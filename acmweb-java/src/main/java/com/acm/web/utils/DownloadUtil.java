@@ -1,5 +1,7 @@
 package com.acm.web.utils;
 
+import com.acm.web.entity.Document;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +18,16 @@ public class DownloadUtil {
     @Value("${spring.profiles.active}")
     private String profiles;
 
-    private static final String FILEPATH = "document/";
+    private static final String FILEPATH = "/document/";
 
     public void download(HttpServletResponse response, String fileName) {
-
+        String oldName = fileName;
+        Document document = new Document().selectOne(new QueryWrapper<Document>().eq("fileName", fileName));
+        if(document==null){
+            return;
+        }
+        String[] strings = document.getFileUrl().split("/");
+        fileName = strings[strings.length-1];
         response.reset();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("multipart/form-data");
@@ -36,7 +44,7 @@ public class DownloadUtil {
             return;
         }
         try {
-            response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(oldName, "UTF-8"));
             input = new FileInputStream(file);
             output = response.getOutputStream();
             int index = 0;
