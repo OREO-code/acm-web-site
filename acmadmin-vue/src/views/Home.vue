@@ -38,7 +38,7 @@
 				<div style="margin: 0 15px;">
 					<router-view/>
 				</div>
-        
+
 			</el-main>
 		</el-container>
 	</el-container>
@@ -58,7 +58,6 @@
 				userInfo: {
 					id: "",
 					username: "",
-					avatar: ""
 				}
 			}
 		},
