@@ -11,7 +11,7 @@ public enum ResponseEnum {
 
     PARAM_ERROR(1, "参数错误"),
 
-    NEED_LOGIN(2, "用户未登录，请先登录"),
+    NEED_LOGIN(401, "用户未登录，请先登录"),
 
     USERNAME_OR_PASSWORD_ERROR(3, "用户名或密码错误"),
 

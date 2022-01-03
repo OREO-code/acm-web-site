@@ -41,10 +41,10 @@
 
 <style>
 	a {font-size:16px}
-	a:link {color: blue; text-decoration:none;} 
-	a:active:{color: red; } 
-	a:visited {color:purple;text-decoration:none;}  
-	a:hover {color: red; text-decoration:underline;} 
+	a:link {color: blue; text-decoration:none;}
+	a:active:{color: red; }
+	a:visited {color:purple;text-decoration:none;}
+	a:hover {color: red; text-decoration:underline;}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -80,13 +80,13 @@
     font-size: 18px;
     opacity: 0.75;
     line-height: 300px;
-   
+
   }
-  
+
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }
@@ -103,7 +103,7 @@
 	width: 100%;
 	height: 3.125rem;
 	filter: Alpha(Opacity=50); /* 针对IE*/
-	background-color: #003A79; 
+	background-color: #003A79;
 	top: 0%;
 	line-height: 3.125rem;
 }
@@ -150,28 +150,28 @@
 			top: 0px;
 			background-color: lavenderblush;
 		}
-	 
+
 		47% {
 			left: 105%;
 			top: 0px;
 		}
-	 
+
 		48% {
 			left: 105%;
 			top: 100px;
 		}
-	 
+
 		49% {
 			left: -105%;
 			top: 100px;
 		}
-	 
+
 		50% {
 			left: -100%;
 			top: 0px;
 			background-color: lightpink;
 		}
-	 
+
 		100% {
 			left: 0%;
 			top: 0px;
@@ -217,7 +217,7 @@
 	.qrcodeshow{
 		width: ;
 	}
-	
+
 </style>
 <script>
 	export default {
@@ -238,7 +238,7 @@
 	      };
 	    },
 		mounted() {
-		    
+
 		},
 		created() {
 			var _that=this
