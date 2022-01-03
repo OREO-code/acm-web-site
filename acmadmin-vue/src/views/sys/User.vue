@@ -10,9 +10,9 @@
 				</el-input>
 			</el-form-item>
 
-			<el-form-item>
+			<!-- <el-form-item>
 				<el-button @click="getUserList">搜索</el-button>
-			</el-form-item>
+			</el-form-item> -->
 
 			<el-form-item>
 				<el-button type="primary" @click="dialogVisible = true" v-if="hasAuth('sys:user:save')">新增</el-button>
@@ -38,13 +38,13 @@
 					width="55">
 			</el-table-column>
 
-			<el-table-column
+			<!-- <el-table-column
 					label="头像"
 					width="50">
 				<template slot-scope="scope">
 					<el-avatar size="small" :src="scope.row.avatar"></el-avatar>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 
 			<el-table-column
 					prop="username"
@@ -77,12 +77,12 @@
 				</template>
 
 			</el-table-column>
-			<el-table-column
+			<!-- <el-table-column
 					prop="created"
 					width="200"
 					label="创建时间"
 			>
-			</el-table-column>
+			</el-table-column> -->
 			<el-table-column
 					prop="icon"
 					width="260px"
