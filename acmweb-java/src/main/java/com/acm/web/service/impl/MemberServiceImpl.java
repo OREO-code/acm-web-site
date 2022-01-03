@@ -1,14 +1,12 @@
 package com.acm.web.service.impl;
 
 import com.acm.web.entity.Member;
-import com.acm.web.entity.Rotation;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.QueryMembers;
 import com.acm.web.mapper.MemberMapper;
 import com.acm.web.service.MemberService;
+import com.acm.web.utils.FileUtil;
 import com.acm.web.utils.IdUtil;
-import com.acm.web.utils.UploadUtil;
-import com.acm.web.vo.FileVo;
 import com.acm.web.vo.ResponseVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,7 +26,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     MemberMapper memberMapper;
 
     @Autowired
-    UploadUtil uploadUtil;
+    FileUtil fileUtil;
 
     private static final String FILEPATH = "image/";
 
@@ -114,7 +112,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         if (!split[1].equals("jpg") && !split[1].equals("svg") && !split[1].equals("png")) {
             return ResponseVo.error(ResponseEnum.UPLOAD_TYPE_ILLEGAL);
         }
-        String path = uploadUtil.upload(file, FILEPATH, id + "." + split[1]);
+        String path = fileUtil.upload(file, FILEPATH, id + "." + split[1]);
         return ResponseVo.success(path);
     }
 }

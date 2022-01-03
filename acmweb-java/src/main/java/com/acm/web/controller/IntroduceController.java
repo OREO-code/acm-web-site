@@ -49,4 +49,9 @@ public class IntroduceController {
     public ResponseVo edit(@RequestBody Introduce introduce){
         return introduceService.edit(introduce);
     }
+
+    @GetMapping("/delIntroduce/{id}")
+    public ResponseVo delIntroduce(@PathVariable(name = "id") Integer id){
+        return introduceService.delIntroduce(id);
+    }
 }
