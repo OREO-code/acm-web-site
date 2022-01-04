@@ -3,10 +3,10 @@
 	  	<div id="nav">
 	  		<el-menu
 						router="true"
-	  		          :default-active="activeIndex2"
+	  		          :default-active="1"
 	  		          class="el-menu-demo"
 	  		          mode="horizontal"
-	  		          @select="handleSelect"
+
 	  		          >
 
 

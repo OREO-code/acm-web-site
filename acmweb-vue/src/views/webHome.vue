@@ -27,14 +27,17 @@
           </el-aside>
 
         </el-container>
-        <h1 >最新咨询</h1>
+        <h1 style="text-align: left">最新资讯</h1>
         <div >
           <router-view/>
         </div>
       </el-main>
       <el-footer>
-
-
+        <el-row>
+          <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
+          <el-col :span="8"><div class="grid-content bg-purple-light"></div></el-col>
+          <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
+        </el-row>
       </el-footer>
     </el-container>
 
