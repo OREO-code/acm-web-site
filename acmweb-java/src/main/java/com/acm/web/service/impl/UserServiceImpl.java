@@ -17,16 +17,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.DataType;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 
 
 @Service
@@ -51,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVo<JwtVo> login(String username, String password) {
-         User user = userMapper.selectByUsername(username);
+        User user = userMapper.selectByUsername(username);
 //        log.info(username);
 //        log.info(password);
 //        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
@@ -61,10 +64,21 @@ public class UserServiceImpl implements UserService {
         }
         //不要通过jwt解析出username 再去数据库里查
         //直接存入redis中加快效率
-        //TODO 优化效率 如果数据量很大会导致redis堵塞
         //另外 请保证redis当前数据库中只含有JWT-User的键值对
         //否则类型转换异常
-        Set<String> keys = redisTemplate.keys("*");
+//        Set<String> keys = redisTemplate.keys("*");
+        Set<String> keys = redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+            Set<String> binaryKeys = new HashSet<>();
+            try (Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().match("*").count(1000).build())) {
+                while (cursor.hasNext()) {
+                    binaryKeys.add(new String(cursor.next(), StandardCharsets.UTF_8));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return binaryKeys;
+        });
+        log.info("keys:{}", keys);
         for (String key : Objects.requireNonNull(keys)) {
             User user1 = gson.fromJson(redisTemplate.opsForValue().get(key), User.class);
             if (Objects.equals(redisTemplate.type(key), DataType.STRING) && user1.getUsername().equals(username)) {
