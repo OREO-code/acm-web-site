@@ -3,11 +3,11 @@
 
   <el-container>
     <el-header style="text-align: left">
-      <el-button type="primary" round>新增</el-button>
+      <el-button type="primary" @click="open_add" round>新增</el-button>
     </el-header>
 
     <el-dialog
-        title="提示"
+        title="修改时间线"
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose">
@@ -16,25 +16,46 @@
           <el-input v-model="ruleForm.id"></el-input>
         </el-form-item>
 
-        <el-form-item label="时间" prop="time" required>
-
-          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.time" style="width: 100%;"></el-date-picker>
-
+        <el-form-item label="时间" prop="createdTime">
+          <el-date-picker v-model="ruleForm.time" value-format="yyyy-MM-ddTHH:mm:ss" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
+
+
 
         <el-form-item label="内容" prop="content">
         <el-input v-model="ruleForm.content"></el-input>
         </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-form-item style="text-align: center">
+          <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
         </el-form-item>
       </el-form>
 
     </el-dialog>
 
+    <el-dialog
+        title="增加时间线"
+        :visible.sync="dialogVisible_add"
+        width="30%"
+        :before-close="handleClose">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+        <el-form-item label="时间" prop="createdTime">
+          <el-date-picker v-model="ruleForm.time" value-format="yyyy-MM-ddTHH:mm:ss" type="datetime" placeholder="Please pick a date" />
+        </el-form-item>
+
+        <el-form-item label="内容" prop="content">
+          <el-input v-model="ruleForm.content"></el-input>
+        </el-form-item>
+
+        <el-form-item style="text-align: center">
+          <el-button type="primary" @click="addFormmethods('ruleForm')">立即新增</el-button>
+        </el-form-item>
+      </el-form>
+
+    </el-dialog>
     <el-main style="text-align: center">
+
       <div>
         <el-table
             :data="times"
@@ -86,6 +107,7 @@
 
         </el-table>
       </div>
+
     </el-main>
   </el-container>
 
@@ -97,23 +119,19 @@ export default {
     return{
       times :[],
       dialogVisible: false,
+      dialogVisible_add:false,
       ruleForm: {
         id:"",
         time:"",
-        content:"",
-
+        content:"...",
       },
       rules: {
-
         content: [
           { required: true, message: '请输入内容', trigger: 'blur' }
         ],
         time: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { required: true, message: '请选择日期', trigger: 'blur' }
         ],
-
-
-
       }
 
     }
@@ -123,10 +141,44 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$axios()
-          console.log(this.ruleForm.time)
+          this.dialogVisible = false
+          const _this = this;
+          console.log(_this.ruleForm)
+          this.$axios.post("/updateTime",_this.ruleForm).then(res=>{
+            this.page()
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            });
+          }).catch(reason => {
+            this.$message.error(reason);
+          })
+
         } else {
-          console.log('error submit!!');
+          this.$message.error('error submit!!');
+          return false;
+        }
+      });
+    },
+    addFormmethods(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogVisible_add = false
+          const _this = this;
+          this.$axios.post("/addTime",_this.ruleForm).then(res=>{
+            _this.ruleForm.time = ''
+            _this.ruleForm.content = ''
+            this.page()
+            this.$message({
+              message: '增加成功',
+              type: 'success'
+            });
+          }).catch(reason => {
+            this.$message.error(reason);
+          })
+
+        } else {
+          this.$message.error('error submit!!');
           return false;
         }
       });
@@ -137,13 +189,17 @@ export default {
     open(time){
       this.dialogVisible = true;
       this.ruleForm.id = time.id;
-      this.ruleForm.time = time.time;
+      this.ruleForm.time = time.time
       this.ruleForm.content = time.content;
     },
+    open_add(){
+      this.dialogVisible_add = true;
+    },
+
     page(){
       const _this = this
       _this.$axios.get("/time").then(res=>{
-        console.log(res.data.data.timeList)
+
         _this.times = res.data.data.timeList;
       })
     },
@@ -163,7 +219,7 @@ export default {
         type: 'warning'
       }).then(() => {
         const _this = this
-        _this.$axios.get("/delIntroduce/"+id).then(res=>{
+        _this.$axios.get("/delTime?id="+id).then(res=>{
           this.$message({
             type: 'success',
             message: '删除成功!'
