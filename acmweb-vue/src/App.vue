@@ -44,7 +44,24 @@
 			notice:'',
 	      };
 	    },
-		methods:{
+    mounted() {
+      setTimeout(() => {
+        window.L2Dwidget.init({
+          pluginRootPath: 'live2dw/',
+          pluginJsPath: 'lib/',
+          pluginModelPath: 'live2d-widget-model-z16/assets/',
+          tagMode: false,
+          debug: false,
+          model: { jsonPath: '../live2dw/live2d-widget-model-shizuku/assets/shizuku.model.json' },
+          //public/live2dw/live2d-widget-model-shizuku/assets/shizuku.model.json
+          display: { position: 'left', width: 200, height: 400 },
+          mobile: { show: true },
+          log: false
+        })
+      }, 1000)
+    },
+
+    methods:{
 			getInfo(){
 				console.log('执行')
 				axios.get('http://101.43.16.42:8082/notice')
