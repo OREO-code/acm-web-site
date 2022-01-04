@@ -6,7 +6,6 @@
 	  		          :default-active="1"
 	  		          class="el-menu-demo"
 	  		          mode="horizontal"
-
 	  		          >
 
 
@@ -78,4 +77,5 @@
 			      }
 		}
 	}
+
 </script>
