@@ -118,4 +118,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
         return ResponseVo.success(path);
     }
+
+    @Override
+    public ResponseVo<List<Member>> getAll() {
+        List<Member> list = this.list();
+        if(list.size()>0) return ResponseVo.success(list);
+        return ResponseVo.error(ResponseEnum.ERROR);
+    }
 }

@@ -35,6 +35,11 @@ public class MemberController {
         return memberService.members(queryMembers);
     }
 
+    @PostMapping("/getAll")
+    public ResponseVo<List<Member>> getAll(){
+        return memberService.getAll();
+    }
+
     @PostMapping("/addMember")
     public ResponseVo addMember(@RequestBody Member member) {
         return memberService.addMember(member);

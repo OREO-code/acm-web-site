@@ -24,4 +24,6 @@ public interface MemberService extends IService<Member> {
     ResponseVo delMember(Integer id);
 
     ResponseVo<String> addMember(MultipartFile file);
+
+    ResponseVo<List<Member>> getAll();
 }
