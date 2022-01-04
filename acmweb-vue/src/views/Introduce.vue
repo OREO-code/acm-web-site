@@ -59,25 +59,13 @@ export default {
 
 <style>
 .el-timeline-item__timestamp{
-  text-align: left;
+  text-align: left !important;
   color: #909399;
   line-height: 2;
-  font-size: 15px;
+  font-size: 15px !important;
 }
-/*.mpage{*/
-/*  margin: 0 auto;*/
-/*  text-align: center;*/
-/*}*/
-/*.el-timeline-item__tail{*/
-/*  border-left: 2px #28567f;*/
-/*}*/
-/*.el-timeline-item__node{*/
-/*  background-color: rgb(72, 147, 255);*/
-/*}*/
-/*.el-timeline-item__node--normal {*/
-/*  left: -3px;*/
-/*  width: 18px;*/
-/*  height: 18px;*/
-/*}*/
+.el-card__body{
+  padding: unset !important;
+}
 
 </style>

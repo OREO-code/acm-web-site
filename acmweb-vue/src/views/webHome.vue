@@ -2,18 +2,18 @@
   <div id="app">
 
 
-    <el-container style="line-height: normal">
+    <el-container >
       <el-header>
         <marquee class="player"  style="color: ivory;" >
           公告:{{notice}}
         </marquee>
       </el-header>
-      <el-main style="line-height: normal">
-        <el-container style="line-height: normal">
-          <el-aside width="200px" style="text-align: center">
+      <el-main>
+        <el-container>
+          <el-aside width="20%" style="text-align: center">
             文件下载
           </el-aside>
-          <el-main style="text-align: center">
+          <el-main >
 
             <el-carousel :interval="4000" type="card" height="200px">
               <el-carousel-item v-for="item in showImageList" :key="item">
@@ -22,15 +22,22 @@
             </el-carousel>
 
           </el-main>
-          <el-aside width="200px" style="text-align: center">
+          <el-aside width="20%" >
             Echarts
           </el-aside>
-
         </el-container>
-        <h1 style="text-align: left">最新资讯</h1>
-        <div >
-          <router-view/>
-        </div>
+        <el-container>
+          <el-aside width="50%">组织架构图</el-aside>
+          <el-main>
+            <h1 style="text-align: left">最新资讯</h1>
+            <div >
+              <router-view/>
+            </div>
+          </el-main>
+        </el-container>
+
+
+
       </el-main>
       <el-footer>
         <el-row>
@@ -49,9 +56,11 @@
 <style>
 
 .el-main{
-  line-height: normal;
+  line-height: normal !important;
 }
-
+.el-header, .el-footer{
+  background-color: #58B7FF !important;
+}
 
 
 </style>
