@@ -2,13 +2,13 @@
   <div id="app">
 
 
-    <el-container >
+    <el-container style="line-height: normal">
       <el-header>
         <marquee class="player"  style="color: ivory;" >
           公告:{{notice}}
         </marquee>
       </el-header>
-      <el-main>
+      <el-main style="line-height: normal">
         <el-container>
           <el-aside width="200px">
             文件下载
@@ -48,7 +48,9 @@
 
 <style>
 
-
+.el-main{
+  line-height: normal;
+}
 
 
 
