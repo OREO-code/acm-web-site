@@ -1,16 +1,12 @@
 <template>
 	<div>
-		<el-carousel :interval="5000" arrow="always" height="20vw" type="card" autoplay="{{}}">
-		    <el-carousel-item v-for="item in showImageList" :key="item">
-		      <img :src="item.url" width="100%" height="100%">
-			  <!-- <div>
-			  	<p>序号：{{item.id}}</p>
-				<p>url：{{item.url}}</p>
-				<el-button>修改</el-button>
-				<el-button>删除</el-button>
-			  </div> -->
-		    </el-carousel-item>
-		  </el-carousel>
+    <template>
+      <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel-item v-for="item in showImageList" :key="item">
+          <el-image :src="item.url" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;margin:auto;" fit="contain"></el-image>
+        </el-carousel-item>
+      </el-carousel>
+    </template>
 		  <!-- <div class="operate">
 			  <div>
 				  <el-upload
@@ -52,9 +48,7 @@
 			fileList: []
 	      };
 	    },
-		mounted() {
-		    
-		},
+
 		created() {
 			var _that=this
 			

@@ -1,127 +1,89 @@
 <template>
-	<el-row type="flex" class="row-bg" justify="center">
-		<el-col :xl="6" :lg="7">
-			<h2>ACM后台管理系统</h2>
-			<el-image :src="require('@/assets/acmlogo.jpg')" style="height: 150px; width: 180px;"></el-image>
-		</el-col>
-
-		<el-col :span="1">
-			<el-divider direction="vertical"></el-divider>
-		</el-col>
-		<el-col :xl="6" :lg="7">
-			<el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px">
-				<el-form-item label="用户名" prop="username" style="width: 380px;">
-					<el-input v-model="loginForm.username"></el-input>
-				</el-form-item>
-				<el-form-item label="密码" prop="password"  style="width: 380px;">
-					<el-input v-model="loginForm.password" type="password"></el-input>
-				</el-form-item>
-				<!-- <el-form-item label="验证码" prop="code"  style="width: 380px;">
-					<el-input v-model="loginForm.code"  style="width: 172px; float: left" maxlength="5"></el-input>
-					<el-image :src="captchaImg" class="captchaImg" @click="getCaptcha"></el-image>
-				</el-form-item> -->
-				<el-form-item>
-					<el-button type="primary" @click="submitForm('loginForm')">立即登录</el-button>
-					<el-button @click="resetForm('loginForm')">重置</el-button>
-				</el-form-item>
-			</el-form>
-		</el-col>
-	</el-row>
-
+  <div class="login-container">
+    <el-form :model="ruleForm" :rules="rules"
+             status-icon
+             ref="ruleForm"
+             label-position="left"
+             label-width="0px"
+             class="demo-ruleForm login-page">
+      <h3 class="title">系统登录</h3>
+      <el-form-item prop="username">
+        <el-input type="text"
+                  v-model="ruleForm.username"
+                  auto-complete="off"
+                  placeholder="用户名">
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input type="password"
+                  v-model="ruleForm.password"
+                  auto-complete="off"
+                  placeholder="密码"
+        ></el-input>
+      </el-form-item>
+      <el-form-item style="width:100%;">
+        <el-button type="primary" style="width:100%;" @click="handleSubmit" >登录</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
 
-	import qs from 'qs'
 
-	export default {
-		name: "Login",
-		data() {
-			return {
-				code: '',
-				token: '',
-				loginForm: {
-					username: '',
-					password: '',
-				},
-				rules: {
-					username: [
-						{ required: true, message: '请输入用户名', trigger: 'blur' }
-					],
-					password: [
-						{ required: true, message: '请输入密码', trigger: 'blur' }
-					],
-					// code: [
-					// 	{ required: true, message: '请输入验证码', trigger: 'blur' },
-					// 	{ min: 5, max: 5, message: '长度为 5 个字符', trigger: 'blur' }
-					// ],
-				},
-				captchaImg: null
-			};
-		},
-		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						console.log(qs.stringify(this.loginForm))
-						console.log(this.loginForm)
-						console.log(JSON.stringify(this.loginForm))
-						this.$axios.post('/login',JSON.stringify(this.loginForm)).then(res => {
-							console.log(res)
-							// const jwt = res.headers['authorization']
-							const jwt = res.data.token
-							console.log(jwt)
-							this.$store.commit('SET_TOKEN', jwt)
-							this.$router.push("/index")
-							console.log(localStorage.token)
-						})
-
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				});
-			},
-			resetForm(formName) {
-				this.$refs[formName].resetFields();
-			},
-			getCaptcha() {
-				this.$axios.get('/captcha').then(res => {
-
-					console.log("/captcha")
-					console.log(res)
-
-					this.loginForm.token = res.data.data.token
-					this.captchaImg = res.data.data.captchaImg
-					this.loginForm.code = ''
-				})
-			}
-		},
-		created() {
-			// this.getCaptcha()
-		}
-	}
+export default {
+  name: "Login",
+  data(){
+    return{
+      ruleForm: {
+        username: 'admin',
+        password: 'admin'
+      },
+      rules: {
+        username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+        password: [{required: true, message: '请输入密码', trigger: 'blur'}]
+      }
+    }
+  },
+  methods: {
+    handleSubmit(){
+      this.$refs.ruleForm.validate((valid) => {
+        if(valid){
+          let _this = this
+          this.$axios.post('/login',this.ruleForm).then(response=> {
+            if(response.data!=null){
+              const jwt = response.data.data.token;
+              this.$store.commit('SET_TOKEN',jwt)
+              this.$router.push("/index")
+            }
+          })
+        }else{
+          console.log('error submit!');
+          return false;
+        }
+      })
+    }
+  }
+};
 </script>
 
 <style scoped>
-
-	.el-row {
-		background-color: #fafafa;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		text-align: center;
-		justify-content: center;
-	}
-
-	.el-divider {
-		height: 200px;
-	}
-
-	.captchaImg {
-		float: left;
-		margin-left: 8px;
-		border-radius: 4px;
-	}
-
+.login-container {
+  width: 100%;
+  height: 100%;
+}
+.login-page {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 180px auto;
+  width: 350px;
+  padding: 35px 35px 15px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+}
+label.el-checkbox.rememberme {
+  margin: 0px 0px 15px;
+  text-align: left;
+}
 </style>

@@ -16,6 +16,7 @@ import Notice from '../views/sys/Notice.vue'
 import axios from "../axios";
 import store from "../store"
 import el from "element-ui/src/locale/lang/el";
+import IntroEdit from "../views/sys/IntroEdit";
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,16 @@ const routes = [
 				meta: {
 					title: "修改轮播图"
 				},
+			},
+			{
+				path: '/sys/intro/:introduceId/edit',
+				name: 'IntroduceEdit',
+				component: IntroEdit
+			},
+			{
+				path: '/sys/intro/edit',
+				name: 'IntroduceEdit',
+				component: IntroEdit
 			},
 			{
 				path: '/sys/intro',

@@ -246,7 +246,7 @@ h3:hover span{
   text-shadow: 0 0 10px #733ebf;
 }
 .group{
-  background: url("../assets/images/9.png");
+
   color: #FFFFFF;
 }
 h4 span{

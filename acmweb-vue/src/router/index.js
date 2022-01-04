@@ -6,13 +6,35 @@ import Tulin from '../views/Tulin.vue'
 import Member from '../views/member.vue'
 import Time from '../views/Time.vue'
 import Login from '../views/Login.vue'
+import Introduce from "../views/Introduce";
+import IntroduceDetail from "../views/IntroduceDetail";
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'WebHome',
-    component: WebHome
+    component: WebHome,
+    children: [
+      {
+        path: '/',
+        name: 'Introduce',
+        meta: {
+          title: "首页"
+        },
+        component: Introduce
+      }
+    ]
+  },
+  {
+    path: '/introduce',
+    name: 'Introduce',
+    component: Introduce
+  },
+  {
+    path: '/introduce/:introduceId',
+    name: 'IntroduceDetail',
+    component: IntroduceDetail
   },
   {
     path: '/form',
@@ -38,14 +60,6 @@ const routes = [
     path: '/time',
     name: 'Time',
     component: Time
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
