@@ -1,13 +1,22 @@
 <template>
 	<div id="app">
 		  	<div class="block">
-		  	  <el-timeline>
-		  	    <el-timeline-item v-for="item in timeList" :timestamp="item.year" placement="top">
+				<el-timeline :reverse="reverse">
+				    <el-timeline-item
+				      v-for="(item, index) in timeList"
+				      :key="index"
+					  :class="index%2 !=0?'el-timeline-item-live-out':''"
+				      :timestamp="item.time">
+				      {{item.content}}
+				    </el-timeline-item>
+				  </el-timeline>
+		  	 <!-- <el-timeline>
+		  	    <el-timeline-item v-for="(item,index) in timeList" :timestamp="item.year" placement="top" :class="index%2 !=0?'el-timeline-item-live-out':''">
 		  	      <el-card>
 		  	        <p>{{item.content}}</p>
 		  	      </el-card>
 		  	    </el-timeline-item>
-		  	  </el-timeline>
+		  	  </el-timeline> -->
 		  	</div>
 	</div>
 </template>
@@ -18,13 +27,19 @@
 	      return {
 	        reverse: true,
 			sum:0,
-	        timeList:[]
+	        timeList:[
+				
+			]
 	      };
 	    },
 		created() {
 			var _that=this
-			this.$axios.post('http://101.43.16.42:8082/time').then((response)=>{
-					_that.notice=response.data.data.notice
+			this.$axios.get('http://101.43.16.42:8082/time').then((response)=>{
+					_that.timeList=response.data.data.timeList
+					for(var i=0;i<_that.timeList.length;i++){
+						var ipods=_that.timeList[i].time.indexOf("T")
+						_that.timeList[i].time=_that.timeList[i].time.substring(0,ipods)
+					}
 			        console.log(response);
 			      }).catch((response)=>{
 			        console.log(response);
@@ -34,6 +49,42 @@
 </script>
 
 <style>
+	.el-timeline-item__timestamp.is-bottom{
+		text-align: center !important;
+	}
+	.el-timeline{
+		margin-top: 10% !important;
+		margin-left: 45% !important;
+	}
+	/* .el-timeline-item__wrapper {
+	position: relative;
+	padding-left: -280px !important;
+	top: -3px;} */
+	.el-timeline-item__wrapper{
+		position: relative;
+		margin-left: -20%;
+	}
+	.el-timeline-item-live-out .el-timeline-item__wrapper {
+    position: relative;
+    padding-left: -160px !important;
+    left: -80%;
+	}
+	.el-timeline-item__node {
+	    position: absolute;
+	    background-color: #537EAF !important;
+	    border-radius: 50%;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.el-timeline-item__tail{
+		background-color: #22B2E4 !important;
+	}
+	/* el-timeline-item__timestamp is-bottom */
+	/* .el-card_body{
+		color: white !important;
+		height: 6.25rem !important;
+	} */
 	#app {
 	  font-family: Avenir, Helvetica, Arial, sans-serif;
 	  -webkit-font-smoothing: antialiased;
@@ -58,25 +109,11 @@
 	  color: #42b983;
 	}
 	//时间线
-	.item {
-	  margin-left: 30px; /*用左边margin显示时间线*/
-	  width: calc(100% - 30px); /*因为左边部分用于显示时间线，所以右边部分减去30px*/
-	  height: auto; /*高度由内容决定*/
-	  position: relative;
-	  margin-bottom: 10px;
-	  cursor: pointer;
-	}
-	.item::before {
-	  content: "";
-	  width: 11px;
-	  height: 11px;
-	  border-radius: 100%;
-	  background-color: #91c2fc;
-	  position: absolute;
-	  left: -15px;
-	}
+	
 	.block{
 		margin-top: 5%;
+		display: flex;
+		align-items: center;
 	}
 
 </style>
