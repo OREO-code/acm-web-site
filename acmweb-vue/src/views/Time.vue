@@ -11,7 +11,7 @@
 		  	</div>
 	</div>
 </template>
-<!-- </el-row> -->
+
 <script>
 	export default {
 	    data() {

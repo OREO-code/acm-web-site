@@ -1,8 +1,197 @@
 <template>
-</template>
 
+
+  <el-container>
+    <el-header style="text-align: left">
+      <el-button type="primary" round>新增</el-button>
+    </el-header>
+
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="id" prop="id">
+          <el-input v-model="ruleForm.id"></el-input>
+        </el-form-item>
+
+        <el-form-item label="时间" prop="time" required>
+
+          <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.time" style="width: 100%;"></el-date-picker>
+
+        </el-form-item>
+
+        <el-form-item label="内容" prop="content">
+        <el-input v-model="ruleForm.content"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+
+    </el-dialog>
+
+    <el-main style="text-align: center">
+      <div>
+        <el-table
+            :data="times"
+            style="width: 100%">
+          <el-table-column
+              align="center"
+              label="ID"
+              width="180">
+            <template slot-scope="scope">
+              <span style="text-align: center">{{ scope.row.id }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+              align="center"
+              label="日期"
+              column-key="date"
+              width="180">
+            <template slot-scope="scope">
+              <i class="el-icon-time"></i>
+              <span >{{ scope.row.time }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+              align="center"
+              label="内容"
+              width="180">
+            <template slot-scope="scope">
+              <el-popover trigger="hover" placement="top">
+
+                <div slot="reference" class="name-wrapper">
+                  <el-tag size="medium">{{ scope.row.content }}</el-tag>
+                </div>
+              </el-popover>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="操作" align="center" style="width: 80px">
+            <template slot-scope="scope">
+              <el-button
+                  size="mini"
+                  @click="open(scope.row)">编辑</el-button>
+              <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+
+        </el-table>
+      </div>
+    </el-main>
+  </el-container>
+
+</template>
 <script>
+export default {
+  name: 'Time',
+  data(){
+    return{
+      times :[],
+      dialogVisible: false,
+      ruleForm: {
+        id:"",
+        time:"",
+        content:"",
+
+      },
+      rules: {
+
+        content: [
+          { required: true, message: '请输入内容', trigger: 'blur' }
+        ],
+        time: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        ],
+
+
+
+      }
+
+    }
+
+  },
+  methods:{
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios()
+          console.log(this.ruleForm.time)
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    open(time){
+      this.dialogVisible = true;
+      this.ruleForm.id = time.id;
+      this.ruleForm.time = time.time;
+      this.ruleForm.content = time.content;
+    },
+    page(){
+      const _this = this
+      _this.$axios.get("/time").then(res=>{
+        console.log(res.data.data.timeList)
+        _this.times = res.data.data.timeList;
+      })
+    },
+
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+    },
+    handleDelete(id) {
+      console.log(id);
+      this.$confirm('此操作将永久删除该文档, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const _this = this
+        _this.$axios.get("/delIntroduce/"+id).then(res=>{
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          this.page();
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
+  },
+  created() {
+    this.page();
+  }
+
+
+}
+
 </script>
 
 <style>
+
+
+
+
+
+
 </style>
