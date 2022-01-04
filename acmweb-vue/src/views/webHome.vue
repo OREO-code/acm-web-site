@@ -14,16 +14,14 @@
             文件下载
           </el-aside>
           <el-main >
-
             <el-carousel :interval="4000" type="card" height="200px">
               <el-carousel-item v-for="item in showImageList" :key="item">
                 <el-image :src="item.url" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;margin:auto;" fit="contain"></el-image>
               </el-carousel-item>
             </el-carousel>
-
           </el-main>
           <el-aside width="20%" >
-            Echarts
+			<div class="box1"></div>
           </el-aside>
         </el-container>
         <el-container>
@@ -35,9 +33,6 @@
             </div>
           </el-main>
         </el-container>
-
-
-
       </el-main>
       <el-footer>
         <el-row>
@@ -54,7 +49,10 @@
 </template>
 
 <style>
-
+.box1{
+	width: 100%;
+	height: 100%;
+}
 .el-main{
   line-height: normal !important;
 }
@@ -65,6 +63,7 @@
 
 </style>
 <script>
+	import * as echarts from 'echarts';
 	export default {
 	    data() {
 	      return {
@@ -87,6 +86,7 @@
 		},
 		created() {
 			var _that=this
+			
 			this.$axios.get('http://101.43.16.42:8082/notice').then((response)=>{
 					_that.notice=response.data.data.notice
 			        console.log(response);
@@ -109,6 +109,7 @@
 			      })
 		},
 		 mounted() {
+					this.awardDraw()
 		          // 首次加载时,需要调用一次
 		          this.screenWidth =  window.innerWidth;
 		          this.setSize();
@@ -147,6 +148,23 @@
 			          },
 			linebackground:function(){
 				
+			},
+			awardDraw(){
+				let myChart = this.$echarts.init(document.querySelector('.box1'))
+				        // 绘制图表
+				        myChart.setOption({
+				            title: { text: '在Vue中使用echarts' },
+				            tooltip: {},
+				            xAxis: {
+				                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+				            },
+				            yAxis: {},
+				            series: [{
+				                name: '销量',
+				                type: 'bar',
+				                data: [5, 20, 36, 10, 10, 20]
+				            }]
+				        });
 			}
 		}
 	}
