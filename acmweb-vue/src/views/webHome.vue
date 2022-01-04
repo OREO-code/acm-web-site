@@ -9,8 +9,8 @@
         </marquee>
       </el-header>
       <el-main style="line-height: normal">
-        <el-container>
-          <el-aside width="200px">
+        <el-container style="line-height: normal">
+          <el-aside width="200px" style="text-align: center">
             文件下载
           </el-aside>
           <el-main style="text-align: center">
@@ -22,8 +22,8 @@
             </el-carousel>
 
           </el-main>
-          <el-aside width="200px">
-            文件下载
+          <el-aside width="200px" style="text-align: center">
+            Echarts
           </el-aside>
 
         </el-container>

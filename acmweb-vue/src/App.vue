@@ -25,7 +25,7 @@
           <el-menu-item index="7" route="/login" ><div><i class="el-icon-setting"></i>管理员登录</div></el-menu-item>
 	  		      </el-menu>
 	  	</div>
-		<router-view></router-view>
+		<router-view style="line-height: normal"></router-view>
 	  
   </div>
 </template>

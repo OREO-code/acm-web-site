@@ -4,7 +4,7 @@
     <el-timeline>
       <el-timeline-item v-for="introduce in introduces" :timestamp="introduce.created" placement="top" type="primary">
         <router-link :to="{name: 'IntroduceDetail',params:{introduceId:introduce.id}}" style="text-decoration: none">
-          <el-card style="text-align: center;background: #409EFF;height: auto">
+          <el-card style="text-align: center;background: #409EFF;">
             <h4 >{{introduce.title}}</h4>
             <p >{{introduce.description}}</p>
           </el-card>
@@ -58,7 +58,12 @@ export default {
 </script>
 
 <style>
-
+.el-timeline-item__timestamp{
+  text-align: left;
+  color: #909399;
+  line-height: 2;
+  font-size: 15px;
+}
 /*.mpage{*/
 /*  margin: 0 auto;*/
 /*  text-align: center;*/
