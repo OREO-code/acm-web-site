@@ -1,6 +1,7 @@
 <template>
   <div id="app">
 
+
     <el-container >
       <el-header>
         <marquee class="player"  style="color: ivory;" >
@@ -9,8 +10,10 @@
       </el-header>
       <el-main>
         <el-container>
-          <el-aside width="200px">Aside</el-aside>
-          <el-main>
+          <el-aside width="200px">
+            文件下载
+          </el-aside>
+          <el-main style="text-align: center">
 
             <el-carousel :interval="4000" type="card" height="200px">
               <el-carousel-item v-for="item in showImageList" :key="item">
@@ -19,9 +22,13 @@
             </el-carousel>
 
           </el-main>
-        </el-container>
+          <el-aside width="200px">
+            文件下载
+          </el-aside>
 
-        <div class="showintro">
+        </el-container>
+        <h1 >最新咨询</h1>
+        <div >
           <router-view/>
         </div>
       </el-main>

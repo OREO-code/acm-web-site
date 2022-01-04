@@ -58,13 +58,13 @@ export default {
 </script>
 
 <style>
-.mpage{
-  margin: 0 auto;
-  text-align: center;
-}
-.el-timeline-item__tail{
-  border-left: 2px #28567f;
-}
+/*.mpage{*/
+/*  margin: 0 auto;*/
+/*  text-align: center;*/
+/*}*/
+/*.el-timeline-item__tail{*/
+/*  border-left: 2px #28567f;*/
+/*}*/
 /*.el-timeline-item__node{*/
 /*  background-color: rgb(72, 147, 255);*/
 /*}*/
