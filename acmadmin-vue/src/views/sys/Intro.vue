@@ -2,6 +2,12 @@
 
 
   <el-container>
+    <el-header style="text-align: left">
+      <router-link to="/sys/intro/edit">
+        <el-button type="primary" round>新增</el-button>
+      </router-link>
+    </el-header>
+
 
     <el-main style="text-align: center">
       <div style="">
@@ -57,7 +63,6 @@
         </el-table>
 
       </div>
-
     </el-main>
   </el-container>
 

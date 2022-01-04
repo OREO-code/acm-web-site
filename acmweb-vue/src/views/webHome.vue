@@ -1,41 +1,30 @@
 <template>
   <div id="app">
-			<marquee class="player"  style="color: ivory;" >
-				公告:{{notice}}
-			</marquee>
-			<el-carousel :interval="5000" arrow="always" height="35vw" >
-			    <el-carousel-item v-for="item in showImageList" :key="item">
-			      <img :src="item.url" width="100%" height="100%">
-			    </el-carousel-item>
-			  </el-carousel>
-			  <div class="showintro">
-			  </div>
-			  <div class="line"></div>
-			  <div class="bottom">
-				  <!-- <el-row type="flex" class="row-bg" justify="space-around">
-				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-				    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-				    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-				  </el-row> -->
-				  <div class="bottomitem">
-					  <div class="item"><div class="itemtitle">
-						<p>扫描右方二维码，关注我们</p>
-						<p>时刻获取最新资讯</p>
-						<!-- <p>联系方式:</p>
-						<p>2319841923@qq.com</p> -->
-					  </div>
-					  <div class="itemtitle">@2021技术部</div>
-				  		<!-- <img src="../assets/.png"> --></div>
-				  </div>
-				  <div class="bottomitem" style="border-right: 1px solid gray;border-left: 0.0625rem solid gray;">
-				  		<div class="itemtitle">沉思广场</div>
-				  		<img src="../assets/chensi.png">
-				  </div>
-				  <div class="bottomitem">
-				  		<div class="itemtitle"><a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2725382040&website=www.oicqzone.com" style="color: white;">QQ公众号</a></div>
-						<img src="../assets/acm.png">
-				  </div>
-			  </div>
+
+    <el-container>
+      <el-header>
+        <marquee class="player"  style="color: ivory;" >
+          公告:{{notice}}
+        </marquee>
+      </el-header>
+      <el-main>
+        <el-carousel :interval="5000" arrow="always" height="35vw" >
+          <el-carousel-item v-for="item in showImageList" :key="item">
+            <img :src="item.url" width="100%" height="100%">
+          </el-carousel-item>
+        </el-carousel>
+        <div class="showintro">
+          <router-view/>
+        </div>
+      </el-main>
+      <el-footer>
+
+
+      </el-footer>
+    </el-container>
+
+
+
   </div>
 </template>
 

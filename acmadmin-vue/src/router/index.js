@@ -74,6 +74,11 @@ const routes = [
 				component: IntroEdit
 			},
 			{
+				path: '/sys/intro/edit',
+				name: 'IntroduceEdit',
+				component: IntroEdit
+			},
+			{
 				path: '/sys/intro',
 				name: 'Sysintro',
 				component: Intro,

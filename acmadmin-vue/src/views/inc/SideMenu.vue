@@ -13,7 +13,7 @@
         <span slot="title">首页</span>
       </template>
 
-      <router-link to="/sys/notice" >
+      <router-link to="/sys/notice" style="text-decoration: none">
         <el-menu-item index="1-1">
           <template slot="title">
             <i class="el-icon-message-solid"></i>
@@ -22,7 +22,7 @@
         </el-menu-item>
       </router-link>
 
-      <router-link  to="/sys/rotation" >
+      <router-link  to="/sys/rotation" style="text-decoration: none">
         <el-menu-item index="1-2">
           <template slot="title">
             <i class="el-icon-picture"></i>
@@ -31,7 +31,7 @@
         </el-menu-item>
       </router-link>
 
-      <router-link to="/sys/intro" >
+      <router-link to="/sys/intro" style="text-decoration: none">
         <el-menu-item  index="1-3" >
           <template slot="title">
             <i class="el-icon-s-order"></i>
@@ -42,7 +42,7 @@
 
     </el-submenu>
 
-		<router-link to="/sys/time" >
+		<router-link to="/sys/time" style="text-decoration: none">
 			<el-menu-item index="2" >
 				<template slot="title">
 					<i class="el-icon-time"></i>
@@ -51,7 +51,7 @@
 			</el-menu-item>
 		</router-link>
 
-		<router-link to="/sys/member" >
+		<router-link to="/sys/member" style="text-decoration: none">
 			<el-menu-item index="3">
 				<template slot="title">
 					<i class="el-icon-medal-1"></i>
@@ -60,7 +60,7 @@
 			</el-menu-item>
 		</router-link>
 
-		<router-link to="/sys/users" >
+		<router-link to="/sys/users" style="text-decoration: none">
 			<el-menu-item index="4">
 				<template slot="title">
 					<i class="el-icon-s-custom"></i>
@@ -100,4 +100,5 @@
 	.el-menu-vertical-demo {
 		height: 100%;
 	}
+
 </style>
