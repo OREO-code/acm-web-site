@@ -245,9 +245,4 @@ export default {
 
 <style>
 
-
-
-
-
-
 </style>
