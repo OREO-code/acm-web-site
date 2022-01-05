@@ -173,9 +173,9 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)))) {
             return ResponseVo.error(ResponseEnum.PASSWORD_CONSISTENT);
         }
-        if (!Objects.equals(redisTemplate2.opsForValue().get("verityCode"), updateUserFrom.getVerifyCode())) {
-            return ResponseVo.error(ResponseEnum.VERITYCODE_ERROR);
-        }
+//        if (!Objects.equals(redisTemplate2.opsForValue().get("verityCode"), updateUserFrom.getVerifyCode())) {
+//            return ResponseVo.error(ResponseEnum.VERITYCODE_ERROR);
+//        }
         user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)));
         log.info("user:{}", user);
         userMapper.updateUser(user);

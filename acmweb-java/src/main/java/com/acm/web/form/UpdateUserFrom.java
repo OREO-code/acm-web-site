@@ -19,7 +19,7 @@ public class UpdateUserFrom {
     @NotBlank
     private String newPassword2;
 
-    @NotBlank
-    private String verifyCode;
+//    @NotBlank
+//    private String verifyCode;
 
 }
