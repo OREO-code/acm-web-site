@@ -1,6 +1,6 @@
 <template>
 
-  <div class="block">
+  <div >
     <el-timeline>
       <el-timeline-item v-for="introduce in introduces" :timestamp="introduce.created" placement="top" type="primary">
         <router-link :to="{name: 'IntroduceDetail',params:{introduceId:introduce.id}}" style="text-decoration: none">
