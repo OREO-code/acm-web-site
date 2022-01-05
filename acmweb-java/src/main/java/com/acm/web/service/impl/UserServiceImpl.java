@@ -61,6 +61,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JavaMailSenderImpl mailSender;
 
+    @Value("${spring.mail.username}")
+    String mailUsername;
+
     @Value("${officialWebsite.jwt.expiration}")
     private Long jwtExpiration;
 
@@ -186,16 +189,16 @@ public class UserServiceImpl implements UserService {
         MimeMessage mailMessage = mailSender.createMimeMessage();
         try {
             Thread.sleep(5000);
+            if (Boolean.TRUE.equals(redisTemplate2.hasKey(address))) {
+                return new AsyncResult<>(ResponseVo.error(ResponseEnum.VERITYCODE_NOT_EXPIRED));
+            }
             String verityCode = RandomUtil.randomString(6);
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mailMessage, true);
             mimeMessageHelper.setSubject("NEUQ-ACM更改密码");
             mimeMessageHelper.setText("Hello!您的验证码为:" + verityCode, true);
-            mimeMessageHelper.setFrom("swang0652@gmail.com");
+            mimeMessageHelper.setFrom("NEUQ-ACM<" + mailUsername + ">");
             mimeMessageHelper.setTo(address);
             mailSender.send(mailMessage);
-            if (Boolean.TRUE.equals(redisTemplate2.hasKey(address))) {
-                return new AsyncResult<>(ResponseVo.error(ResponseEnum.VERITYCODE_NOT_EXPIRED));
-            }
             //TODO 时间差待优化
             redisTemplate2.opsForValue().set(address, verityCode, mailExpiration, TimeUnit.SECONDS);
         } catch (Exception e) {
