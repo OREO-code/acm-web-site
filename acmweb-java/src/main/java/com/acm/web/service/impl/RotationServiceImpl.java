@@ -65,6 +65,7 @@ public class RotationServiceImpl extends ServiceImpl<RotationMapper, Rotation> i
     //TODO 暂时无法判断svg
     @Override
     public ResponseVo uploadRotation(MultipartFile file) {
+        //TODO 尝试使用Hutool工具类实现雪花算法
         String id = String.valueOf(IdUtil.nextId());
         String path;
         try {

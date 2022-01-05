@@ -7,6 +7,9 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+    database:
+      db1: 0
+      db2: 1
   servlet:
     multipart:
       enabled: true
@@ -16,6 +19,24 @@ spring:
       resolve-lazily: false  #是否支持 multipart 上传文件时懒加载
 #     TODO 设置文件存储位置
       location: /src/main/resources/static/
+  mail:
+    host: smtp.gmail.com
+    username: swang0652@gmail.com
+    password: kktuyhocrjhlndcv
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        debug: false
+        smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          ssl:
+            enable: true
+    expiration: 1800
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml

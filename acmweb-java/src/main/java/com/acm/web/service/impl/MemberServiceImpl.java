@@ -104,6 +104,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     @Override
     public ResponseVo<String> addMember(MultipartFile file) {
+        //TODO 尝试使用Hutool工具类实现雪花算法
         String id = String.valueOf(IdUtil.nextId());
         String path;
         try {
@@ -122,7 +123,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Override
     public ResponseVo<List<Member>> getAll() {
         List<Member> list = this.list();
-        if(list.size()>0) return ResponseVo.success(list);
+        if (list.size() > 0) return ResponseVo.success(list);
         return ResponseVo.error(ResponseEnum.ERROR);
     }
 }
