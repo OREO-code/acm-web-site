@@ -55,7 +55,7 @@ export default {
             this.$alert("操作成功", '提示', {
               confirmButtonText: '确定',
               callback: action => {
-                _this.$router.push("/")
+                _this.$router.push("/sys/intro")
 
               }
             });

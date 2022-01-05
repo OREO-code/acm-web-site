@@ -3,8 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Index from '../views/Index.vue'
 import User from '../views/sys/User.vue'
-import Role from '../views/sys/Role.vue'
-import Menu from '../views/sys/Menu.vue'
+
 import Rotation from '../views/sys/Rotation.vue'
 import Member from '../views/sys/Member.vue'
 import Intro from '../views/sys/Intro.vue'
@@ -51,16 +50,6 @@ const routes = [
 				component: User
 			},
 			{
-				path: '/sys/roles',
-				name: 'SysRole',
-				component: Role
-			},
-			{
-				path: '/sys/menus',
-				name: 'SysMenu',
-				component: Menu
-			},
-			{
 				path: '/sys/rotation',
 				name: 'Sysrotation',
 				component: Rotation,
@@ -71,19 +60,25 @@ const routes = [
 			{
 				path: '/sys/intro/:introduceId/edit',
 				name: 'IntroduceEdit',
-				component: IntroEdit
+				component: IntroEdit,
+				meta: {
+					title: "编辑介绍文档"
+				},
 			},
 			{
 				path: '/sys/intro/edit',
 				name: 'IntroduceEdit',
-				component: IntroEdit
+				component: IntroEdit,
+				meta: {
+					title: "新建介绍文档"
+				},
 			},
 			{
 				path: '/sys/intro',
 				name: 'Sysintro',
 				component: Intro,
 				meta: {
-					title: "修改介绍文档"
+					title: "查看介绍文档"
 				},
 			},
 			{
