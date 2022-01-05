@@ -1,6 +1,8 @@
 package com.acm.web.service.impl;
 
 
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import com.acm.web.entity.User;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.LoginForm;
@@ -15,20 +17,26 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
 
+import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 
@@ -43,10 +51,21 @@ public class UserServiceImpl implements UserService {
     JwtUtil jwtUtil;
 
     @Autowired
-    StringRedisTemplate redisTemplate;
+    @Qualifier("redisTemplate1")
+    StringRedisTemplate redisTemplate1;
+
+    @Autowired
+    @Qualifier("redisTemplate2")
+    StringRedisTemplate redisTemplate2;
+
+    @Autowired
+    JavaMailSenderImpl mailSender;
 
     @Value("${officialWebsite.jwt.expiration}")
-    private Long expiration;
+    private Long jwtExpiration;
+
+    @Value("${spring.mail.expiration}")
+    private Long mailExpiration;
 
     private static final String SALT = "neuqer";
 
@@ -67,7 +86,7 @@ public class UserServiceImpl implements UserService {
         //另外 请保证redis当前数据库中只含有JWT-User的键值对
         //否则类型转换异常
 //        Set<String> keys = redisTemplate.keys("*");
-        Set<String> keys = redisTemplate.execute((RedisCallback<Set<String>>) connection -> {
+        Set<String> keys = redisTemplate1.execute((RedisCallback<Set<String>>) connection -> {
             Set<String> binaryKeys = new HashSet<>();
             try (Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().match("*").count(1000).build())) {
                 while (cursor.hasNext()) {
@@ -80,14 +99,15 @@ public class UserServiceImpl implements UserService {
         });
         log.info("keys:{}", keys);
         for (String key : Objects.requireNonNull(keys)) {
-            User user1 = gson.fromJson(redisTemplate.opsForValue().get(key), User.class);
-            if (Objects.equals(redisTemplate.type(key), DataType.STRING) && user1.getUsername().equals(username)) {
+            User user1 = gson.fromJson(redisTemplate1.opsForValue().get(key), User.class);
+            if (Objects.equals(redisTemplate1.type(key), DataType.STRING) && user1.getUsername().equals(username)) {
+                redisTemplate1.expire(key, jwtExpiration - 1, TimeUnit.SECONDS);
                 return ResponseVo.success(new JwtVo(key));
             }
         }
         String jwt = jwtUtil.generateToken(username);
-        if (Boolean.FALSE.equals(redisTemplate.hasKey(jwt))) {
-            redisTemplate.opsForValue().set(jwt, gson.toJson(user), expiration - 1, TimeUnit.SECONDS);
+        if (Boolean.FALSE.equals(redisTemplate1.hasKey(jwt))) {
+            redisTemplate1.opsForValue().set(jwt, gson.toJson(user), jwtExpiration - 1, TimeUnit.SECONDS);
         }
         return ResponseVo.success(new JwtVo(jwt));
     }
@@ -95,8 +115,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVo<UserVo> currentUser(String token) {
         jwtUtil.getTokenBody(token);
-        String value = redisTemplate.opsForValue().get(token);
-        if (StringUtils.isEmpty(value)) {
+        String value = redisTemplate1.opsForValue().get(token);
+        if (StrUtil.isEmpty(value)) {
             return ResponseVo.error(ResponseEnum.EXPIRED_ERROR);
         }
         User user = gson.fromJson(value, User.class);
@@ -115,11 +135,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public ResponseVo logout(String token) {
-        String value = redisTemplate.opsForValue().get(token);
-        if (StringUtils.isEmpty(value)) {
+        String value = redisTemplate1.opsForValue().get(token);
+        if (StrUtil.isEmpty(value)) {
             return ResponseVo.error(ResponseEnum.EXPIRED_ERROR);
         }
-        redisTemplate.delete(token);
+        redisTemplate1.delete(token);
         return ResponseVo.success("注销成功");
     }
 
@@ -150,9 +170,36 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)))) {
             return ResponseVo.error(ResponseEnum.PASSWORD_CONSISTENT);
         }
+        if (!Objects.equals(redisTemplate2.opsForValue().get("verityCode"), updateUserFrom.getVerifyCode())) {
+            return ResponseVo.error(ResponseEnum.VERITYCODE_ERROR);
+        }
         user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)));
         log.info("user:{}", user);
         userMapper.updateUser(user);
         return ResponseVo.success("修改成功");
+    }
+
+    //TODO 自定义异步任务执行线程池
+    @Async
+    @Override
+    public Future<ResponseVo> sendEmail(String address) {
+        MimeMessage mailMessage = mailSender.createMimeMessage();
+        try {
+            Thread.sleep(5000);
+            String verityCode = RandomUtil.randomString(6);
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mailMessage, true);
+            mimeMessageHelper.setSubject("NEUQ-ACM更改密码");
+            mimeMessageHelper.setText("Hello!您的验证码为:" + verityCode, true);
+            mimeMessageHelper.setFrom("swang0652@gmail.com");
+            mimeMessageHelper.setTo(address);
+            mailSender.send(mailMessage);
+            if (Boolean.TRUE.equals(redisTemplate2.hasKey(address))) {
+                return new AsyncResult<>(ResponseVo.error(ResponseEnum.VERITYCODE_NOT_EXPIRED));
+            }
+            redisTemplate2.opsForValue().set(address, verityCode, mailExpiration, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            return new AsyncResult<>(ResponseVo.error(ResponseEnum.MAIL_DELIVERY_FAILURE));
+        }
+        return new AsyncResult<>(ResponseVo.success("验证码发送成功，三分钟有效，请注意查收！"));
     }
 }
