@@ -84,12 +84,12 @@
               label="内容"
               width="180">
             <template slot-scope="scope">
-              <el-popover trigger="hover" placement="top">
+<!--              <el-popover trigger="hover" placement="top">-->
 
                 <div slot="reference" class="name-wrapper">
                   <el-tag size="medium">{{ scope.row.content }}</el-tag>
                 </div>
-              </el-popover>
+<!--              </el-popover>-->
             </template>
           </el-table-column>
 
@@ -199,8 +199,11 @@ export default {
     page(){
       const _this = this
       _this.$axios.get("/time").then(res=>{
-
         _this.times = res.data.data.timeList;
+        for(var i=0;i<_this.times.length;i++){
+          var ipods=_this.times[i].time.indexOf("T")
+          _this.times[i].time=_this.times[i].time.substring(0,ipods)
+        }
       })
     },
 
