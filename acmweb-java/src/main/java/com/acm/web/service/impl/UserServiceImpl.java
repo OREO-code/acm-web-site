@@ -196,6 +196,7 @@ public class UserServiceImpl implements UserService {
             if (Boolean.TRUE.equals(redisTemplate2.hasKey(address))) {
                 return new AsyncResult<>(ResponseVo.error(ResponseEnum.VERITYCODE_NOT_EXPIRED));
             }
+            //TODO 时间差待优化
             redisTemplate2.opsForValue().set(address, verityCode, mailExpiration, TimeUnit.SECONDS);
         } catch (Exception e) {
             return new AsyncResult<>(ResponseVo.error(ResponseEnum.MAIL_DELIVERY_FAILURE));
