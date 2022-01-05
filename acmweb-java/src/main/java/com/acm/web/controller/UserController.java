@@ -1,6 +1,7 @@
 package com.acm.web.controller;
 
 
+import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.LoginForm;
 import com.acm.web.form.UpdateUserFrom;
 import com.acm.web.service.UserService;
@@ -41,5 +42,14 @@ public class UserController {
     @PostMapping("/updateUser")
     public ResponseVo updateUser(@Valid @RequestBody UpdateUserFrom updateUserFrom) {
         return userService.updateUser(updateUserFrom);
+    }
+
+    @RequestMapping("/sendEmail")
+    public ResponseVo sendEmail(@RequestParam("address") String address) {
+        try {
+            return userService.sendEmail(address).get();
+        } catch (Exception e) {
+            return ResponseVo.error(ResponseEnum.ERROR);
+        }
     }
 }

@@ -33,11 +33,19 @@ public enum ResponseEnum {
 
     DELETE_ERROR(13, "删除失败"),
 
-    NEED_PARAM(14,"参数不能为空"),
+    NEED_PARAM(14, "参数不能为空"),
 
-    SELECT_EMPTY(15,"记录为空"),
+    SELECT_EMPTY(15, "记录为空"),
 
     UPLOAD_TYPE_ILLEGAL(16, "上传类型不合法"),
+
+    MAIL_DELIVERY_FAILURE(17, "邮件发送失败"),
+
+    VERITYCODE_ERROR(18, "验证码错误"),
+
+    VERITYCODE_NOT_EXPIRED(19,"验证码仍然有效"),
+
+
 
 //    DOWNLOAD_SUCCESS(9,"下载成功"),
 //

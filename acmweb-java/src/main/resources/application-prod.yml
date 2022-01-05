@@ -10,12 +10,32 @@ spring:
       maximum-pool-size: 5  # 连接池最大连接数，默认是10
       max-lifetime: 30000 # 此属性控制池中连接的最长生命周期
       connection-test-query: SELECT 1
-
+  mail:
+    host: smtp.gmail.com
+    username: swang0652@gmail.com
+    password: kktuyhocrjhlndcv
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        debug: false
+        smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          ssl:
+            enable: true
+    expiration: 1800
   redis:
     host: 101.43.16.42
     port: 6379
     password: B&NEUQ#ACM@henrik
     username: default
+    database:
+      db1: 0
+      db2: 1
   servlet:
     multipart:
       enabled: true

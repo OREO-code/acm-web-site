@@ -1,11 +1,11 @@
 package com.acm.web.Interceptor;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.acm.web.exception.UserLoginException;
 import com.acm.web.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("Authorization");
-        if (StringUtils.isEmpty(token)) {
+        if (StrUtil.isEmpty(token)) {
             throw new UserLoginException();
         }
         jwtUtil.getTokenBody(token);
