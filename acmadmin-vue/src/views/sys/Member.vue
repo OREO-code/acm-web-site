@@ -7,6 +7,49 @@
     </el-header>
 
     <el-dialog
+        title="增加成员信息"
+        :visible.sync="dialogVisible_add"
+        width="30%"
+        :before-close="handleClose">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="姓名" prop="name" >
+          <el-input v-model="ruleForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="年级" prop="year">
+          <el-input v-model="ruleForm.year"></el-input>
+        </el-form-item>
+        <el-form-item label="学院" prop="college">
+          <el-input v-model="ruleForm.college"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" prop="honor">
+          <el-input v-model="ruleForm.honor"></el-input>
+        </el-form-item>
+        <el-form-item label="照片" prop="url">
+          <el-upload
+              action="http://101.43.16.42:8082/addImg"
+              :headers="myHeaders"
+              list-type="picture-card"
+              :limit="1"
+              :file-list="dialogImageUrl"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :on-success="GetUrl">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisibleImage">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+
+
+        <el-form-item style="text-align: center">
+          <el-button type="primary" @click="addFormmethods('ruleForm')">立即增加</el-button>
+        </el-form-item>
+      </el-form>
+
+    </el-dialog>
+
+    <el-dialog
         title="修改成员信息"
         :visible.sync="dialogVisible"
         width="30%"
@@ -33,14 +76,13 @@
               :headers="myHeaders"
               list-type="picture-card"
               :limit="1"
-              :file-list="dialogImageUrl"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
               :on-success="GetUrl">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisibleImage">
-            <img width="100%" :src="dialogImageUrl[0].url" alt="">
+            <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-form-item>
 
@@ -73,7 +115,14 @@
               label="姓名"
               width="180">
             <template slot-scope="scope">
-              <span style="text-align: center">{{ scope.row.name }}</span>
+              <el-popover trigger="hover" placement="top">
+                <p>年级: {{ scope.row.year }}</p>
+                <p>学院: {{ scope.row.college }}</p>
+                <p>简介: {{ scope.row.honor }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              </div>
+              </el-popover>
             </template>
           </el-table-column>
 
@@ -144,9 +193,7 @@ export default {
       },
 
       members :[],
-      dialogImageUrl: [
-        {url:""}
-      ],
+      dialogImageUrl: "",
       dialogVisibleImage: false,
       dialogVisible: false,
       dialogVisible_add:false,
@@ -224,9 +271,7 @@ export default {
         if (valid) {
           this.dialogVisible_add = false
           const _this = this;
-          this.$axios.post("/addTime",_this.ruleForm).then(res=>{
-            _this.ruleForm.time = ''
-            _this.ruleForm.content = ''
+          this.$axios.post("/addMember",_this.ruleForm).then(res=>{
             this.page()
             this.$message({
               message: '增加成功',
@@ -245,24 +290,25 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    open(time){
+    open(item){
       this.dialogVisible = true;
-      this.ruleForm.id = time.id;
-      this.ruleForm.name = time.name;
-      this.ruleForm.year = time.year;
-      this.ruleForm.college = time.college;
-      this.ruleForm.honor = time.honor;
-      this.ruleForm.url = time.url;
-      this.dialogImageUrl[0].url = time.url;
-
-
-
+      this.ruleForm.id = item.id;
+      this.ruleForm.name = item.name;
+      this.ruleForm.year = item.year;
+      this.ruleForm.college = item.college;
+      this.ruleForm.honor = item.honor;
+      this.ruleForm.url = item.url;
+      this.dialogImageUrl = item.url;
     },
     open_add(){
-      this.ruleForm.time=''
-      this.ruleForm.id=''
-      this.ruleForm.content=''
-      this.dialogVisible_add = true;
+      this.dialogVisible_add = true
+      this.ruleForm.id = "";
+      this.ruleForm.name = "";
+      this.ruleForm.year = "";
+      this.ruleForm.college = "";
+      this.ruleForm.honor = "";
+      this.ruleForm.url = "";
+      this.dialogImageUrl = "";
     },
 
     page(){
@@ -287,7 +333,7 @@ export default {
         type: 'warning'
       }).then(() => {
         const _this = this
-        _this.$axios.get("/delTime?id="+id).then(res=>{
+        _this.$axios.get("/delMember?id="+id).then(res=>{
           this.$message({
             type: 'success',
             message: '删除成功!'
