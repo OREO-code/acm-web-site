@@ -9,7 +9,7 @@
 
       <div class="header-avatar">
 
-        
+        <el-avatar size="medium" src="http://101.43.16.42:8082/image/676623760790388736.jpg"></el-avatar>
 
         <el-dropdown>
 						<span class="el-dropdown-link">

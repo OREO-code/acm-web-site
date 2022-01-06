@@ -1,6 +1,6 @@
 <template>
 	<el-menu
-			:default-active="index"
+			:default-active="activeIndex"
       active-text-color="#409EFF"
 			class="el-menu-vertical-demo"
 			background-color="#545c64"
@@ -87,7 +87,7 @@
 		name: "SideMenu",
 		data() {
 			return {
-				
+        activeIndex:1
 			}
 		},
 		computed:  {

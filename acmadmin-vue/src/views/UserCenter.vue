@@ -1,36 +1,42 @@
 <template>
 	<div style="text-align: center;">
 		<h2>你好！{{ userInfo.username }} 同学</h2>
-		<!-- 信息展示 -->
-		<el-descriptions class="margin-top" title="无边框列表" :column="3" :size="size">
-		    <!-- <template slot="extra">
-		      <el-button type="primary" size="small">操作</el-button>
-		    </template> -->
-		    <el-descriptions-item label="用户名">{{userInfo.username}}</el-descriptions-item>
-		    <el-descriptions-item label="ID">{{userInfo.id}}</el-descriptions-item>
-		    <el-descriptions-item label="邮箱">{{userInfo.eamil}}</el-descriptions-item>
-			<el-descriptions-item label="手机号">{{userInfo.phone}}</el-descriptions-item>
-		    <!-- <el-descriptions-item label="备注">
-		      <el-tag size="small">手机号</el-tag>
-		    </el-descriptions-item> -->
-	
-		  </el-descriptions>
+
+    <template>
+      <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+        <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+      </ul>
+    </template>
+
+        <el-descriptions class="margin-top" title="无边框列表" :column="3" :size="size">
+
+          <el-descriptions-item label="用户名">{{userInfo.username}}</el-descriptions-item>
+          <el-descriptions-item label="ID">{{userInfo.id}}</el-descriptions-item>
+          <el-descriptions-item label="邮箱">{{userInfo.email}}</el-descriptions-item>
+          <el-descriptions-item label="手机号">{{userInfo.phone}}</el-descriptions-item>
+          <el-descriptions-item label="备注">{{userInfo.remarks}}</el-descriptions-item>
+        </el-descriptions>
+
+        <el-form :model="passForm" status-icon :rules="rules" ref="passForm" label-width="100px">
+          <el-form-item label="旧密码" prop="currentPass">
+            <el-input type="password" v-model="passForm.currentPass" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="password">
+            <el-input type="password" v-model="passForm.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input type="password" v-model="passForm.checkPass" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('passForm')">提交</el-button>
+            <el-button @click="resetForm('passForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+
+
+
 		  
-		<!-- <el-form :model="passForm" status-icon :rules="rules" ref="passForm" label-width="100px">
-			<el-form-item label="旧密码" prop="currentPass">
-				<el-input type="password" v-model="passForm.currentPass" autocomplete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="新密码" prop="password">
-				<el-input type="password" v-model="passForm.password" autocomplete="off"></el-input>
-			</el-form-item>
-			<el-form-item label="确认密码" prop="checkPass">
-				<el-input type="password" v-model="passForm.checkPass" autocomplete="off"></el-input>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary" @click="submitForm('passForm')">提交</el-button>
-				<el-button @click="resetForm('passForm')">重置</el-button>
-			</el-form-item>
-		</el-form> -->
+
 	</div>
 </template>
 
@@ -75,6 +81,7 @@
 			this.getUserInfo()
 		},
 		methods: {
+
 			getUserInfo() {
 				this.$axios.get("/currentUser",localStorage.token).then(res =>{
 					this.userInfo=res.data.data
