@@ -1,10 +1,16 @@
 <template>
 
-  <div class="introduce" >
-    <h2 style="text-align: center">{{introduce.title}}</h2>
-    <el-divider><i class="el-icon-mobile-phone" ></i></el-divider>
-    <div>{{introduce.description}}</div>
-    <div class="markdown-body" v-html="introduce.content"></div>
+  <div className="introduce">
+    <div style="font-size: 1.875rem;margin-top: 3%;padding-top: 3%;">
+      {{ introduce.title }}
+    </div>
+    <div style="margin-top: 2%;margin-bottom: 1%;">
+      {{ introduce.description }}
+    </div>
+    <el-divider><i className="el-icon-mobile-phone"></i></el-divider>
+    <div style="width: 80%;margin-left: 10%;margin-top: 3%;">
+      <div className="markdown-body" v-html="introduce.content"></div>
+    </div>
   </div>
 </template>
 
@@ -16,17 +22,17 @@ export default {
   data() {
     return {
       introduce: {
-        id: '',
-        title: '',
-        description: '',
-        content: ''
+        id: '6',
+        title: 'title',
+        description: 'description',
+        content: 'content'
       }
     }
   },
   created() {
     const id = this.$route.params.introduceId;
     const _this = this;
-    this.$axios.get("http://101.43.16.42:8082/introduce/"+id).then(res=>{
+    this.$axios.get("http://101.43.16.42:8082/introduce/" + id).then(res => {
       const introduce = res.data.data;
       _this.introduce.id = introduce.id;
       _this.introduce.title = introduce.title;
@@ -40,10 +46,11 @@ export default {
 </script>
 
 <style scoped>
-.introduce{
+.introduce {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
   min-height: 700px;
-  background: lightgrey;
+  margin-bottom: 3%;
 }
 </style>

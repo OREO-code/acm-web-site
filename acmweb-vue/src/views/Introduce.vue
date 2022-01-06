@@ -1,23 +1,23 @@
 <template>
 
-  <div >
+  <div style="margin-top: -5%;">
     <el-timeline>
       <el-timeline-item v-for="introduce in introduces" :timestamp="introduce.created" placement="top" type="primary">
         <router-link :to="{name: 'IntroduceDetail',params:{introduceId:introduce.id}}" style="text-decoration: none">
-          <el-card style="text-align: center;background: #58B7FF;">
+          <el-card style="text-align: center;background: #58B7FF;color: white;">
             <h4 >{{introduce.title}}</h4>
             <p >{{introduce.description}}</p>
           </el-card>
         </router-link>
       </el-timeline-item>
       <el-pagination class="mpage"
-          background
-          layout="prev, pager, next"
+                     background
+                     layout="prev, pager, next"
                      :current-page="currentPage"
                      :page-size="pageSize"
                      :total="total"
                      @current-change=page
-          >
+      >
       </el-pagination>
     </el-timeline>
   </div>

@@ -3,9 +3,15 @@
     <div class="group">
       <div class="body">
         <div class="fxd">
-          <h4><span class="title" title="年级">年级</span><span>></span></h4>
-
+          <h4><span class="titlesec" title="年级">年级</span><span>></span></h4>
           <el-checkbox-group v-model="from.yearList" @change="getValue()">
+            <el-checkbox
+                v-for="item in getYear"
+                :label="item"
+                :checked="false"
+            ></el-checkbox>
+          </el-checkbox-group>
+          <!-- <el-checkbox-group v-model="from.yearList" @change="getValue()">
             <div class="year row">
               <el-checkbox
                   v-for="item in getYear"
@@ -15,12 +21,18 @@
               >
               </el-checkbox>
             </div>
-          </el-checkbox-group>
+          </el-checkbox-group> -->
         </div>
         <div class="fxd">
-          <h4><span class="title" title="学院">学院</span><span>></span></h4>
-
+          <h4><span class="titlesec" title="学院">学院</span><span>></span></h4>
           <el-checkbox-group v-model="from.collegeList" @change="getValue()">
+            <el-checkbox
+                v-for="item in getCollege"
+                :label="item"
+                :checked="false"
+            ></el-checkbox>
+          </el-checkbox-group>
+          <!-- <el-checkbox-group v-model="from.collegeList" @change="getValue()">
             <div class="college row collegec">
               <el-checkbox
                   v-for="item in getCollege"
@@ -30,7 +42,7 @@
               >
               </el-checkbox>
             </div>
-          </el-checkbox-group>
+          </el-checkbox-group> -->
         </div>
       </div>
     </div>
@@ -40,7 +52,7 @@
       <el-container>
         <el-aside width="200px">
           <div class="ima">
-            <div class="block" v-for="fit in fits" :key="fit">
+            <div  v-for="fit in fits" :key="fit">
               <el-image
                   class="picture"
                   :src="item.url"
@@ -79,8 +91,9 @@
     <!--      </div>-->
     <!--      </div>-->
 
-
+    <div class="footer"></div>
   </div>
+
 </template>
 
 <script>
@@ -140,6 +153,32 @@ export default {
 </script>
 
 <style scoped>
+.footer{
+  width: 100%;
+  height: 0.625rem;
+  margin-bottom: 10%;
+}
+.total{
+  width: 100%;
+  height: 100%;
+  padding-bottom: 3%;
+}
+.el-checkbox-group{
+  padding-top: 13px;
+  margin-left: 0%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+
+}
+.el-checkbox{
+  margin-right: 0rem !important;
+  margin-left: 10%;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  display: flex;
+  justify-content: start !important;
+}
 .group {
   border: 1px solid #e8e8e8;
   border-radius: 7px;
@@ -158,7 +197,7 @@ export default {
 .group .head {
   color: black;
 }
-.group .head .title {
+.group .head .titlesec {
   max-width: 80px;
   white-space: nowrap;
   overflow: hidden;
@@ -174,6 +213,7 @@ export default {
 }
 .fxd {
   display: flex;
+  width: 21.875rem;
 }
 
 .head h4 {
@@ -214,7 +254,6 @@ h4 {
   color: #403131;
   margin: 21px 40px 9px 0;
   height: 18px;
-  text-decoration: none;
 }
 
 .people {
@@ -224,7 +263,7 @@ h4 {
   border-radius: 7px;
   width: 937px;
   /*height: 166px;*/
-  left: 245px;
+  left: 450px;
   top: 97px;
   /*background: -webkit-linear-gradient(left,#6190E8,#021B79);*/
   /*background: rgba(164, 167, 164, 0.4);*/
