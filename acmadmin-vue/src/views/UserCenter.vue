@@ -2,13 +2,8 @@
 	<div style="text-align: center;">
 		<h2>你好！{{ userInfo.username }} 同学</h2>
 
-    <template>
-      <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-        <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
-      </ul>
-    </template>
 
-        <el-descriptions class="margin-top" title="无边框列表" :column="3" :size="size">
+        <el-descriptions class="margin-top" title="基本信息" :column="1" >
 
           <el-descriptions-item label="用户名">{{userInfo.username}}</el-descriptions-item>
           <el-descriptions-item label="ID">{{userInfo.id}}</el-descriptions-item>

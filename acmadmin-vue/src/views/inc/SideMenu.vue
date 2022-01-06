@@ -1,10 +1,11 @@
 <template>
 	<el-menu
 			:default-active="activeIndex"
-      active-text-color="#409EFF"
 			class="el-menu-vertical-demo"
-			background-color="#545c64"
-			text-color="#fff"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      menu-trigger="click"
 
 			router>
 
