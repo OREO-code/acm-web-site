@@ -1,12 +1,13 @@
 package com.acm.web.service;
 
 
-import com.acm.web.form.LoginForm;
+import com.acm.web.entity.User;
 import com.acm.web.form.UpdateUserFrom;
 import com.acm.web.vo.JwtVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.UserVo;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 public interface UserService {
@@ -17,9 +18,11 @@ public interface UserService {
 
     ResponseVo logout(String token);
 
-    ResponseVo addUser(LoginForm loginForm);
+    ResponseVo addUser(User user);
 
     ResponseVo updateUser(UpdateUserFrom updateUserFrom);
 
     Future<ResponseVo> sendEmail(String address);
+
+    ResponseVo<List<UserVo>> getAllUser();
 }

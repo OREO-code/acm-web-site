@@ -3,16 +3,19 @@ package com.acm.web.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import com.acm.web.entity.Time;
 import com.acm.web.entity.User;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.LoginForm;
 import com.acm.web.form.UpdateUserFrom;
+import com.acm.web.mapper.TimeMapper;
 import com.acm.web.mapper.UserMapper;
 import com.acm.web.service.UserService;
 import com.acm.web.utils.JwtUtil;
 import com.acm.web.vo.JwtVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.UserVo;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -33,16 +36,14 @@ import org.springframework.util.DigestUtils;
 
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     UserMapper userMapper;
@@ -147,9 +148,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVo addUser(LoginForm loginForm) {
-        User user = new User();
-        BeanUtils.copyProperties(loginForm, user);
+    public ResponseVo addUser(User user) {
         user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword() + SALT).getBytes(StandardCharsets.UTF_8)));
         boolean flag = userMapper.addUser(user);
         if (!flag) {
@@ -205,5 +204,18 @@ public class UserServiceImpl implements UserService {
             return new AsyncResult<>(ResponseVo.error(ResponseEnum.MAIL_DELIVERY_FAILURE));
         }
         return new AsyncResult<>(ResponseVo.success("验证码发送成功，三分钟有效，请注意查收！"));
+    }
+
+    @Override
+    public ResponseVo<List<UserVo>> getAllUser() {
+        List<User> list = this.list();
+        List<UserVo> userVoList = new ArrayList<>();
+        for(User user:list){
+            UserVo temp = new UserVo();
+            BeanUtils.copyProperties(user,temp);
+            userVoList.add(temp);
+        }
+        if(userVoList.size() > 0)return ResponseVo.success(userVoList);
+        else return ResponseVo.error(ResponseEnum.ERROR);
     }
 }

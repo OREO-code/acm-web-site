@@ -1,6 +1,8 @@
 package com.acm.web.controller;
 
 
+
+import com.acm.web.entity.User;
 import com.acm.web.enums.ResponseEnum;
 import com.acm.web.form.LoginForm;
 import com.acm.web.form.UpdateUserFrom;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -35,14 +38,20 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public ResponseVo addUser(@Valid @RequestBody LoginForm loginForm) {
-        return userService.addUser(loginForm);
+    public ResponseVo addUser(@Valid @RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @PostMapping("/updateUser")
     public ResponseVo updateUser(@Valid @RequestBody UpdateUserFrom updateUserFrom) {
         return userService.updateUser(updateUserFrom);
     }
+
+    @PostMapping("/getAllUser")
+    public ResponseVo<List<UserVo>> getAllUser(){
+        return userService.getAllUser();
+    }
+
 
     @RequestMapping("/sendEmail")
     public ResponseVo sendEmail(@RequestParam("address") String address) {

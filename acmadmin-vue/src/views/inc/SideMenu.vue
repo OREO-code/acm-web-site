@@ -69,7 +69,7 @@
       </el-menu-item>
     </router-link>
 
-		<router-link to="/sys/users" style="text-decoration: none">
+		<router-link to="/sys/manage" style="text-decoration: none">
 			<el-menu-item index="8">
 				<template slot="title">
 					<i class="el-icon-s-custom"></i>
