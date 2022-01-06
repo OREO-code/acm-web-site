@@ -2,9 +2,7 @@
 
 
   <el-container>
-    <el-header style="text-align: left">
-      <el-button type="primary" @click="open_add" round>新增</el-button>
-    </el-header>
+
 
     <el-dialog
         title="修改时间线"
@@ -58,6 +56,7 @@
 
       <div>
         <el-table
+            height="660"
             :data="times"
             style="width: 100%">
           <el-table-column
@@ -82,7 +81,7 @@
           <el-table-column
               align="center"
               label="内容"
-              width="180">
+              width="300">
             <template slot-scope="scope">
 <!--              <el-popover trigger="hover" placement="top">-->
 
@@ -93,7 +92,10 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="操作" align="center" style="width: 80px">
+          <el-table-column align="center" style="width: 80px">
+            <template slot="header" slot-scope="scope">
+              <el-button type="primary" @click="open_add" round>新增</el-button>
+            </template>
             <template slot-scope="scope">
               <el-button
                   size="mini"

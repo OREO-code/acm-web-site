@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import WebHome from '../views/webHome.vue'
-import Form from '../views/Form.vue'
+
 import Tulin from '../views/Tulin.vue'
 import Member from '../views/member.vue'
 import Time from '../views/Time.vue'
@@ -37,11 +37,7 @@ const routes = [
     name: 'IntroduceDetail',
     component: IntroduceDetail
   },
-  {
-    path: '/form',
-    name: 'Form',
-    component: Form
-  },
+
   {
     path: '/login',
     name: 'Login',

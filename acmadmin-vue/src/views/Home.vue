@@ -2,36 +2,39 @@
 	<el-container>
 
 <!--    左侧布局-->
-		<el-aside width="200px">
 
-			<SideMenu></SideMenu>
 
-		</el-aside>
+    <el-header>
+      <strong>ACM官网后台管理系统</strong>
 
-		<el-container>
-			<el-header>
-				<strong>ACM官网后台管理系统</strong>
+      <div class="header-avatar">
 
-				<div class="header-avatar">
+        <el-avatar size="medium" src="https://s3.bmp.ovh/imgs/2021/12/5f60ab4a82d1e62c.jpg"></el-avatar>
 
-					<el-avatar size="medium" src="https://s3.bmp.ovh/imgs/2021/12/5f60ab4a82d1e62c.jpg"></el-avatar>
-
-					<el-dropdown>
+        <el-dropdown>
 						<span class="el-dropdown-link">
 						{{userInfo.username}}<i class="el-icon-arrow-down el-icon--right"></i>
 						</span>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item>
-								<router-link :to="{name: 'UserCenter'}">个人中心</router-link>
-							</el-dropdown-item>
-							<el-dropdown-item @click.native="logout">退出</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <router-link :to="{name: 'UserCenter'}">个人中心</router-link>
+            </el-dropdown-item>
+            <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
 
-					<el-link href="https://markerhub.com" target="_blank">网站</el-link>
-				</div>
+        <el-link href="https://markerhub.com" target="_blank">网站</el-link>
+      </div>
 
-			</el-header>
+    </el-header>
+		<el-container>
+
+      <el-aside width="200px">
+
+        <SideMenu></SideMenu>
+
+      </el-aside>
+
 			<el-main>
 
 

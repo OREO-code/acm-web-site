@@ -15,7 +15,7 @@
     </el-submenu>
 
     <router-link to="/sys/notice" style="text-decoration: none">
-      <el-menu-item index="1-1">
+      <el-menu-item index="2">
         <template slot="title">
           <i class="el-icon-message-solid"></i>
           <span slot="title">公告</span>
@@ -24,7 +24,7 @@
     </router-link>
 
     <router-link  to="/sys/rotation" style="text-decoration: none">
-      <el-menu-item index="1-2">
+      <el-menu-item index="3">
         <template slot="title">
           <i class="el-icon-picture"></i>
           <span slot="title">轮播图</span>
@@ -33,7 +33,7 @@
     </router-link>
 
     <router-link to="/sys/intro" style="text-decoration: none">
-      <el-menu-item  index="1-3" >
+      <el-menu-item  index="4" >
         <template slot="title">
           <i class="el-icon-s-order"></i>
           <span slot="title">介绍文档</span>
@@ -42,7 +42,7 @@
     </router-link>
 
 		<router-link to="/sys/time" style="text-decoration: none">
-			<el-menu-item index="2" >
+			<el-menu-item index="5" >
 				<template slot="title">
 					<i class="el-icon-time"></i>
 					<span slot="title">时间线</span>
@@ -51,7 +51,7 @@
 		</router-link>
 
 		<router-link to="/sys/member" style="text-decoration: none">
-			<el-menu-item index="3">
+			<el-menu-item index="6">
 				<template slot="title">
 					<i class="el-icon-medal-1"></i>
 					<span slot="title">成员风采</span>
@@ -59,8 +59,17 @@
 			</el-menu-item>
 		</router-link>
 
+    <router-link to="/sys/tulin" style="text-decoration: none">
+      <el-menu-item index="7">
+        <template slot="title">
+          <i class="el-icon-medal-1"></i>
+          <span slot="title">文件管理</span>
+        </template>
+      </el-menu-item>
+    </router-link>
+
 		<router-link to="/sys/users" style="text-decoration: none">
-			<el-menu-item index="4">
+			<el-menu-item index="8">
 				<template slot="title">
 					<i class="el-icon-s-custom"></i>
 					<span slot="title">权限管理</span>

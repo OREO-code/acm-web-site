@@ -2,9 +2,7 @@
 
 
   <el-container>
-    <el-header style="text-align: left">
-      <el-button type="primary" @click="open_add" round>新增</el-button>
-    </el-header>
+
 
     <el-dialog
         title="增加成员信息"
@@ -99,8 +97,10 @@
 
       <div>
         <el-table
+            height="600"
+            max-height="100%"
             :data="members"
-            style="width: 100%">
+            style="width: 100%;line-height: normal;">
           <el-table-column
               align="center"
               label="ID"
@@ -164,6 +164,10 @@
           </el-table-column>
 
           <el-table-column label="操作" align="center" style="width: 80px">
+            <template slot="header" slot-scope="scope">
+              <el-button type="primary" @click="open_add">新增</el-button>
+            </template>
+
             <template slot-scope="scope">
               <el-button
                   size="mini"
