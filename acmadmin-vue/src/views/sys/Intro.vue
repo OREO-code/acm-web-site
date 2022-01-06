@@ -15,7 +15,7 @@
           <el-table-column
               align="center"
               label="ID"
-              width="180">
+              width="150%">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.id }}</span>
             </template>
@@ -23,8 +23,7 @@
           <el-table-column
               align="center"
               label="日期"
-              column-key="date"
-              width="180">
+              column-key="date">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span >{{ scope.row.created }}</span>
@@ -33,8 +32,7 @@
 
           <el-table-column
               align="center"
-              label="标题"
-              width="180">
+              label="标题">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
                 <p>摘要: {{ scope.row.description }}</p>
@@ -54,6 +52,7 @@
             </template>
             <template slot-scope="scope">
               <el-button
+                  type="success"
 
                   @click="handleEdit(scope.row.id)">编辑</el-button>
               <el-button

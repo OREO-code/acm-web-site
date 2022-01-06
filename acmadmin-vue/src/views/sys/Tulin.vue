@@ -1,15 +1,19 @@
 <template>
   <el-container>
     <el-container>
-      <el-main style="padding: 0;height: 660px">
+      <el-main style="padding: 0;height: 660px;text-align: center !important;">
         <el-table
             height="660"
+            :header-cell-style="{'text-align':'center'}"
+            :cell-style="{'text-align':'center'}"
             max-height="100%"
             :data="tableData"
-            style="width: 100%;line-height: normal;"
+            style="width: 100%;line-height: normal;text-align: center !important;"
             highlight-current-row="true">
           <el-table-column
+              style="text-align: center !important;"
               label="ID"
+              width="150%"
               prop="id">
           </el-table-column>
           <el-table-column
@@ -157,70 +161,8 @@ export default {
 </script>
 
 <style scoped>
-::-webkit-scrollbar {
-  width: 8px;
+.el-table .el-table__cell{
+  text-align: center !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #eaecf1;
-  border-radius: 3px;
-}
-
-body .el-scrollbar__wrap {
-  overflow-x: hidden;
-}
-
-.el-header, .el-footer {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #333;
-  color: #fff;
-  text-align: left;
-  line-height: 60px;
-}
-
-.l-content {
-  display: flex;
-  align-items: center;
-}
-
-.el-aside {
-  background-color: #D3DCE6;
-  color: #333;
-  text-align: left;
-  line-height: 200px;
-  height: 100%;
-}
-
-.el-main {
-  padding-top: 0;
-  background-color: #E9EEF3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
-}
-
-body > .el-container {
-  margin-bottom: 40px;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  /*width: 200px;*/
-  min-height: 720px;
-}
-
-.el-menu {
-  border-right: 0;
-}
 </style>

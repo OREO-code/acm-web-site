@@ -97,14 +97,14 @@
 
       <div>
         <el-table
-            height="600"
+            height="660"
             max-height="100%"
             :data="members"
-            style="width: 100%;line-height: normal;">
+            style="width: 100%;line-height: normal;"
+            width="150%">
           <el-table-column
               align="center"
-              label="ID"
-              width="180">
+              label="ID">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.id }}</span>
             </template>
@@ -112,8 +112,7 @@
 
           <el-table-column
               align="center"
-              label="姓名"
-              width="180">
+              label="姓名">
             <template slot-scope="scope">
               <el-popover trigger="hover" placement="top">
                 <p>年级: {{ scope.row.year }}</p>
@@ -128,8 +127,7 @@
 
           <el-table-column
               align="center"
-              label="年级"
-              width="180">
+              label="年级">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.year }}</span>
             </template>
@@ -137,8 +135,7 @@
 
           <el-table-column
               align="center"
-              label="学院"
-              width="180">
+              label="学院">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.college }}</span>
             </template>
@@ -146,8 +143,7 @@
 
           <el-table-column
               align="center"
-              label="简介"
-              width="180">
+              label="简介">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.honor }}</span>
             </template>
@@ -156,8 +152,7 @@
 
           <el-table-column
               align="center"
-              label="照片"
-              width="180">
+              label="照片">
             <template slot-scope="scope">
               <el-image :src="scope.row.url"></el-image>
             </template>
@@ -170,6 +165,7 @@
 
             <template slot-scope="scope">
               <el-button
+                  type="success"
 
                   @click="open(scope.row)">编辑</el-button>
               <el-button

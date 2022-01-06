@@ -62,7 +62,7 @@
           <el-table-column
               align="center"
               label="ID"
-              width="180">
+              width="150%">
             <template slot-scope="scope">
               <span style="text-align: center">{{ scope.row.id }}</span>
             </template>
@@ -70,8 +70,7 @@
           <el-table-column
               align="center"
               label="日期"
-              column-key="date"
-              width="180">
+              column-key="date">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
               <span >{{ scope.row.time }}</span>
@@ -80,8 +79,7 @@
 
           <el-table-column
               align="center"
-              label="内容"
-              width="300">
+              label="内容">
             <template slot-scope="scope">
 <!--              <el-popover trigger="hover" placement="top">-->
 
@@ -98,6 +96,7 @@
             </template>
             <template slot-scope="scope">
               <el-button
+                  type="success"
 
                   @click="open(scope.row)">编辑</el-button>
               <el-button
