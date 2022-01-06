@@ -71,6 +71,7 @@
               :headers="myHeaders"
               list-type="picture-card"
               :limit="1"
+              accept=".jpg,.png,.svg"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
               :on-success="GetUrl">
@@ -241,7 +242,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // this.dialogVisible = false
+          this.dialogVisible = false
           // console.log(this.getUrlPath);
           //
           // this.ruleForm.url = this.getUrlPath;

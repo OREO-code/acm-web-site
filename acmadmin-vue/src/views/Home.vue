@@ -9,7 +9,7 @@
 
       <div class="header-avatar">
 
-        <el-avatar size="medium" src="https://s3.bmp.ovh/imgs/2021/12/5f60ab4a82d1e62c.jpg"></el-avatar>
+        
 
         <el-dropdown>
 						<span class="el-dropdown-link">
@@ -23,7 +23,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-link href="https://acmclub,cn" target="_blank">网站</el-link>
+        <el-link href="http://acmclub.cn" target="_blank">网站</el-link>
       </div>
 
     </el-header>
