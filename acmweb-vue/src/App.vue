@@ -16,7 +16,7 @@
 
           <el-menu-item index="2" route="/introduce"><div><i class="el-icon-position"></i>资讯</div></el-menu-item>
           <el-menu-item index="3" route="/member"><div><i class="el-icon-medal-1"></i>成员风采</div></el-menu-item>
-          <el-menu-item index="4" route="/tulin"><div><i class="el-icon-data-line"></i>暑期编程训练营</div></el-menu-item>
+          <el-menu-item index="4" route="/camp"><div><i class="el-icon-data-line"></i>暑期编程训练营</div></el-menu-item>
           <el-menu-item index="5" route="/tulin"><div><i class="el-icon-trophy"></i>图灵杯</div></el-menu-item>
           <el-menu-item index="6" route="/time"><div ><i class="el-icon-time"></i> 时间线</div></el-menu-item>
           <el-menu-item><a href="http://newoj.acmclub.cn/home" style="text-decoration: none;color: #A6ADB4;" target="_blank" ><div><i class="el-icon-link"></i>NEUQ OJ</div></a>

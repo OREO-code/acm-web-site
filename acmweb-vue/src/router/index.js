@@ -8,6 +8,7 @@ import Time from '../views/Time.vue'
 import Login from '../views/Login.vue'
 import Introduce from "../views/Introduce";
 import IntroduceDetail from "../views/IntroduceDetail";
+import Camp from "../views/Camp";
 Vue.use(VueRouter)
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
     path: '/tulin',
     name: 'Tulin',
     component: Tulin
+  },
+  {
+    path: '/camp',
+    name: 'Camp',
+    component: Camp
   },
   {
     path: '/member',
