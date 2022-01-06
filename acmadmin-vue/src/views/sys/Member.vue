@@ -170,10 +170,10 @@
 
             <template slot-scope="scope">
               <el-button
-                  size="mini"
+
                   @click="open(scope.row)">编辑</el-button>
               <el-button
-                  size="mini"
+
                   type="danger"
                   @click="handleDelete(scope.row.id)">删除</el-button>
             </template>

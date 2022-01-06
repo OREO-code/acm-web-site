@@ -23,7 +23,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <el-link href="https://markerhub.com" target="_blank">网站</el-link>
+        <el-link href="https://acmclub,cn" target="_blank">网站</el-link>
       </div>
 
     </el-header>
@@ -108,7 +108,7 @@
 	}
 
 	.el-header {
-		background-color: #22A7F2;
+		background-color: #409EFF;
 		color: #333;
 		text-align: center;
 		line-height: 60px;

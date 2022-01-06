@@ -40,7 +40,7 @@
             </template>
             <template slot-scope="scope">
               <el-button
-                  size="mini"
+
                   type="danger"
                   @click="open(scope.row.id)">删除
               </el-button>

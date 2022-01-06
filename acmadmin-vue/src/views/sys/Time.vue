@@ -94,14 +94,14 @@
 
           <el-table-column align="center" style="width: 80px">
             <template slot="header" slot-scope="scope">
-              <el-button type="primary" @click="open_add" round>新增</el-button>
+              <el-button type="primary" @click="open_add">新增</el-button>
             </template>
             <template slot-scope="scope">
               <el-button
-                  size="mini"
+
                   @click="open(scope.row)">编辑</el-button>
               <el-button
-                  size="mini"
+
                   type="danger"
                   @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
