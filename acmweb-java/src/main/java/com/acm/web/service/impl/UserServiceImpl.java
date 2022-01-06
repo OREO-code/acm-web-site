@@ -15,6 +15,7 @@ import com.acm.web.utils.JwtUtil;
 import com.acm.web.vo.JwtVo;
 import com.acm.web.vo.ResponseVo;
 import com.acm.web.vo.UserVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public ResponseVo<JwtVo> login(String username, String password) {
-        User user = userMapper.selectByUsername(username);
+        User user = this.getOne(new QueryWrapper<User>().eq("username",username));
 //        log.info(username);
 //        log.info(password);
 //        log.info(DigestUtils.md5DigestAsHex((password + SALT).getBytes(StandardCharsets.UTF_8)));
@@ -150,7 +151,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public ResponseVo addUser(User user) {
         user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword() + SALT).getBytes(StandardCharsets.UTF_8)));
-        boolean flag = userMapper.addUser(user);
+        boolean flag = this.save(user);
         if (!flag) {
             return ResponseVo.error(ResponseEnum.ERROR);
         }
@@ -158,11 +159,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public ResponseVo updateUser(UpdateUserFrom updateUserFrom) {
+    public ResponseVo updatePassword(UpdateUserFrom updateUserFrom) {
         if (!updateUserFrom.getNewPassword1().equals(updateUserFrom.getNewPassword2())) {
             return ResponseVo.error(ResponseEnum.PASSWORD_INCONSISTENT);
         }
-        User user = userMapper.selectByUsername(updateUserFrom.getUsername());
+        User user = this.getOne(new QueryWrapper<User>().eq("username",updateUserFrom.getUsername()));
         if (user == null) {
             return ResponseVo.error(ResponseEnum.USER_NONEXISTENT);
         }
@@ -177,8 +178,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        }
         user.setPassword(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)));
         log.info("user:{}", user);
-        userMapper.updateUser(user);
-        return ResponseVo.success("修改成功");
+        boolean ans = this.updateById(user);
+        if(ans) return ResponseVo.success("修改成功");
+        else return ResponseVo.error(ResponseEnum.ERROR);
+
     }
 
     //TODO 自定义异步任务执行线程池
@@ -217,5 +220,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         if(userVoList.size() > 0)return ResponseVo.success(userVoList);
         else return ResponseVo.error(ResponseEnum.ERROR);
+    }
+
+    @Override
+    public ResponseVo delUser(Integer id) {
+        boolean ans = this.removeById(id);
+        if(ans) return ResponseVo.success("删除成功");
+        else return ResponseVo.error(ResponseEnum.USER_NONEXISTENT);
+    }
+
+    @Override
+    public ResponseVo updateUser(User user) {
+        if(user.getPassword()!=null){
+            user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword() + SALT).getBytes(StandardCharsets.UTF_8)));
+        }
+        boolean ans = this.updateById(user);
+        if(ans) return ResponseVo.success("更新成功");
+        else return ResponseVo.error(ResponseEnum.USER_NONEXISTENT);
     }
 }

@@ -20,9 +20,13 @@ public interface UserService {
 
     ResponseVo addUser(User user);
 
-    ResponseVo updateUser(UpdateUserFrom updateUserFrom);
+    ResponseVo updatePassword(UpdateUserFrom updateUserFrom);
 
     Future<ResponseVo> sendEmail(String address);
 
     ResponseVo<List<UserVo>> getAllUser();
+
+    ResponseVo delUser(Integer id);
+
+    ResponseVo updateUser(User user);
 }

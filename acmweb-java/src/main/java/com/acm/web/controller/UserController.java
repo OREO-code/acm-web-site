@@ -38,13 +38,23 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public ResponseVo addUser(@Valid @RequestBody User user) {
+    public ResponseVo addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
+    @GetMapping("/delUser")
+    public ResponseVo delUser(@RequestParam Integer id) {
+        return userService.delUser(id);
+    }
+
     @PostMapping("/updateUser")
-    public ResponseVo updateUser(@Valid @RequestBody UpdateUserFrom updateUserFrom) {
-        return userService.updateUser(updateUserFrom);
+    public ResponseVo updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
+
+    @PostMapping("/updatePassword")
+    public ResponseVo updatePassword(@Valid @RequestBody UpdateUserFrom updateUserFrom) {
+        return userService.updatePassword(updateUserFrom);
     }
 
     @PostMapping("/getAllUser")

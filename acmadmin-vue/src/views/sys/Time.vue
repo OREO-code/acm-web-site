@@ -10,9 +10,7 @@
         width="30%"
         :before-close="handleClose">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="id" prop="id">
-          <el-input v-model="ruleForm.id"></el-input>
-        </el-form-item>
+
 
         <el-form-item label="时间" prop="createdTime">
           <el-date-picker v-model="ruleForm.time" value-format="yyyy-MM-ddTHH:mm:ss" type="datetime" placeholder="Please pick a date" />
@@ -124,7 +122,7 @@ export default {
       ruleForm: {
         id:"",
         time:"",
-        content:"...",
+        content:"",
       },
       rules: {
         content: [
@@ -194,6 +192,9 @@ export default {
       this.ruleForm.content = time.content;
     },
     open_add(){
+      this.id=" "
+      this.time=" "
+      this.content=" "
       this.dialogVisible_add = true;
     },
 

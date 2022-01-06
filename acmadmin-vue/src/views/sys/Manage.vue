@@ -5,25 +5,26 @@
 
 
     <el-dialog
-        title="修改时间线"
+        title="修改管理员信息"
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="id" prop="id">
-          <el-input v-model="ruleForm.id"></el-input>
+        <el-form-item label="用户名" prop="content">
+          <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
-
-        <el-form-item label="时间" prop="createdTime">
-          <el-date-picker v-model="ruleForm.time" value-format="yyyy-MM-ddTHH:mm:ss" type="datetime" placeholder="Please pick a date" />
+        <el-form-item label="新密码" prop="password" placeholder="不修改密码忽视即可">
+          <el-input v-model="ruleForm.password"></el-input>
         </el-form-item>
-
-
-
-        <el-form-item label="内容" prop="content">
-          <el-input v-model="ruleForm.content"></el-input>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="ruleForm.email"></el-input>
         </el-form-item>
-
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="ruleForm.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="备注" prop="remarks">
+          <el-input v-model="ruleForm.remarks"></el-input>
+        </el-form-item>
         <el-form-item style="text-align: center">
           <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
         </el-form-item>
@@ -32,18 +33,25 @@
     </el-dialog>
 
     <el-dialog
-        title="增加时间线"
+        title="增加管理员"
         :visible.sync="dialogVisible_add"
         width="30%"
         :before-close="handleClose">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-
-        <el-form-item label="时间" prop="createdTime">
-          <el-date-picker v-model="ruleForm.time" value-format="yyyy-MM-ddTHH:mm:ss" type="datetime" placeholder="Please pick a date" />
+        <el-form-item label="用户名" prop="content">
+          <el-input v-model="ruleForm.username"></el-input>
         </el-form-item>
-
-        <el-form-item label="内容" prop="content">
-          <el-input v-model="ruleForm.content"></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="ruleForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="ruleForm.email"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="ruleForm.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="备注" prop="remarks">
+          <el-input v-model="ruleForm.remarks"></el-input>
         </el-form-item>
 
         <el-form-item style="text-align: center">
@@ -103,17 +111,15 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" style="width: 80px">
+          <el-table-column align="center" style="width: 80px" v-if='adminShow'>
             <template slot="header" slot-scope="scope">
               <el-button type="primary" @click="open_add">新增</el-button>
             </template>
             <template slot-scope="scope">
               <el-button
                   type="success"
-
                   @click="open(scope.row)">编辑</el-button>
               <el-button
-
                   type="danger"
                   @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
@@ -131,20 +137,32 @@ export default {
   name: 'Time',
   data(){
     return{
+      currentUser:[],
+      adminShow:"",
+
       users :[],
       dialogVisible: false,
       dialogVisible_add:false,
       ruleForm: {
         id:"",
-        time:"",
-        content:"...",
+        username:"",
+        password:"",
+        email:"",
+        phone:"",
+        remarks:""
       },
       rules: {
-        content: [
-          { required: true, message: '请输入内容', trigger: 'blur' }
+        username: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
-        time: [
-          { required: true, message: '请选择日期', trigger: 'blur' }
+        email: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入手机号', trigger: 'blur' }
+        ],
+        remarks: [
+          { required: true, message: '请输入备注', trigger: 'blur' }
         ],
       }
 
@@ -158,7 +176,7 @@ export default {
           this.dialogVisible = false
           const _this = this;
           console.log(_this.ruleForm)
-          this.$axios.post("/updateTime",_this.ruleForm).then(res=>{
+          this.$axios.post("/updateUser",_this.ruleForm).then(res=>{
             this.page()
             this.$message({
               message: '修改成功',
@@ -179,9 +197,8 @@ export default {
         if (valid) {
           this.dialogVisible_add = false
           const _this = this;
-          this.$axios.post("/addTime",_this.ruleForm).then(res=>{
-            _this.ruleForm.time = ''
-            _this.ruleForm.content = ''
+          console.log(_this.ruleForm)
+          this.$axios.post("/addUser",_this.ruleForm).then(res=>{
             this.page()
             this.$message({
               message: '增加成功',
@@ -200,14 +217,22 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    open(time){
+    open(item){
       this.dialogVisible = true;
-      this.ruleForm.id = time.id;
-      this.ruleForm.time = time.time
-      this.ruleForm.content = time.content;
+      this.ruleForm.id = item.id;
+      this.ruleForm.username = item.username;
+      this.ruleForm.email = item.email;
+      this.ruleForm.phone = item.phone;
+      this.ruleForm.remarks = item.remarks;
     },
     open_add(){
       this.dialogVisible_add = true;
+      this.ruleForm.id = "";
+      this.ruleForm.username = "";
+      this.ruleForm.password = "";
+      this.ruleForm.email = "";
+      this.ruleForm.phone = "";
+      this.ruleForm.remarks = "";
     },
 
     page(){
@@ -215,6 +240,8 @@ export default {
       _this.$axios.post("/getAllUser").then(res=>{
         _this.users = res.data.data;
       })
+
+
     },
 
     handleClose(done) {
@@ -232,7 +259,7 @@ export default {
         type: 'warning'
       }).then(() => {
         const _this = this
-        _this.$axios.get("/delTime?id="+id).then(res=>{
+        _this.$axios.get("/delUser?id="+id).then(res=>{
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -249,6 +276,13 @@ export default {
   },
   created() {
     this.page();
+    const _this = this
+    _this.$axios.get("/currentUser").then(res=>{
+      _this.adminShow = res.data.data.username === 'admin'
+      console.log(_this.adminShow)
+    })
+
+
   }
 
 
