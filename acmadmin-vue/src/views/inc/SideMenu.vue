@@ -1,6 +1,6 @@
 <template>
 	<el-menu
-			:default-active="this.$store.state.menus.editableTabsValue"
+			:default-active="index"
 			class="el-menu-vertical-demo"
 			background-color="#545c64"
 			text-color="#fff"
@@ -12,35 +12,34 @@
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </template>
-
-      <router-link to="/sys/notice" style="text-decoration: none">
-        <el-menu-item index="1-1">
-          <template slot="title">
-            <i class="el-icon-message-solid"></i>
-            <span slot="title">公告</span>
-          </template>
-        </el-menu-item>
-      </router-link>
-
-      <router-link  to="/sys/rotation" style="text-decoration: none">
-        <el-menu-item index="1-2">
-          <template slot="title">
-            <i class="el-icon-picture"></i>
-            <span slot="title">轮播图</span>
-          </template>
-        </el-menu-item>
-      </router-link>
-
-      <router-link to="/sys/intro" style="text-decoration: none">
-        <el-menu-item  index="1-3" >
-          <template slot="title">
-            <i class="el-icon-s-order"></i>
-            <span slot="title">介绍文档</span>
-          </template>
-        </el-menu-item>
-      </router-link>
-
     </el-submenu>
+
+    <router-link to="/sys/notice" style="text-decoration: none">
+      <el-menu-item index="1-1">
+        <template slot="title">
+          <i class="el-icon-message-solid"></i>
+          <span slot="title">公告</span>
+        </template>
+      </el-menu-item>
+    </router-link>
+
+    <router-link  to="/sys/rotation" style="text-decoration: none">
+      <el-menu-item index="1-2">
+        <template slot="title">
+          <i class="el-icon-picture"></i>
+          <span slot="title">轮播图</span>
+        </template>
+      </el-menu-item>
+    </router-link>
+
+    <router-link to="/sys/intro" style="text-decoration: none">
+      <el-menu-item  index="1-3" >
+        <template slot="title">
+          <i class="el-icon-s-order"></i>
+          <span slot="title">介绍文档</span>
+        </template>
+      </el-menu-item>
+    </router-link>
 
 		<router-link to="/sys/time" style="text-decoration: none">
 			<el-menu-item index="2" >
@@ -82,16 +81,10 @@
 			}
 		},
 		computed:  {
-			menuList: {
-				get() {
-					return this.$store.state.menus.menuList
-				}
-			}
+
 		},
 		methods: {
-			selectMenu(item) {
-				this.$store.commit("addTab", item)
-			}
+
 		}
 	}
 </script>

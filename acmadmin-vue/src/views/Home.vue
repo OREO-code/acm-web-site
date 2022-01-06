@@ -33,7 +33,7 @@
 
 			</el-header>
 			<el-main>
-				<Tabs></Tabs>
+
 
 				<div style="margin: 0 15px;">
 					<router-view/>
@@ -46,12 +46,12 @@
 
 <script>
 	import SideMenu from "./inc/SideMenu";
-	import Tabs from "./inc/Tabs";
+
 
 	export default {
 		name: "Home",
 		components: {
-			SideMenu, Tabs
+			SideMenu,
 		},
 		data() {
 			return {
@@ -71,9 +71,10 @@
 				})
 			},
 			logout() {
-				this.$axios.post("/logout").then(res => {
+				this.$axios.get("/logout").then(res => {
 					localStorage.clear()
 					sessionStorage.clear()
+
 
 					this.$store.commit("resetState")
 
