@@ -35,7 +35,7 @@
       <el-menu-item  index="4" >
         <template slot="title">
           <i class="el-icon-s-order"></i>
-          <span slot="title">介绍文档</span>
+          <span slot="title">资讯</span>
         </template>
       </el-menu-item>
     </router-link>
@@ -61,8 +61,8 @@
     <router-link to="/sys/file/notice" style="text-decoration: none">
       <el-menu-item index="7">
         <template slot="title">
-          <i class="el-icon-medal-1"></i>
-          <span slot="title">文件管理</span>
+          <i class="el-icon-s-platform"></i>
+          <span slot="title">公示文件</span>
 
         </template>
       </el-menu-item>
@@ -70,14 +70,20 @@
 
     <el-submenu index="7">
       <template slot="title">
-        <i class="el-icon-location"></i>
+        <i class="el-icon-s-opportunity"></i>
         <span>图灵杯</span>
       </template>
       <router-link to="/sys/file/pdf" style="text-decoration: none">
-        <el-menu-item index="7-1">pdf题解</el-menu-item>
+        <el-menu-item index="7-1">
+          <i class="el-icon-s-data"></i>
+          <span>pdf题解</span>
+        </el-menu-item>
       </router-link>
       <router-link to="/sys/file/mp4" style="text-decoration: none">
-        <el-menu-item index="7-2">mp4题解</el-menu-item>
+        <el-menu-item index="7-2">
+          <i class="el-icon-s-unfold"></i>
+          <span>mp4题解</span>
+        </el-menu-item>
       </router-link>
 <!--        <el-menu-item index="7-3">公示文件</el-menu-item>-->
     </el-submenu>

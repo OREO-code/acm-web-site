@@ -10,8 +10,34 @@
       </el-header>
       <el-main>
         <el-container>
-          <el-aside width="20%" style="text-align: center">
-            文件下载
+          <el-aside width="20%"  >
+            <div  style="width: 98.95%;height: 200px;">
+              <el-card class="box-card">
+                <h3 style="height: 10px">公示文件</h3>
+                <el-card class="box-card">
+                  <el-table
+                      height="660"
+                      :header-cell-style="{'text-align':'center'}"
+                      :cell-style="{'text-align':'center'}"
+                      max-height="100%"
+                      :data="fileList"
+                      style="width: 100%;line-height: normal;"
+                      highlight-current-row="true">
+
+                    <el-table-column
+                        label="文件名"
+                        prop="fileName">
+                    </el-table-column>
+
+                    <el-table-column
+                        label="上传时间"
+                        prop="created">
+                    </el-table-column>
+                  </el-table>
+                </el-card>
+              </el-card>
+            </div>
+
           </el-aside>
           <el-main >
             <el-carousel :interval="4000" type="card" height="200px">
@@ -66,6 +92,7 @@
 .el-aside{
 	background-color: white !important;
 }
+
 .box2father{
 	width: 100%;
 	height: 100%;

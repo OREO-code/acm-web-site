@@ -1,52 +1,46 @@
 <template>
   <div>
     <el-container class="container">
+      <el-aside width="5%">
+      </el-aside>
         <el-aside width="22%">
 
-          <el-card class="box-card_1" shadow="hover">
-            <div>
-              <span style="float: left;padding-bottom: 20px">历年真题</span>
-              <a href="http://newoj.acmclub.cn/home" target="_blank" class="oj">
-                <el-button size="medium" type="primary"
-                           style="line-height: normal;float: right;"
-                           round
-                >
-                  NEUQ OJ
-                </el-button>
-              </a>
-            </div>
-          </el-card>
+<!--          <el-card >-->
+
+
+<!--              <a href="http://newoj.acmclub.cn/home" target="_blank" class="oj">-->
+<!--                <el-button size="medium" type="primary" >NEUQ OJ</el-button>-->
+<!--              </a>-->
+
+<!--          </el-card>-->
+
           <el-card class="box-card_2" shadow="hover" >
             <div slot="header" class="clearfix" style="text-align: left">
               <span>历年题解文档</span>
             </div>
-            <div class="text item" style="height: 200px">
+            <el-card class="box-card_2" shadow="hover" >
+            <div class="text item" style="height: 200px;text-decoration: none">
               <el-link type="primary" :href="downUrl+item.fileName" target="_blank"
-                           v-for="item in tableData" v-if="matchType(item.fileName)">
+                           v-for="item in pdfSolutionList" >
                 <h3>{{ item.fileName }}</h3>
               </el-link>
             </div>
+            </el-card>
           </el-card>
-          <el-card class="box-card_3" shadow="hover" style="padding: 0">
+          <el-card class="box-card_2" shadow="hover" >
             <div slot="header" class="clearfix" style="text-align: left">
-              <span>历年真题讲解视频</span>
+              <span>历年题解视频</span>
             </div>
-            <div class="text item">
-              <el-table
-                  height="200"
-                  :show-header="false"
-                  :data="videoData"
-                  style="width: 100%;line-height: normal;">
-                <el-table-column width="400" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <a :href="downUrl+scope.row.fileName" style="text-decoration: none;padding: 0">
-                      {{ scope.row[1].fileName }}
-                    </a>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
+            <el-card class="box-card_2" shadow="hover" >
+              <div class="text item" style="height: 200px;text-decoration: none">
+                <el-link type="primary" :href="downUrl+item.fileName" target="_blank"
+                         v-for="item in mp4List" >
+                  <h3>{{ item.fileName }}</h3>
+                </el-link>
+              </div>
+            </el-card>
           </el-card>
+
           <el-card class="box-card_3">
             <div slot="header" class="clearfix" style="text-align: left">
               <span>关注公众号沉思广场 立即报名</span>
@@ -109,6 +103,8 @@
             </div>
           </el-card>
         </el-main>
+      <el-aside width="5%">
+      </el-aside>
       </el-container>
 
   </div>
@@ -120,8 +116,7 @@ import jpg2 from '@/assets/2.png'
 import jpg3 from '@/assets/3.png'
 import jpg4 from '@/assets/7.png'
 
-const http = 'http://101.43.16.42:8082/'
-const downFile = 'download/'
+
 export default {
   name: "viewport",
   data() {
@@ -130,79 +125,38 @@ export default {
       imgurl2: jpg2,
       imgurl3: jpg3,//有问题 没用 3.png
       imgurl4: jpg4,
-      downUrl: http + downFile,
+      downUrl: 'http://101.43.16.42:8082/download/',
       activeIndex: '3',
       srcList: [
         jpg1,
         jpg2,
         jpg2,
       ],
-      tableData: [],
-      videoData: [],
+      pdfSolutionList: [],
+      mp4List: [],
     };
   },
   methods: {
-    fullVideo() {
-      let temp = 0
-      for (let i = 0; i < this.tableData.length; i++) {
-        if (!this.matchType(this.tableData[i].fileName)) {
-          this.videoData[temp++] = this.tableData[i]
-        }
-      }
-      console.log(this.tableData)
-      console.log(this.videoData.length)
-      console.log(this.videoData)
-    },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     getFileList() {
       this.$axios
-          .get('http://101.43.16.42:8082/file')
+          .get('http://101.43.16.42:8082/pdfSolutionList')
           .then((data) => {
-            this.tableData = data.data.data.fileList
-            this.fullVideo()
-            console.log(data)
+            this.pdfSolutionList = data.data.data.fileList
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      this.$axios
+          .get('http://101.43.16.42:8082/mp4List')
+          .then((data) => {
+            this.mp4List = data.data.data.fileList
           })
           .catch((error) => {
             console.log(error)
           })
     },
-    matchType(fileName) {
-      // 后缀获取
-      let suffix = '';
-      // 获取类型结果
-      let result = '';
-      try {
-        let flieArr = fileName.split('.');
-        suffix = flieArr[flieArr.length - 1];
-      } catch (err) {
-        suffix = '';
-      }
-      // fileName无后缀返回 false
-      if (!suffix) {
-        result = false;
-        return result;
-      }
-      // 匹配 pdf
-      const pdflist = ['pdf'];
-      result = pdflist.some(function (item) {
-        return item === suffix;
-      });
-      if (result) {
-        result = 'pdf';
-        return true;
-      }
-      // 匹配 视频
-      const videolist = ['mp4'];
-      result = videolist.some(function (item) {
-        return item === suffix;
-      });
-      if (result) {
-        result = 'video';
-        return false;
-      }
-    },
+
+
   },
   mounted() {
     this.getFileList();
