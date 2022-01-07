@@ -8,13 +8,11 @@
         </div>
         <el-card class="box-card_2" shadow="hover" >
           <el-table
-              max-height="400px"
               :data="Introduces"
-              style="width: 100%;height: 50%">
+              style="width: 100%">
             <el-table-column
                 align="center"
-                label="标题"
-                width="150%">
+                label="标题">
               <template slot-scope="scope">
                 <span style="text-align: center">{{ scope.row.name }}</span>
               </template>

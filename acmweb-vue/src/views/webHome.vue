@@ -13,10 +13,10 @@
           <el-aside width="20%"  >
             <div  style="width: 98.95%;height: 200px;">
               <el-card class="box-card">
-                <h3 style="height: 10px">公示文件</h3>
+                <h3 style="top: 100px!important;">公示文件</h3>
                 <el-card class="box-card">
                   <el-table
-                      height="660"
+                      height="180px"
                       :header-cell-style="{'text-align':'center'}"
                       :cell-style="{'text-align':'center'}"
                       max-height="100%"
