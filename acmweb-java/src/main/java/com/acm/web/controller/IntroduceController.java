@@ -29,6 +29,11 @@ public class IntroduceController {
         return introduceService.introduces(currentPage);
     }
 
+    @GetMapping("/getAllIntroduce")
+    public ResponseVo<List<Introduce>> getAllIntroduce(){
+        return introduceService.getAllIntroduce();
+    }
+
     @GetMapping("/introduceAdmin")
     public ResponseVo<List<Introduce>> introduceAdmin(){
         return introduceService.introduceAdmin();

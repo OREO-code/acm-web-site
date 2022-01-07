@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> implements DocumentService {
@@ -48,7 +51,7 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
     @Override
     public ResponseVo<DocumentVo> file() {
         QueryWrapper<Document> wrapper = new QueryWrapper<>();
-        wrapper.eq("isDel", 0);
+        wrapper.eq("isDel", 0).orderByDesc("created");
         DocumentVo documentVo = new DocumentVo()
                 .setSum(this.count(wrapper))
                 .setFileList(this.list(wrapper));
@@ -70,12 +73,64 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
             Document document = new Document()
                     .setFileName(file.getOriginalFilename())
                     .setIsDel(0)
-                    .setFileUrl(path);
+                    .setFileUrl(path)
+                    .setCreated(LocalDateTime.now());
             this.save(document);
         } catch (Exception e) {
             return ResponseVo.error(ResponseEnum.UPLOAD_ERROR);
         }
         return ResponseVo.success(new FileVo().setUrl(path));
+    }
+
+    @Override
+    public ResponseVo<DocumentVo> pdfSolutionList() {
+        QueryWrapper<Document> wrapper = new QueryWrapper<>();
+        wrapper.eq("isDel", 0);
+        List<Document> documentList = this.list(wrapper);
+        List<Document> pdfList = new ArrayList<>();
+        for(Document document:documentList){
+            if(document.getFileName().contains(".pdf") && document.getFileName().contains("图灵杯")){
+                pdfList.add(document);
+            }
+        }
+        DocumentVo documentVo = new DocumentVo()
+                .setSum(pdfList.size())
+                .setFileList(pdfList);
+        return ResponseVo.success(documentVo);
+    }
+
+    @Override
+    public ResponseVo<DocumentVo> mp4List() {
+        QueryWrapper<Document> wrapper = new QueryWrapper<>();
+        wrapper.eq("isDel", 0).orderByDesc("created");
+        List<Document> documentList = this.list(wrapper);
+        List<Document> pdfList = new ArrayList<>();
+        for(Document document:documentList){
+            if(document.getFileName().contains(".mp4")){
+                pdfList.add(document);
+            }
+        }
+        DocumentVo documentVo = new DocumentVo()
+                .setSum(pdfList.size())
+                .setFileList(pdfList);
+        return ResponseVo.success(documentVo);
+    }
+
+    @Override
+    public ResponseVo<DocumentVo> pdfNoticeList() {
+        QueryWrapper<Document> wrapper = new QueryWrapper<>();
+        wrapper.eq("isDel", 0).orderByDesc("created");
+        List<Document> documentList = this.list(wrapper);
+        List<Document> pdfList = new ArrayList<>();
+        for(Document document:documentList){
+            if(document.getFileName().contains(".pdf") && !document.getFileName().contains("题解")){
+                pdfList.add(document);
+            }
+        }
+        DocumentVo documentVo = new DocumentVo()
+                .setSum(pdfList.size())
+                .setFileList(pdfList);
+        return ResponseVo.success(documentVo);
     }
 
     @Override

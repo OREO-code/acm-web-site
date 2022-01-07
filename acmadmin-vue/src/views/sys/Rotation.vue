@@ -1,8 +1,8 @@
 <template>
   <div >
     <el-container >
-      <el-main style="display: flex;justify-content: center;align-items: center">
-        <el-card class="box-card" style="width: 80%">
+      <el-main style="display: flex;justify-content: center;align-items: center;padding: 0rem !important;">
+        <el-card class="box-card" style="width: 83% !important;">
           <template>
             <div class="headbar">
               轮播图效果Demo
@@ -16,44 +16,43 @@
         </el-card>
       </el-main>
     </el-container>
-
-    <div style="display: flex;justify-content: center;align-items: center;width: 100%">
-    <div class="imgshow" >
-      <div v-for="item in showImageList" class="imgbtn">
-        <div >
-          <el-image :src="item.url"  fit="contain"></el-image>
+    <div style="display: flex;justify-content: center;align-items: center;width: 100%;margin-top: 3%;">
+      <div class="imgshow" >
+        <div v-for="item in showImageList" class="imgbtn">
+          <div >
+            <el-image :src="item.url"  fit="contain"></el-image>
+          </div>
+          <div class="deletebtn">
+            {{item.id}}
+            <el-button type="danger" icon="el-icon-delete" circle @click="getvalue(item.id)" ></el-button>
+          </div>
         </div>
-        <div class="deletebtn">
-          {{item.id}}
-          <el-button type="danger" icon="el-icon-delete" circle @click="getvalue(item.id)" ></el-button>
-        </div>
-      </div>
-      <div class="imgbtn">
-        <el-upload
-            ref="upload"
-            action="http://101.43.16.42:8082/addRotation"
-            :before-upload="beforeAvatarUpload"
-            :headers="myHeaders"
+        <div class="imgbtn">
+          <el-upload
+              ref="upload"
+              action="http://101.43.16.42:8082/addRotation"
+              :before-upload="beforeAvatarUpload"
+              :headers="myHeaders"
 
-            :limit="1"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :on-success="GetUrl">
-          <i class="el-icon-plus"></i>
-        </el-upload>
+              :limit="1"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :on-success="GetUrl">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+        </div>
+        <!-- <el-upload
+           class="avatar-uploader"
+           action="http://101.43.16.42:8082/addRotation"
+         :on-error="uploaderr"
+         :headers="headers"
+           :show-file-list="false"
+           :on-success="handleAvatarSuccess"
+           :before-upload="beforeAvatarUpload">
+           <img v-if="imageUrl" :src="imageUrl" class="avatar">
+           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+         </el-upload> -->
       </div>
-      <!-- <el-upload
-         class="avatar-uploader"
-         action="http://101.43.16.42:8082/addRotation"
-       :on-error="uploaderr"
-       :headers="headers"
-         :show-file-list="false"
-         :on-success="handleAvatarSuccess"
-         :before-upload="beforeAvatarUpload">
-         <img v-if="imageUrl" :src="imageUrl" class="avatar">
-         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-       </el-upload> -->
-    </div>
     </div>
   </div>
 </template>
@@ -253,7 +252,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scope>
 .headbar{
   width: 100%;
   /* 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); */
@@ -283,7 +282,7 @@ export default {
 }
 .imgshow{
   width: 80%;
-  margin-left: 10%;
+  /*  margin-left: 10%; */
   margin-top: 1%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -291,7 +290,7 @@ export default {
   grid-gap: 25px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 5%;
-  padding: 3%;
+  padding: 1.25rem;
 }
 
 .imgbtn{

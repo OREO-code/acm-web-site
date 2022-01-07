@@ -61,7 +61,7 @@
           </div>
         </el-aside>
         <el-main>
-          <div class="intro">
+          <div class="intro" style="text-align: left">
             <div class="introduction1"><span>姓名：</span>{{ item.name }}</div>
             <div class="introduction2"><span>年级：</span>{{ item.year }}</div>
             <div class="introduction3"><span>学院：</span>{{ item.college }}</div>

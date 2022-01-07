@@ -25,7 +25,7 @@
         <el-form-item label="备注" prop="remarks">
           <el-input v-model="ruleForm.remarks"></el-input>
         </el-form-item>
-        <el-form-item style="text-align: center">
+        <el-form-item style="text-align: center;margin-left: -100px!important;">
           <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
         </el-form-item>
       </el-form>
@@ -54,7 +54,7 @@
           <el-input v-model="ruleForm.remarks"></el-input>
         </el-form-item>
 
-        <el-form-item style="text-align: center">
+        <el-form-item style="text-align: center;margin-left: -100px!important;">
           <el-button type="primary" @click="addFormmethods('ruleForm')">立即新增</el-button>
         </el-form-item>
       </el-form>

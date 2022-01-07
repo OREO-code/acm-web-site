@@ -30,6 +30,15 @@ public class DocumentController {
         documentService.downloads(response, fileName);
     }
 
+    @GetMapping("/pdfSolutionList")
+    public ResponseVo<DocumentVo> pdfSolutionList(){return documentService.pdfSolutionList();}
+
+    @GetMapping("/pdfNoticeList")
+    public ResponseVo<DocumentVo> pdfNoticeList(){return documentService.pdfNoticeList();}
+
+    @GetMapping("/mp4List")
+    public ResponseVo<DocumentVo> mp4List(){return documentService.mp4List();}
+
     @GetMapping("/file")
     public ResponseVo<DocumentVo> file() {
         return documentService.file();

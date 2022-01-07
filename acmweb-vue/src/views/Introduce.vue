@@ -1,5 +1,7 @@
 <template>
 
+
+
   <div style="margin-top: -5%;">
     <el-timeline>
       <el-timeline-item v-for="introduce in introduces" :timestamp="introduce.created" placement="top" type="primary">
@@ -27,7 +29,9 @@
 
 
 export default {
+
   name: 'Introduce',
+
   data(){
     return{
       introduces :{},

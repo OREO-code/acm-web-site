@@ -1,56 +1,8 @@
 <template>
   <div>
     <el-container class="container">
-      <el-header style="padding: 0;">
-        <el-menu
-            :default-active="activeIndex"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            menu-trigger="click">
-          <el-menu-item index="1" class="index_1">NEUQ ACM</el-menu-item>
-          <el-menu-item index="2" class="index_2">成员风采</el-menu-item>
-          <el-menu-item index="3" class="index_3">图灵杯</el-menu-item>
-          <el-menu-item index="4" class="index_4">训练营</el-menu-item>
-          <el-menu-item index="5" class="index_5">时间线</el-menu-item>
-          <el-menu-item index="6" class="index_6"><a href="http://newoj.acmclub.cn/home" style="text-decoration: none"
-                                                     target="_blank">NEUQ OJ</a></el-menu-item>
-          <el-submenu index="7" class="index_7">
-            <template slot="title"><i class="el-icon-more"></i></template>
-            <el-menu-item index="7-1">成员风采</el-menu-item>
-            <el-menu-item index="7-2">图灵杯</el-menu-item>
-            <el-menu-item index="7-3">训练营</el-menu-item>
-            <el-menu-item index="7-4">时间线</el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-header>
-      <el-container>
         <el-aside width="22%">
-          <el-card class="box-card_3">
-            <div slot="header" class="clearfix" style="text-align: left">
-              <span>关注公众号沉思广场 立即报名</span>
-            </div>
-            <div class="text item">
-              <img
-                  src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzA4NjYzMzE0Ng==&mid=2665512771&idx=1&sn=32a79cfc0b3f10f14180b978615aea79&send_time="
-                  alt="" style="width: 60%">
-            </div>
-          </el-card>
-          <el-card class="box-card_3">
-            <div slot="header" class="clearfix" style="text-align: left">
-              <span>关注NEUQ ACM俱乐部QQ公众号</span>
-            </div>
-            <div class="text item">
-              <el-image
-                  style="width: 54.5%;"
-                  :src="imgurl4"
-                  :preview-src-list="srcList">
-              </el-image>
-            </div>
-          </el-card>
+
           <el-card class="box-card_1" shadow="hover">
             <div>
               <span style="float: left;padding-bottom: 20px">历年真题</span>
@@ -64,14 +16,14 @@
               </a>
             </div>
           </el-card>
-          <el-card class="box-card_2" shadow="hover">
+          <el-card class="box-card_2" shadow="hover" >
             <div slot="header" class="clearfix" style="text-align: left">
               <span>历年题解文档</span>
             </div>
-            <div class="text item">
+            <div class="text item" style="height: 200px">
               <el-link type="primary" :href="downUrl+item.fileName" target="_blank"
-                       v-for="item in tableData" v-if="matchType(item.fileName)">
-                {{ item.fileName }}
+                           v-for="item in tableData" v-if="matchType(item.fileName)">
+                <h3>{{ item.fileName }}</h3>
               </el-link>
             </div>
           </el-card>
@@ -93,6 +45,28 @@
                   </template>
                 </el-table-column>
               </el-table>
+            </div>
+          </el-card>
+          <el-card class="box-card_3">
+            <div slot="header" class="clearfix" style="text-align: left">
+              <span>关注公众号沉思广场 立即报名</span>
+            </div>
+            <div class="text item">
+              <img
+                  src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzA4NjYzMzE0Ng==&mid=2665512771&idx=1&sn=32a79cfc0b3f10f14180b978615aea79&send_time="
+                  alt="" style="width: 60%">
+            </div>
+          </el-card>
+          <el-card class="box-card_3">
+            <div slot="header" class="clearfix" style="text-align: left">
+              <span>关注NEUQ ACM俱乐部QQ公众号</span>
+            </div>
+            <div class="text item">
+              <el-image
+                  style="width: 54.5%;"
+                  :src="imgurl4"
+                  :preview-src-list="srcList">
+              </el-image>
             </div>
           </el-card>
         </el-aside>
@@ -136,7 +110,7 @@
           </el-card>
         </el-main>
       </el-container>
-    </el-container>
+
   </div>
 </template>
 
@@ -184,7 +158,7 @@ export default {
     },
     getFileList() {
       this.$axios
-          .get('/file')
+          .get('http://101.43.16.42:8082/file')
           .then((data) => {
             this.tableData = data.data.data.fileList
             this.fullVideo()

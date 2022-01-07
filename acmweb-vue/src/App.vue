@@ -14,7 +14,7 @@
           <div ><i class="el-icon-house"></i>首页</div>
 					</el-menu-item>
 
-          <el-menu-item index="2" route="/introduce"><div><i class="el-icon-position"></i>资讯</div></el-menu-item>
+          <el-menu-item index="2" route="/info"><div><i class="el-icon-position"></i>资讯</div></el-menu-item>
           <el-menu-item index="3" route="/member"><div><i class="el-icon-medal-1"></i>成员风采</div></el-menu-item>
           <el-menu-item index="4" route="/camp"><div><i class="el-icon-data-line"></i>暑期编程训练营</div></el-menu-item>
           <el-menu-item index="5" route="/tulin"><div><i class="el-icon-trophy"></i>图灵杯</div></el-menu-item>

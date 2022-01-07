@@ -9,6 +9,7 @@ import Login from '../views/Login.vue'
 import Introduce from "../views/Introduce";
 import IntroduceDetail from "../views/IntroduceDetail";
 import Camp from "../views/Camp";
+import Info from "../views/Info";
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,13 +21,23 @@ const routes = [
       {
         path: '/',
         name: 'Introduce',
-        meta: {
-          title: "首页"
-        },
         component: Introduce
       }
     ]
   },
+  {
+    path: '/info',
+    name: 'Info',
+    component: Info,
+    children: [
+      {
+        path: '/info',
+        name: 'Introduce',
+        component: Introduce
+      }
+    ]
+  },
+
   {
     path: '/introduce',
     name: 'Introduce',

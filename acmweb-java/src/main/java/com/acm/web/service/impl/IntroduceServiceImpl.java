@@ -69,4 +69,11 @@ public class IntroduceServiceImpl extends ServiceImpl<IntroduceMapper, Introduce
         if(ans) return ResponseVo.success(ResponseEnum.SUCCESS);
         else return ResponseVo.error(ResponseEnum.ERROR);
     }
+
+    @Override
+    public ResponseVo<List<Introduce>> getAllIntroduce() {
+        List<Introduce> list = this.list();
+        if(list.size() > 0) return ResponseVo.success(list);
+        else return ResponseVo.error(ResponseEnum.ERROR);
+    }
 }

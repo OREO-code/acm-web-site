@@ -40,7 +40,7 @@
         </el-form-item>
 
 
-        <el-form-item style="text-align: center">
+        <el-form-item style="text-align: center;margin-left: -100px!important;">
           <el-button type="primary" @click="addFormmethods('ruleForm')">立即增加</el-button>
         </el-form-item>
       </el-form>
@@ -83,7 +83,7 @@
         </el-form-item>
 
 
-        <el-form-item style="text-align: center">
+        <el-form-item style="text-align: center;margin-left: -100px!important;">
           <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
         </el-form-item>
       </el-form>

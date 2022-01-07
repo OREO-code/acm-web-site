@@ -16,6 +16,9 @@ import axios from "../axios";
 import store from "../store"
 import el from "element-ui/src/locale/lang/el";
 import IntroEdit from "../views/sys/IntroEdit";
+import pdfFile from "../views/sys/pdfFile";
+import mp4File from "../views/sys/mp4File";
+import NoticeFile from "../views/sys/NoticeFile";
 
 Vue.use(VueRouter)
 
@@ -92,6 +95,24 @@ const routes = [
 				path: '/sys/notice',
 				name: 'Sysnotice',
 				component: Notice,
+
+			},
+			{
+				path: '/sys/file/pdf',
+				name: 'SysFilePdf',
+				component: pdfFile,
+
+			},
+			{
+				path: '/sys/file/mp4',
+				name: 'SysFileMp4',
+				component: mp4File,
+
+			},
+			{
+				path: '/sys/file/notice',
+				name: 'SysFileMp4',
+				component: NoticeFile,
 
 			},
 		]

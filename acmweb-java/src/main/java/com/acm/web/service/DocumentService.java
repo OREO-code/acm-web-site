@@ -17,4 +17,10 @@ public interface DocumentService extends IService<Document> {
     void downloads(HttpServletResponse response, String fileName);
 
     ResponseVo fileUpload(MultipartFile file);
+
+    ResponseVo<DocumentVo> pdfSolutionList();
+
+    ResponseVo<DocumentVo> mp4List();
+
+    ResponseVo<DocumentVo> pdfNoticeList();
 }

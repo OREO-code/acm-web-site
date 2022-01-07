@@ -26,4 +26,6 @@ public interface IntroduceService extends IService<Introduce> {
     ResponseVo edit(Introduce introduce);
 
     ResponseVo delIntroduce(Integer id);
+
+    ResponseVo<List<Introduce>> getAllIntroduce();
 }
