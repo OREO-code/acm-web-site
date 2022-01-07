@@ -1,16 +1,24 @@
 <template>
-  <div>
-    <template>
-      <div class="headbar">
-        轮播图修改界面
-      </div>
-      <el-carousel :interval="4000" type="card" height="200px">
-        <el-carousel-item v-for="(item,index) in showImageList" :key="index">
-          <el-image :src="item.url" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;margin:auto;" fit="contain"></el-image>
-        </el-carousel-item>
-      </el-carousel>
-    </template>
-    <div class="imgshow">
+  <div >
+    <el-container >
+      <el-main style="display: flex;justify-content: center;align-items: center">
+        <el-card class="box-card" style="width: 80%">
+          <template>
+            <div class="headbar">
+              轮播图效果Demo
+            </div>
+            <el-carousel :interval="4000" type="card" height="200px">
+              <el-carousel-item v-for="(item,index) in showImageList" :key="index">
+                <el-image :src="item.url" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;margin:auto;" fit="contain"></el-image>
+              </el-carousel-item>
+            </el-carousel>
+          </template>
+        </el-card>
+      </el-main>
+    </el-container>
+
+    <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+    <div class="imgshow" >
       <div v-for="item in showImageList" class="imgbtn">
         <div >
           <el-image :src="item.url"  fit="contain"></el-image>
@@ -45,6 +53,7 @@
          <img v-if="imageUrl" :src="imageUrl" class="avatar">
          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
        </el-upload> -->
+    </div>
     </div>
   </div>
 </template>
