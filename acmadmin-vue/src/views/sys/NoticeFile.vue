@@ -64,9 +64,6 @@ export default {
   name: "pdfFile",
   data() {
     return {
-      headers: {
-        "Authorization": localStorage.getItem("token")
-      },
       fileList: [],
     };
   },

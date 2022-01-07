@@ -143,6 +143,14 @@
 					  console.log('err')
 			        console.log(response);
 			      })
+      this.$axios
+          .get('http://101.43.16.42:8082/pdfNoticeList')
+          .then((res) => {
+            this.fileList = res.data.data.fileList
+          })
+          .catch((error) => {
+            this.$message.error("查询失败");
+          })
 		},
 		 mounted() {
 					this.formdraw()
