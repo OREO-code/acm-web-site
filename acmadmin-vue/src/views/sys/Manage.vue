@@ -80,7 +80,9 @@
               label="用户名"
               column-key="date">
             <template slot-scope="scope">
-              <span >{{ scope.row.username }}</span>
+
+              <el-tag >{{ scope.row.username }}</el-tag>
+
             </template>
           </el-table-column>
 

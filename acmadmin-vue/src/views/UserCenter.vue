@@ -51,8 +51,7 @@
     <el-dialog
         title="修改管理员信息"
         :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose">
+        width="30%">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="content">
           <el-input v-model="ruleForm.username"></el-input>

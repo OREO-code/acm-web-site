@@ -167,7 +167,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user == null) {
             return ResponseVo.error(ResponseEnum.USER_NONEXISTENT);
         }
-        if (!(updateUserFrom.getOldPassword().equals(user.getPassword()))) {
+        if (!(user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getOldPassword() + SALT).getBytes(StandardCharsets.UTF_8))))) {
             return ResponseVo.error(ResponseEnum.OLD_PASSWORD_ERROR);
         }
         if (user.getPassword().equals(DigestUtils.md5DigestAsHex((updateUserFrom.getNewPassword1() + SALT).getBytes(StandardCharsets.UTF_8)))) {
